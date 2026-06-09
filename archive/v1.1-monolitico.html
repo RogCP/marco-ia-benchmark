@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark de marcos internacionales de competencias en IA — Marco IA 2030</title>
+<meta name="description" content="Benchmark interactivo de marcos internacionales de competencias en inteligencia artificial. Insumo del Marco Mexicano de Competencias en IA 2030, FIMPES-Santander Universidades 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --bg-elevated: #ffffff;
+    --bg-subtle: #f3f2ec;
+    --bg-accent: #ebe9df;
+    --text: #1c1c1a;
+    --text-muted: #5f5e57;
+    --text-faint: #8a8980;
+    --border: #d8d6cc;
+    --border-strong: #bcb9ac;
+    --accent: #5b4733;
+    --accent-soft: #efe6d8;
+    --accent-text: #3a2c1e;
+
+    --c-ethics: #b88a3a;
+    --c-ethics-bg: #f7eed8;
+    --c-data: #4a6a8a;
+    --c-data-bg: #dde5ee;
+    --c-device: #4a7a5c;
+    --c-device-bg: #dce8df;
+    --c-problem: #6b4a7a;
+    --c-problem-bg: #e6dcec;
+    --c-career: #a85a3a;
+    --c-career-bg: #f0dccf;
+    --c-affective: #3a6a6a;
+    --c-affective-bg: #d8e5e5;
+    --c-agency: #2f5a78;
+    --c-agency-bg: #d2e0eb;
+    --c-pedagogy: #6e5a2e;
+    --c-pedagogy-bg: #ece2c5;
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16161a;
+      --bg-elevated: #1f1f24;
+      --bg-subtle: #25252b;
+      --bg-accent: #2d2d33;
+      --text: #ecebe5;
+      --text-muted: #a8a7a0;
+      --text-faint: #6f6e68;
+      --border: #34343b;
+      --border-strong: #4a4a52;
+      --accent: #d4b896;
+      --accent-soft: #2e271e;
+      --accent-text: #e8d4b6;
+      --c-ethics-bg: #3a2f1c;
+      --c-data-bg: #1f2e3d;
+      --c-device-bg: #1f2e26;
+      --c-problem-bg: #2c1f33;
+      --c-career-bg: #3a221a;
+      --c-affective-bg: #1f2e2e;
+      --c-agency-bg: #1c2c38;
+      --c-pedagogy-bg: #2e2818;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .site-header { border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--bg-elevated) 92%, transparent); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+  .site-header-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1100px; margin: 0 auto; }
+  .brand { font-family: var(--font-display); font-size: 17px; font-weight: 500; letter-spacing: -0.01em; color: var(--text); text-decoration: none; }
+  .brand-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .hero { padding: 80px 0 60px; border-bottom: 1px solid var(--border); }
+  .hero-eyebrow { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 24px; }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 52px); font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; max-width: 800px; }
+  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .hero-lead { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 680px; font-family: var(--font-display); font-weight: 400; }
+  .hero-meta { display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .hero-meta-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); }
+  .hero-meta-value { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  .tab-nav { border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 53px; z-index: 50; }
+  .tab-nav-inner { display: flex; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .tab { background: transparent; border: none; padding: 16px 0; margin-right: 32px; cursor: pointer; font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--text-muted); border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .tab:hover { color: var(--text); }
+  .tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+
+  .panel { display: none; padding: 56px 0 80px; }
+  .panel[aria-current="true"] { display: block; }
+  .section-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 16px; }
+
+  .framework-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: 48px; }
+  .framework-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px 20px; cursor: pointer; text-align: left; font-family: var(--font-body); transition: border-color 0.15s, background 0.15s, transform 0.15s; display: flex; flex-direction: column; gap: 6px; }
+  .framework-card:hover:not([disabled]) { border-color: var(--border-strong); transform: translateY(-1px); }
+  .framework-card[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  .fc-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .fc-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; letter-spacing: -0.01em; }
+  .fc-meta { font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+  .fc-badge { font-family: var(--font-mono); font-size: 9px; padding: 3px 7px; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+  .badge-loaded { background: var(--c-device-bg); color: var(--c-device); }
+  .badge-foundational { background: var(--c-agency-bg); color: var(--c-agency); }
+  .badge-complete { background: var(--accent-soft); color: var(--accent); }
+
+  .ficha { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px 48px; margin-bottom: 32px; display: none; }
+  .ficha[data-active="true"] { display: block; }
+  .ficha-header { padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+  .ficha-eyebrow { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 12px; }
+  .ficha h2 { font-family: var(--font-display); font-size: 32px; font-weight: 500; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 12px; }
+  .ficha-citation { font-size: 14px; color: var(--text-muted); font-style: italic; line-height: 1.5; max-width: 720px; }
+
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 40px; border: 1px solid var(--border); }
+  .meta-cell { background: var(--bg-elevated); padding: 16px 18px; }
+  .meta-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 6px; }
+  .meta-value { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.4; }
+
+  .section { margin-bottom: 40px; }
+  .section:last-child { margin-bottom: 0; }
+  .section-heading { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 16px; letter-spacing: -0.01em; line-height: 1.2; }
+  .section-body { font-size: 15px; line-height: 1.7; color: var(--text); }
+  .section-body p { margin-bottom: 12px; }
+  .section-body p:last-child { margin-bottom: 0; }
+  .section-body strong { font-weight: 600; color: var(--text); }
+  .section-body em { font-style: italic; }
+  .section-body blockquote { border-left: 3px solid var(--accent); padding: 4px 16px; margin: 16px 0; font-style: italic; color: var(--text-muted); font-family: var(--font-display); font-size: 16px; line-height: 1.5; }
+
+  .comp-list { display: flex; flex-direction: column; gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+  .comp-row { background: var(--bg-elevated); padding: 16px 20px; display: grid; grid-template-columns: 36px 1fr; gap: 16px; align-items: flex-start; }
+  .comp-num { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--accent); line-height: 1; padding-top: 2px; }
+  .comp-content { display: flex; flex-direction: column; gap: 4px; }
+  .comp-name { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.005em; }
+  .comp-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+
+  .matrix-wrapper { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-top: 8px; }
+  .matrix-scroll { overflow-x: auto; }
+  .matrix-table { width: 100%; border-collapse: collapse; min-width: 720px; }
+  .matrix-table th, .matrix-table td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); vertical-align: top; }
+  .matrix-table th:last-child, .matrix-table td:last-child { border-right: none; }
+  .matrix-table thead th { background: var(--bg-subtle); font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; text-transform: uppercase; }
+  .matrix-table thead th:first-child { background: var(--bg-subtle); width: 160px; }
+  .matrix-table tbody td:first-child { background: var(--bg-subtle); font-weight: 600; color: var(--text); font-size: 13px; }
+  .matrix-table tbody td { font-size: 13px; line-height: 1.5; color: var(--text); }
+  .matrix-table tbody tr:last-child td { border-bottom: none; }
+
+  /* DigCompEdu: CEFR levels visualization */
+  .cefr-levels { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-top: 12px; }
+  .cefr-level {
+    background: var(--bg-subtle);
+    border-radius: var(--radius-md);
+    padding: 16px 12px;
+    text-align: center;
+    border-top: 3px solid var(--accent);
+    position: relative;
+  }
+  .cefr-code { font-family: var(--font-mono); font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .cefr-label { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; letter-spacing: -0.01em; }
+  .cefr-focus { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; font-weight: 600; }
+  .cefr-keywords { font-size: 11px; color: var(--text); line-height: 1.45; font-style: italic; }
+
+  /* Bloom progression mapping */
+  .bloom-mapping {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--bg-subtle);
+    border-radius: var(--radius-md);
+  }
+  .bloom-pair {
+    text-align: center;
+    padding: 10px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-sm);
+  }
+  .bloom-bloom { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 4px; }
+  .bloom-levels { font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--text); }
+
+  /* Architecture diagram: core + envelopes */
+  .arch-diagram {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+    align-items: stretch;
+  }
+  .arch-block {
+    background: var(--bg-subtle);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+  }
+  .arch-block.core {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+  }
+  .arch-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .arch-block.core .arch-label { color: var(--accent); }
+  .arch-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+  .arch-block.core .arch-title { color: var(--accent-text); }
+  .arch-list {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .arch-list strong { font-weight: 600; }
+
+  /* Areas with competencies */
+  .areas-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+  .area-card {
+    background: var(--bg-subtle);
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    border-left: 3px solid var(--accent);
+  }
+  .area-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+  .area-num { font-family: var(--font-mono); font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .area-name { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--text); letter-spacing: -0.005em; flex: 1; }
+  .area-count { font-family: var(--font-mono); font-size: 10px; background: var(--bg-elevated); color: var(--accent); padding: 2px 8px; border-radius: 3px; font-weight: 600; }
+  .area-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; }
+  .area-comps {
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .area-comps strong { font-weight: 600; color: var(--accent); }
+
+  /* Validation block */
+  .validation-block { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 22px 26px; margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 18px; }
+  .validation-stat { text-align: center; }
+  .validation-num { font-family: var(--font-display); font-size: 28px; font-weight: 500; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+  .validation-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+
+  /* Quote box for developmental philosophy */
+  .philosophy-box {
+    background: var(--c-affective-bg);
+    border-left: 3px solid var(--c-affective);
+    padding: 22px 26px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin-top: 12px;
+  }
+  .philosophy-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-affective); margin-bottom: 8px; font-weight: 600; }
+  .philosophy-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 12px; letter-spacing: -0.005em; }
+  .philosophy-body { font-size: 13.5px; line-height: 1.65; color: var(--text); }
+  .philosophy-body p { margin-bottom: 10px; }
+  .philosophy-body p:last-child { margin-bottom: 0; }
+
+  /* Career timeline (Yoon) */
+  .career-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 12px; }
+  .career-stage-card { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 18px 16px; border-top: 3px solid var(--accent); }
+  .career-stage-num { font-family: var(--font-mono); font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 4px; }
+  .career-stage-name { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--text); letter-spacing: -0.005em; margin-bottom: 4px; }
+  .career-stage-years { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-bottom: 12px; font-weight: 500; }
+  .career-stage-section { margin-bottom: 10px; }
+  .career-stage-section:last-child { margin-bottom: 0; }
+  .career-stage-label { font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 3px; }
+  .career-stage-content { font-size: 11.5px; color: var(--text); line-height: 1.45; }
+
+  /* Yoon Bloom dimensions */
+  .bloom-dimensions { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
+  .bloom-dim { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 18px 22px; border-left: 3px solid var(--accent); display: grid; grid-template-columns: 60px 1fr; gap: 18px; align-items: flex-start; }
+  .bloom-dim-num { font-family: var(--font-display); font-size: 28px; font-weight: 500; color: var(--accent); line-height: 1; }
+  .bloom-dim-body { display: flex; flex-direction: column; gap: 6px; }
+  .bloom-dim-name { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--text); letter-spacing: -0.005em; }
+  .bloom-dim-categories { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; }
+  .bloom-dim-categories strong { color: var(--text); font-weight: 600; }
+
+  /* Findings/data box */
+  .findings-box { background: var(--c-data-bg); border-left: 3px solid var(--c-data); padding: 22px 26px; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-top: 12px; }
+  .findings-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-data); margin-bottom: 8px; font-weight: 600; }
+  .findings-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 12px; letter-spacing: -0.005em; }
+  .findings-body { font-size: 13.5px; line-height: 1.65; color: var(--text); }
+  .findings-body p { margin-bottom: 10px; }
+  .findings-body p:last-child { margin-bottom: 0; }
+  .findings-body strong { font-weight: 600; }
+
+  /* Chiu literacy/competency */
+  .lit-comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .lit-comp-card { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 22px 24px; border-left: 3px solid var(--accent); }
+  .lit-comp-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+  .lit-comp-name { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 12px; letter-spacing: -0.005em; }
+  .lit-comp-focus { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); background: var(--bg-elevated); padding: 6px 10px; border-radius: var(--radius-sm); display: inline-block; margin-bottom: 10px; font-weight: 500; }
+  .lit-comp-desc { font-size: 13px; color: var(--text); line-height: 1.55; }
+  .lit-comp-desc strong { font-weight: 600; background: var(--accent-soft); padding: 0 4px; border-radius: 2px; }
+
+  /* Chiu 5 components */
+  .chiu-comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+  .chiu-comp-card { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 18px 20px; border-top: 3px solid var(--accent); }
+  .chiu-comp-num { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 4px; }
+  .chiu-comp-name { font-family: var(--font-display); font-size: 19px; font-weight: 500; color: var(--text); margin-bottom: 8px; letter-spacing: -0.005em; }
+  .chiu-comp-topics { font-size: 12.5px; color: var(--text); line-height: 1.5; }
+  .chiu-comp-topics strong { font-weight: 600; }
+  .chiu-comp-unique { display: inline-block; font-family: var(--font-mono); font-size: 9px; background: var(--c-agency-bg); color: var(--c-agency); padding: 2px 7px; border-radius: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; }
+
+  /* Critique box */
+  .critique-box { background: var(--c-career-bg); border-left: 3px solid var(--c-career); padding: 18px 22px; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-top: 16px; }
+  .critique-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-career); margin-bottom: 8px; font-weight: 600; }
+  .critique-body { font-size: 13.5px; line-height: 1.6; color: var(--text); }
+  .critique-body p { margin-bottom: 8px; }
+  .critique-body p:last-child { margin-bottom: 0; }
+
+  /* L&M questions */
+  .questions-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 12px; }
+  .question-block { background: var(--bg-subtle); border-radius: var(--radius-md); overflow: hidden; border-left: 3px solid var(--accent); }
+  .question-header { background: var(--bg-accent); padding: 14px 18px; display: flex; align-items: baseline; gap: 14px; justify-content: space-between; }
+  .question-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--text); letter-spacing: -0.005em; }
+  .question-count { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 600; }
+  .question-comps { list-style: none; padding: 0; margin: 0; }
+  .question-comps li { padding: 10px 18px; font-size: 13px; line-height: 1.45; color: var(--text); border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+  .question-comps li:last-child { border-bottom: none; }
+  .question-comp-num { font-family: var(--font-mono); font-size: 11px; color: var(--accent); font-weight: 600; min-width: 28px; padding-top: 2px; }
+  .question-comp-name { font-weight: 500; color: var(--text); }
+
+  /* Generic helpers */
+  .dual-block { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 16px; }
+  .dual-side { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 20px 24px; }
+  .dual-side-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 4px; }
+  .dual-side-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 14px; letter-spacing: -0.005em; }
+  .dual-side-count { display: inline-block; font-family: var(--font-mono); font-size: 11px; background: var(--bg-elevated); padding: 2px 8px; border-radius: 3px; color: var(--accent); margin-left: 8px; font-weight: 500; vertical-align: 3px; }
+
+  .core-values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .core-value-card { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: var(--radius-md); padding: 20px 22px; }
+  .core-value-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+  .core-value-name { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--accent-text); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .core-value-desc { font-size: 13px; color: var(--accent-text); line-height: 1.55; }
+  .modes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+  .mode-card { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 18px 20px; text-align: center; border-top: 3px solid var(--accent); }
+  .mode-name { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .practices-list { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
+  .practice-card { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 16px 18px; border-left: 3px solid var(--accent); }
+  .practice-header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+  .practice-num { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-right: 6px; }
+  .practice-name { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; }
+
+  .dimensions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 12px; }
+  .dimension-card { background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-md); border-left: 3px solid var(--accent); }
+  .dimension-num { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); font-weight: 600; margin-bottom: 4px; }
+  .dimension-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .dimension-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  .domain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .domain-card { background: var(--bg-subtle); border-radius: var(--radius-md); padding: 18px 20px; border-left: 3px solid var(--accent); }
+  .domain-num { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 4px; }
+  .domain-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 6px; letter-spacing: -0.005em; }
+  .domain-count { display: inline-block; font-family: var(--font-mono); font-size: 10px; background: var(--bg-elevated); padding: 2px 8px; border-radius: 3px; color: var(--accent); font-weight: 500; margin-bottom: 10px; }
+  .domain-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  .callout { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 20px 24px; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-top: 32px; }
+  .callout-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .callout-body { font-size: 14px; line-height: 1.65; color: var(--accent-text); }
+
+  .link-row { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; gap: 12px; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 13px; font-weight: 500; color: var(--text); text-decoration: none; transition: background 0.15s, border-color 0.15s; }
+  .link-btn:hover { background: var(--bg-subtle); border-color: var(--border-strong); }
+  .link-btn svg { width: 14px; height: 14px; }
+
+  .comp-intro { margin-bottom: 40px; }
+  .comp-intro p { font-size: 16px; line-height: 1.7; color: var(--text-muted); max-width: 720px; }
+  .progress-track { background: var(--bg-subtle); border-radius: var(--radius-sm); height: 6px; overflow: hidden; margin: 16px 0 8px; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: var(--radius-sm); transition: width 0.3s; }
+  .progress-text { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; }
+
+  .compare-section { margin-bottom: 64px; }
+  .compare-section-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .compare-section-title { font-family: var(--font-display); font-size: 26px; font-weight: 500; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; line-height: 1.2; }
+  .compare-section-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 680px; }
+
+  .compare-wrapper { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-elevated); }
+  .compare-scroll { overflow-x: auto; }
+  .compare-table { width: 100%; border-collapse: collapse; min-width: 2500px; }
+  .compare-table th, .compare-table td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .compare-table thead th { background: var(--bg-subtle); font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: -0.005em; position: sticky; top: 0; border-bottom: 1px solid var(--border-strong); border-right: 1px solid var(--border); }
+  .compare-table thead th:last-child { border-right: none; }
+  .compare-table thead th:first-child { background: var(--bg-subtle); width: 180px; }
+  .compare-table tbody tr:last-child td { border-bottom: none; }
+  .compare-table tbody td { font-size: 13px; line-height: 1.5; color: var(--text); border-right: 1px solid var(--border); }
+  .compare-table tbody td:last-child { border-right: none; }
+  .compare-table tbody td:first-child { background: var(--bg-subtle); font-weight: 600; color: var(--text); width: 180px; }
+  .compare-table thead th .col-meta { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  .competency-map { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .map-column { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; }
+  .map-column-header { background: var(--bg-subtle); padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .map-column-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; line-height: 1.25; }
+  .map-column-subtitle { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; }
+  .map-column-count { font-family: var(--font-mono); font-size: 10px; color: var(--accent); font-weight: 600; margin-top: 6px; }
+  .map-list { list-style: none; padding: 0; margin: 0; flex: 1; }
+  .map-list li { padding: 9px 14px; font-size: 12.5px; line-height: 1.45; color: var(--text); border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-start; }
+  .map-list li:last-child { border-bottom: none; }
+  .map-list-num { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); font-weight: 600; min-width: 20px; padding-top: 2px; }
+  .map-list-name { font-weight: 500; color: var(--text); }
+  .map-list-note { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+  .map-tag { display: inline-block; font-family: var(--font-mono); font-size: 9px; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-left: 4px; vertical-align: 1px; }
+  .map-tag-unique { background: var(--c-agency-bg); color: var(--c-agency); }
+  .map-tag-shared { background: var(--c-device-bg); color: var(--c-device); }
+
+  .progression-grid { display: flex; flex-direction: column; gap: 16px; }
+  .progression-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; }
+  .progression-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 16px; flex-wrap: wrap; }
+  .progression-name { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.005em; }
+  .progression-source { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+  .progression-tag { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .tag-has-levels { background: var(--c-device-bg); color: var(--c-device); }
+  .tag-no-levels { background: var(--c-career-bg); color: var(--c-career); }
+  .tag-lifestage { background: var(--c-agency-bg); color: var(--c-agency); }
+  .tag-parallel { background: var(--c-ethics-bg); color: var(--c-ethics); }
+  .tag-concentric { background: var(--c-problem-bg); color: var(--c-problem); }
+  .tag-career { background: var(--c-pedagogy-bg); color: var(--c-pedagogy); }
+  .tag-cefr { background: var(--c-affective-bg); color: var(--c-affective); }
+  .progression-body { font-size: 14px; line-height: 1.6; color: var(--text); }
+  .progression-levels { display: flex; gap: 4px; margin-top: 14px; }
+  .progression-level { flex: 1; background: var(--bg-subtle); border-radius: var(--radius-sm); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 6px; text-align: center; min-height: 48px; }
+  .progression-level-name { font-size: 11px; font-weight: 600; color: var(--text); line-height: 1.2; }
+  .progression-level-num { font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .progression-empty { background: var(--bg-subtle); border-radius: var(--radius-sm); padding: 14px 18px; margin-top: 14px; font-size: 13px; color: var(--text-muted); text-align: center; font-style: italic; }
+
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .insight-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px 22px; }
+  .insight-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 10px; }
+  .insight-title { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+  .insight-list { list-style: none; padding: 0; margin: 0; }
+  .insight-list li { font-size: 13px; line-height: 1.55; color: var(--text); padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .insight-list li:last-child { border-bottom: none; }
+  .insight-list li strong { font-weight: 600; }
+
+  .family-box { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: var(--radius-md); padding: 24px 26px; margin-top: 24px; }
+  .family-box-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+  .family-box-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--accent-text); margin-bottom: 12px; letter-spacing: -0.01em; }
+  .family-box-body { font-size: 14px; line-height: 1.65; color: var(--accent-text); }
+  .family-box-body p { margin-bottom: 10px; }
+  .family-box-body p:last-child { margin-bottom: 0; }
+
+  .lineages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; margin-bottom: 16px; }
+  .lineage-card { background: var(--bg-elevated); border: 1px solid var(--accent); border-radius: var(--radius-md); padding: 18px 20px; }
+  .lineage-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+  .lineage-title { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 12px; letter-spacing: -0.005em; }
+  .lineage-chain { font-size: 13px; line-height: 1.7; color: var(--text); font-family: var(--font-mono); }
+  .lineage-chain strong { color: var(--accent); font-weight: 600; }
+
+  .site-footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px; background: var(--bg-elevated); }
+  .footer-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; }
+  .footer-block h4 { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 10px; font-weight: 600; }
+  .footer-block p { font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 400px; }
+  .footer-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); letter-spacing: 0.05em; }
+
+  @media (max-width: 720px) {
+    .ficha { padding: 28px 24px; }
+    .ficha h2 { font-size: 26px; }
+    .insight-grid { grid-template-columns: 1fr; }
+    .domain-grid, .core-values-grid, .lit-comp-grid, .lineages-grid { grid-template-columns: 1fr; }
+    .modes-grid, .career-timeline { grid-template-columns: 1fr; }
+    .cefr-levels { grid-template-columns: repeat(2, 1fr); }
+    .arch-diagram { grid-template-columns: 1fr; }
+    .bloom-mapping { grid-template-columns: 1fr; }
+    .hero { padding: 48px 0 40px; }
+    .hero-meta { gap: 20px; }
+  }
+
+  @media print {
+    .site-header, .tab-nav, .link-row, .site-footer, .framework-grid { display: none; }
+    .panel { display: block !important; padding: 0; }
+    .ficha { border: none; padding: 0; display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="#" class="brand">Marco IA 2030 <span style="color: var(--text-faint); font-weight: 400;">· Benchmark</span></a>
+    <span class="brand-meta">FIMPES-Santander 2026</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Documento de trabajo · v1.1 · Benchmark completo</div>
+    <h1>Once marcos internacionales de competencias en IA, <em>comparados</em> para informar el Marco Mexicano de Competencias en IA para Educación Superior.</h1>
+    <p class="hero-lead">
+      Este benchmark sintetiza los marcos fundacionales, institucionales y académicos que están dando forma a la conversación global sobre alfabetización en inteligencia artificial. Su propósito es informar el diseño del Marco Mexicano que se construye en alianza entre la Universidad Anáhuac México y la UNAM, Facultad de Química.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Marcos analizados</span>
+        <span class="hero-meta-value">11 de 11 · completo</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Última actualización</span>
+        <span class="hero-meta-value" id="last-update">—</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Categorías</span>
+        <span class="hero-meta-value">Fundacionales · Institucionales · Académicos</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="tab-nav" role="tablist">
+  <div class="tab-nav-inner">
+    <button class="tab" role="tab" aria-selected="true" data-tab="fichas" onclick="switchTab('fichas')">Fichas por marco</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="comparativa" onclick="switchTab('comparativa')">Vista comparativa</button>
+  </div>
+</nav>
+
+<main class="panel" aria-current="true" data-panel="fichas">
+  <div class="container">
+    <p class="section-label">Once marcos · ordenados cronológicamente</p>
+    <div class="framework-grid">
+      <button class="framework-card" aria-pressed="true" onclick="showFicha('digcompedu', this)">
+        <div class="fc-header"><span class="fc-title">DigCompEdu (Redecker)</span><span class="fc-badge badge-loaded">2017</span></div>
+        <span class="fc-meta">JRC · CE · Educadores incluyendo HE</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('long-magerko', this)">
+        <div class="fc-header"><span class="fc-title">Long & Magerko</span><span class="fc-badge badge-foundational">2020</span></div>
+        <span class="fc-meta">CHI · Definición seminal AI literacy</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('digcomp', this)">
+        <div class="fc-header"><span class="fc-title">DigComp 2.2 / 3.0</span><span class="fc-badge badge-loaded">2022 / 2025</span></div>
+        <span class="fc-meta">JRC · CE · 5 ediciones</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('unesco-cft', this)">
+        <div class="fc-header"><span class="fc-title">UNESCO AI CFT</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">Competencias para docentes</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('unesco-cfs', this)">
+        <div class="fc-header"><span class="fc-title">UNESCO AI CFS</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">Competencias para estudiantes</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('digital-promise', this)">
+        <div class="fc-header"><span class="fc-title">Digital Promise (Mills, Ruiz et al.)</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">K-12 · EUA · Operativo</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('chiu', this)">
+        <div class="fc-header"><span class="fc-title">Chiu et al.</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">Literacy vs competency · CAEO</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('ailit', this)">
+        <div class="fc-header"><span class="fc-title">AILit Framework (OECD-EC)</span><span class="fc-badge badge-loaded">2025</span></div>
+        <span class="fc-meta">OECD + EC · Base para PISA 2029</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('chee', this)">
+        <div class="fc-header"><span class="fc-title">Chee, Ahn & Lee</span><span class="fc-badge badge-loaded">2025</span></div>
+        <span class="fc-meta">PRISMA · BJET</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('dol', this)">
+        <div class="fc-header"><span class="fc-title">US DOL AI Literacy Framework</span><span class="fc-badge badge-loaded">2026</span></div>
+        <span class="fc-meta">TEN 07-25 · Feb 2026</span>
+      </button>
+      <button class="framework-card" aria-pressed="false" onclick="showFicha('yoon', this)">
+        <div class="fc-header"><span class="fc-title">Yoon, Ryu, Kim & Kim</span><span class="fc-badge badge-loaded">2026</span></div>
+        <span class="fc-meta">Etapas de carrera docente · Corea</span>
+      </button>
+    </div>
+
+    <!-- FICHA LONG & MAGERKO -->
+    <article class="ficha" id="ficha-long-magerko" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco académico fundacional · Definición seminal del campo</div>
+        <h2>Long & Magerko (2020)</h2>
+        <p class="ficha-citation">Long, D. y Magerko, B. (2020). What is AI Literacy? Competencies and Design Considerations. <em>Proceedings of the 2020 CHI Conference</em>. ACM Paper 598. DOI: 10.1145/3313831.3376727</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Tipo</div><div class="meta-value">Paper académico · scoping review</div></div>
+        <div class="meta-cell"><div class="meta-label">Origen</div><div class="meta-value">Georgia Tech · Comunidad HCI</div></div>
+        <div class="meta-cell"><div class="meta-label">Base</div><div class="meta-value">150 documentos revisados</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">5 preguntas · 17 competencias · 15 DC</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">Sin progresión interna</div></div>
+        <div class="meta-cell"><div class="meta-label">Función histórica</div><div class="meta-value">Definición canónica de AI literacy</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">Posicionamiento estratégico</h3>
+        <div class="section-body">
+          <p>El paper <strong>fundacional del campo</strong>. Los demás marcos citan explícitamente a Long & Magerko. Publicado <strong>antes de ChatGPT</strong>.</p>
+          <blockquote>"AI literacy [is] a set of competencies that enables individuals to critically evaluate AI technologies; communicate and collaborate effectively with AI; and use AI as a tool online, at home, and in the workplace."</blockquote>
+        </div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">5 preguntas, 17 competencias</h3>
+        <div class="questions-grid">
+          <div class="question-block">
+            <div class="question-header"><div class="question-title">¿Qué es la IA?</div><div class="question-count">4 comp.</div></div>
+            <ul class="question-comps"><li><span class="question-comp-num">C1-C4</span><div><span class="question-comp-name">Recognizing AI, Understanding Intelligence, Interdisciplinarity, General vs Narrow</span></div></li></ul>
+          </div>
+          <div class="question-block">
+            <div class="question-header"><div class="question-title">¿Qué puede hacer?</div><div class="question-count">2 comp.</div></div>
+            <ul class="question-comps"><li><span class="question-comp-num">C5-C6</span><div><span class="question-comp-name">Strengths & Weaknesses, Imagine Future AI</span></div></li></ul>
+          </div>
+          <div class="question-block">
+            <div class="question-header"><div class="question-title">¿Cómo funciona?</div><div class="question-count">9 comp.</div></div>
+            <ul class="question-comps"><li><span class="question-comp-num">C7-C15</span><div><span class="question-comp-name">Representations, Decision-Making, ML Steps, Human Role, Data Literacy, Learning from Data, Critically Interpreting Data, Action & Reaction, Sensors</span></div></li></ul>
+          </div>
+          <div class="question-block">
+            <div class="question-header"><div class="question-title">¿Cómo usar?</div><div class="question-count">1 comp.</div></div>
+            <ul class="question-comps"><li><span class="question-comp-num">C16</span><div><span class="question-comp-name">Ethics</span></div></li></ul>
+          </div>
+          <div class="question-block">
+            <div class="question-header"><div class="question-title">¿Cómo se percibe?</div><div class="question-count">1 comp.</div></div>
+            <ul class="question-comps"><li><span class="question-comp-num">C17</span><div><span class="question-comp-name">Programmability</span></div></li></ul>
+          </div>
+        </div>
+      </div>
+      <aside class="callout">
+        <div class="callout-label">Nota para el marco mexicano</div>
+        <div class="callout-body">Posicionarse explícitamente respecto a Long & Magerko. Incorporar "Recognizing AI" como competencia explícita en nivel Receptor.</div>
+      </aside>
+    </article>
+
+    <!-- FICHA CHEE -->
+    <article class="ficha" id="ficha-chee" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco académico · Revisión sistemática</div>
+        <h2>Chee, Ahn & Lee (2025)</h2>
+        <p class="ficha-citation">A Competency Framework for AI Literacy. <em>BJET</em>, 56, 2146–2182.</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Tipo</div><div class="meta-value">PRISMA · 29 estudios</div></div>
+        <div class="meta-cell"><div class="meta-label">Origen</div><div class="meta-value">Académico · Corea del Sur</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">8 competencias · 18 sub-comp.</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">Etapa de vida</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">Las ocho competencias</h3>
+        <div class="comp-list">
+          <div class="comp-row"><div class="comp-num">1</div><div class="comp-content"><div class="comp-name">Device & software operations</div></div></div>
+          <div class="comp-row"><div class="comp-num">2</div><div class="comp-content"><div class="comp-name">Data and algorithm literacy</div></div></div>
+          <div class="comp-row"><div class="comp-num">3</div><div class="comp-content"><div class="comp-name">Problem solving</div></div></div>
+          <div class="comp-row"><div class="comp-num">4</div><div class="comp-content"><div class="comp-name">Communication and collaboration</div></div></div>
+          <div class="comp-row"><div class="comp-num">5</div><div class="comp-content"><div class="comp-name">AI ethics</div></div></div>
+          <div class="comp-row"><div class="comp-num">6</div><div class="comp-content"><div class="comp-name">Career-related</div></div></div>
+          <div class="comp-row"><div class="comp-num">7</div><div class="comp-content"><div class="comp-name">AI content creation</div></div></div>
+          <div class="comp-row"><div class="comp-num">8</div><div class="comp-content"><div class="comp-name">Affective competences</div><div class="comp-desc">Único en el benchmark.</div></div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- FICHA DOL -->
+    <article class="ficha" id="ficha-dol" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco institucional · Política pública</div>
+        <h2>U.S. Department of Labor (2026)</h2>
+        <p class="ficha-citation">TEN 07-25, ETA, U.S. DOL, 13 de febrero de 2026.</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Audiencia</div><div class="meta-value">Workforce system</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">5 áreas + 7 principios</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">Plano</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">Estructura qué + cómo</h3>
+        <div class="dual-block">
+          <div class="dual-side"><div class="dual-side-label">Qué se enseña</div><div class="dual-side-title">Áreas<span class="dual-side-count">5</span></div><div class="comp-list"><div class="comp-row"><div class="comp-num">1-5</div><div class="comp-content"><div class="comp-name">Understand Principles, Explore Uses, Direct AI, Evaluate Outputs, Use Responsibly</div></div></div></div></div>
+          <div class="dual-side"><div class="dual-side-label">Cómo se enseña</div><div class="dual-side-title">Principios<span class="dual-side-count">7</span></div><div class="comp-list"><div class="comp-row"><div class="comp-num">1-7</div><div class="comp-content"><div class="comp-name">Experiential, Context, Complementary Skills, Prerequisites, Pathways, Enabling Roles, Agility</div></div></div></div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- FICHA UNESCO CFT -->
+    <article class="ficha" id="ficha-unesco-cft" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco institucional · Referencia global</div>
+        <h2>UNESCO AI CFT (2024)</h2>
+        <p class="ficha-citation">Miao, F. y Cukurova, M. (2024). UNESCO.</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Audiencia</div><div class="meta-value">Docentes y gobiernos</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">5 × 3 = 15 bloques</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">3 niveles no jerárquicos</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">Matriz 5 × 3</h3>
+        <div class="matrix-wrapper"><div class="matrix-scroll">
+          <table class="matrix-table">
+            <thead><tr><th>Aspecto</th><th>Acquire</th><th>Deepen</th><th>Create</th></tr></thead>
+            <tbody>
+              <tr><td>1. Human-centred</td><td>Human agency</td><td>Human accountability</td><td>Social responsibility</td></tr>
+              <tr><td>2. Ethics of AI</td><td>Principles</td><td>Safe use</td><td>Co-creating rules</td></tr>
+              <tr><td>3. AI foundations</td><td>Techniques</td><td>Application skills</td><td>Creating with AI</td></tr>
+              <tr><td>4. AI pedagogy</td><td>AI-assisted teaching</td><td>Integration</td><td>Transformation</td></tr>
+              <tr><td>5. AI for prof. dev.</td><td>Lifelong learning</td><td>Organizational</td><td>Transformation</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+    </article>
+
+    <!-- FICHA UNESCO CFS -->
+    <article class="ficha" id="ficha-unesco-cfs" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco institucional · Estudiantes</div>
+        <h2>UNESCO AI CFS (2024)</h2>
+        <p class="ficha-citation">Miao, F. y Cukurova, M. (2024). UNESCO.</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Audiencia</div><div class="meta-value">Estudiantes K-12</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">4 × 3 = 12 bloques</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">3 niveles (U-A-C)</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">Matriz 4 × 3</h3>
+        <div class="matrix-wrapper"><div class="matrix-scroll">
+          <table class="matrix-table">
+            <thead><tr><th>Aspecto</th><th>Understand</th><th>Apply</th><th>Create</th></tr></thead>
+            <tbody>
+              <tr><td>1. Human-centred</td><td>Human agency</td><td>Accountability</td><td>Citizenship</td></tr>
+              <tr><td>2. Ethics</td><td>Embodied</td><td>Safe use</td><td>Ethics by design</td></tr>
+              <tr><td>3. AI techniques</td><td>Foundations</td><td>Application</td><td>Creating tools</td></tr>
+              <tr><td>4. System design</td><td>Problem scoping</td><td>Architecture</td><td>Iteration</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+    </article>
+
+    <!-- FICHA DIGCOMP -->
+    <article class="ficha" id="ficha-digcomp" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco fundacional · Comisión Europea</div>
+        <h2>DigComp 2.2 / 3.0</h2>
+        <p class="ficha-citation">Vuorikari et al. (2022) · Cosgrove & Cachia (2025). JRC.</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Tipo</div><div class="meta-value">Política vinculante UE</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">5 áreas · 21 competencias</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">8 → 4 niveles</div></div>
+        <div class="meta-cell"><div class="meta-label">Adopción</div><div class="meta-value">14+ países</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">5 dimensiones</h3>
+        <div class="dimensions-grid">
+          <div class="dimension-card"><div class="dimension-num">D1</div><div class="dimension-title">Áreas</div><div class="dimension-desc">5 áreas.</div></div>
+          <div class="dimension-card"><div class="dimension-num">D2</div><div class="dimension-title">Competencias</div><div class="dimension-desc">21 competencias.</div></div>
+          <div class="dimension-card"><div class="dimension-num">D3</div><div class="dimension-title">Niveles</div><div class="dimension-desc">8 → 4.</div></div>
+          <div class="dimension-card"><div class="dimension-num">D4</div><div class="dimension-title">K-S-A</div><div class="dimension-desc">K-S-A.</div></div>
+          <div class="dimension-card"><div class="dimension-num">D5</div><div class="dimension-title">Casos</div><div class="dimension-desc">Empleo, vida.</div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- FICHA AILIT -->
+    <article class="ficha" id="ficha-ailit" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco institucional · Base para PISA 2029</div>
+        <h2>AILit Framework (OECD-EC, 2025)</h2>
+        <p class="ficha-citation">OECD (2025). Review Draft. CC-BY-SA 4.0</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Audiencia</div><div class="meta-value">K-12</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">4 dominios · 22 comp.</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">Modos paralelos</div></div>
+        <div class="meta-cell"><div class="meta-label">Anclaje</div><div class="meta-value">EU AI Act · PISA 2029</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">4 dominios</h3>
+        <div class="domain-grid">
+          <div class="domain-card"><div class="domain-num">D1</div><div class="domain-title">Engaging with AI</div><div class="domain-count">7 comp.</div><div class="domain-desc">Consumidor crítico.</div></div>
+          <div class="domain-card"><div class="domain-num">D2</div><div class="domain-title">Creating with AI</div><div class="domain-count">5 comp.</div><div class="domain-desc">Colaborador.</div></div>
+          <div class="domain-card"><div class="domain-num">D3</div><div class="domain-title">Managing AI</div><div class="domain-count">5 comp.</div><div class="domain-desc">Orquestador.</div></div>
+          <div class="domain-card"><div class="domain-num">D4</div><div class="domain-title">Designing AI</div><div class="domain-count">5 comp.</div><div class="domain-desc">Co-diseñador.</div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- FICHA DIGITAL PROMISE -->
+    <article class="ficha" id="ficha-digital-promise" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco institucional · K-12 · Operativo</div>
+        <h2>Digital Promise (Mills, Ruiz et al., 2024)</h2>
+        <p class="ficha-citation">Digital Promise. DOI: 10.51388/20.500.12265/218</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Tipo</div><div class="meta-value">Marco operativo</div></div>
+        <div class="meta-cell"><div class="meta-label">Audiencia</div><div class="meta-value">Líderes K-12</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">2+3+6+3 concéntrica</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">2 Core Values</h3>
+        <div class="core-values-grid">
+          <div class="core-value-card"><div class="core-value-label">Core Value 1</div><div class="core-value-name">Human Judgment</div><div class="core-value-desc">El juicio humano central.</div></div>
+          <div class="core-value-card"><div class="core-value-label">Core Value 2</div><div class="core-value-name">Centering Justice</div><div class="core-value-desc">Justicia en el centro.</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">3 Modes + 6 Practices + 3 Types</h3>
+        <div class="modes-grid">
+          <div class="mode-card"><div class="mode-name">Understand</div></div>
+          <div class="mode-card"><div class="mode-name">Evaluate</div></div>
+          <div class="mode-card"><div class="mode-name">Use</div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- FICHA CHIU ET AL. -->
+    <article class="ficha" id="ficha-chiu" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco académico · Literacy vs Competency</div>
+        <h2>Chiu, Ahmad, Ismailov & Sanusi (2024)</h2>
+        <p class="ficha-citation">What are AI literacy and competency? <em>Computers and Education Open</em>, 6, 100171.</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Tipo</div><div class="meta-value">Co-design empírico</div></div>
+        <div class="meta-cell"><div class="meta-label">Audiencia</div><div class="meta-value">K-12 middle school</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">5 componentes · 5 experiencias</div></div>
+        <div class="meta-cell"><div class="meta-label">Contribución</div><div class="meta-value">Distinción Literacy vs Competency</div></div>
+      </div>
+      <div class="critique-box">
+        <div class="critique-label">Crítica explícita a Long & Magerko</div>
+        <div class="critique-body"><p>Chiu et al. son explícitos: la definición de LM fue desarrollada desde perspectiva de ingeniería, mezcla literacy/competency, y no incorpora self-reflective mindsets. Primera crítica académica seria al ancestro del campo.</p></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">Definiciones revisadas</h3>
+        <div class="lit-comp-grid">
+          <div class="lit-comp-card"><div class="lit-comp-label">Def. 1</div><div class="lit-comp-name">AI Literacy</div><div class="lit-comp-focus">Focuses on knowing</div><div class="lit-comp-desc">"Individual's <strong>ability</strong> to clearly explain how AI works and impact society."</div></div>
+          <div class="lit-comp-card"><div class="lit-comp-label">Def. 2</div><div class="lit-comp-name">AI Competency</div><div class="lit-comp-focus">Focuses on how well</div><div class="lit-comp-desc">"Individual's <strong>confidence and ability</strong>, with capacity to <strong>self-reflect</strong>."</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">5 componentes</h3>
+        <div class="chiu-comp-grid">
+          <div class="chiu-comp-card"><div class="chiu-comp-num">C1</div><div class="chiu-comp-name">Technology</div></div>
+          <div class="chiu-comp-card"><div class="chiu-comp-num">C2</div><div class="chiu-comp-name">Impact</div></div>
+          <div class="chiu-comp-card"><div class="chiu-comp-num">C3</div><div class="chiu-comp-name">Ethics</div></div>
+          <div class="chiu-comp-card"><div class="chiu-comp-num">C4</div><div class="chiu-comp-name">Collaboration</div></div>
+          <div class="chiu-comp-card"><div class="chiu-comp-num">C5</div><div class="chiu-comp-name">Self-reflection</div><div class="chiu-comp-unique">Único como componente</div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- FICHA YOON ET AL. -->
+    <article class="ficha" id="ficha-yoon" data-active="false">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco académico-aplicado · Etapas de carrera docente</div>
+        <h2>Yoon, Ryu, Kim & Kim (2026)</h2>
+        <p class="ficha-citation">What AI-digital competencies should teachers develop throughout their careers? <em>Frontiers in Education</em>, 11:1745059.</p>
+      </header>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Tipo</div><div class="meta-value">Académico-aplicado · Delphi cuantitativo</div></div>
+        <div class="meta-cell"><div class="meta-label">Audiencia</div><div class="meta-value">In-service teachers · Corea</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">3 dim · 8 cat · 17 comp · 51 indicadores</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">4 etapas de carrera docente</div></div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">4 etapas de carrera docente</h3>
+        <div class="career-timeline">
+          <div class="career-stage-card"><div class="career-stage-num">E1</div><div class="career-stage-name">Induction</div><div class="career-stage-years">0-5 años</div><div class="career-stage-section"><div class="career-stage-label">Prioridades</div><div class="career-stage-content">Foundational knowledge + digital ethics.</div></div></div>
+          <div class="career-stage-card"><div class="career-stage-num">E2</div><div class="career-stage-name">Development</div><div class="career-stage-years">5-15 años</div><div class="career-stage-section"><div class="career-stage-label">Prioridades</div><div class="career-stage-content">Personalized learning, data analytics.</div></div></div>
+          <div class="career-stage-card"><div class="career-stage-num">E3</div><div class="career-stage-name">Mastery</div><div class="career-stage-years">15-25 años</div><div class="career-stage-section"><div class="career-stage-label">Prioridades</div><div class="career-stage-content">Real-time feedback, adaptive instruction.</div></div></div>
+          <div class="career-stage-card"><div class="career-stage-num">E4</div><div class="career-stage-name">Leadership</div><div class="career-stage-years">25+ años</div><div class="career-stage-section"><div class="career-stage-label">Prioridades</div><div class="career-stage-content">Ethical AI use, distributed leadership.</div></div></div>
+        </div>
+      </div>
+      <div class="section">
+        <h3 class="section-heading">3 dimensiones Bloom-based</h3>
+        <div class="bloom-dimensions">
+          <div class="bloom-dim"><div class="bloom-dim-num">D1</div><div class="bloom-dim-body"><div class="bloom-dim-name">Understand AI-Digital Technologies</div><div class="bloom-dim-categories"><strong>3 categorías:</strong> Foundational · Contextual · Ethical Awareness</div></div></div>
+          <div class="bloom-dim"><div class="bloom-dim-num">D2</div><div class="bloom-dim-body"><div class="bloom-dim-name">Apply and Analyze AI-Digital Teaching Practices</div><div class="bloom-dim-categories"><strong>3 categorías:</strong> Design · Implementation · Assessment</div></div></div>
+          <div class="bloom-dim"><div class="bloom-dim-num">D3</div><div class="bloom-dim-body"><div class="bloom-dim-name">Evaluate and Create Professional Growth</div><div class="bloom-dim-categories"><strong>2 categorías:</strong> Reflective Practices · Ethical Responsibilities</div></div></div>
+        </div>
+      </div>
+      <div class="findings-box">
+        <div class="findings-label">Hallazgo empírico clave</div>
+        <div class="findings-title">9 de 17 competencias con diferencias significativas entre etapas (ANOVA p&lt;0.05)</div>
+        <div class="findings-body"><p><strong>Leadership-stage teachers valoran significativamente más bajo</strong> muchas competencias de aplicación práctica. Contradice asunción de "más experiencia = más competencia". Sugiere desarrollo no lineal.</p></div>
+      </div>
+    </article>
+
+    <!-- FICHA DIGCOMPEDU -->
+    <article class="ficha" id="ficha-digcompedu" data-active="true">
+      <header class="ficha-header">
+        <div class="ficha-eyebrow">Marco institucional · Educadores incluyendo educación superior · Cierra el benchmark</div>
+        <h2>DigCompEdu (Redecker, 2017)</h2>
+        <p class="ficha-citation">Redecker, C. (2017). European Framework for the Digital Competence of Educators: DigCompEdu. Punie, Y. (ed). EUR 28775 EN. Publications Office of the European Union, Luxembourg. ISBN 978-92-79-73494-6, DOI: 10.2760/159770, JRC107466</p>
+      </header>
+
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-label">Tipo</div><div class="meta-value">Marco institucional · JRC Science for Policy Report</div></div>
+        <div class="meta-cell"><div class="meta-label">Origen</div><div class="meta-value">Joint Research Centre · Comisión Europea</div></div>
+        <div class="meta-cell"><div class="meta-label">Audiencia primaria</div><div class="meta-value">Educadores en todos los niveles · incluye educación superior</div></div>
+        <div class="meta-cell"><div class="meta-label">Estructura</div><div class="meta-value">6 áreas · 22 competencias elementales</div></div>
+        <div class="meta-cell"><div class="meta-label">Progresión</div><div class="meta-value">6 niveles CEFR-inspired (A1-C2)</div></div>
+        <div class="meta-cell"><div class="meta-label">Función</div><div class="meta-value">Marco de desarrollo profesional (no evaluativo)</div></div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Posicionamiento estratégico</h3>
+        <div class="section-body">
+          <p>DigCompEdu es <strong>el marco europeo más relevante para el marco mexicano</strong> por cuatro razones simultáneas:</p>
+          <p><strong>(1) Audiencia exacta:</strong> es el único marco del benchmark dirigido específicamente a docentes incluyendo educación superior. <em>"DigCompEdu is directed towards educators at all levels of education, from early childhood to higher and adult education, including general and vocational education and training, special needs education, and non-formal learning contexts."</em> Higher education está nombrada explícitamente.</p>
+          <p><strong>(2) Cierra la familia JRC:</strong> es la pareja conceptual de DigComp para educadores. La familia europea queda completa: DigComp (ciudadanos) + DigCompEdu (educadores).</p>
+          <p><strong>(3) Ancestro del linaje europeo de competencia digital docente.</strong> Yoon et al. (2026) lo cita explícitamente. Base de SELFIE for Teachers (Comisión Europea, 2021) y de múltiples instrumentos nacionales europeos de autoevaluación.</p>
+          <p><strong>(4) Sin AI explícita.</strong> Publicado en 2017, <strong>cinco años antes de ChatGPT</strong>. Trata "competencia digital" en sentido amplio, no AI literacy. Pero su arquitectura es genérica y adaptable.</p>
+        </div>
+      </div>
+
+      <div class="philosophy-box">
+        <div class="philosophy-label">Filosofía declarativa del marco</div>
+        <div class="philosophy-title">Marco de desarrollo profesional, NO de evaluación punitiva</div>
+        <div class="philosophy-body">
+          <blockquote>"The main objective of the proposed DigCompEdu progression model is to support continuous professional development. It is not intended as a normative framework or as a tool for performance appraisal."</blockquote>
+          <p>Esta declaración explícita lo distingue del DOL (regulatorio) o UNESCO CFT (referencia normativa global). <strong>El marco existe para que educadores identifiquen dónde están, qué han logrado, y qué pasos seguir</strong>. Los proficiency statements están diseñados para "celebrar logros y motivar el desarrollo" — no para evaluar desempeño.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Arquitectura — núcleo pedagógico + dos envolventes</h3>
+        <div class="section-body">
+          <p>DigCompEdu tiene una arquitectura conceptual sofisticada: las áreas 2-5 forman el <strong>núcleo pedagógico</strong>; las áreas 1 y 6 son envolventes complementarias.</p>
+        </div>
+        <div class="arch-diagram">
+          <div class="arch-block">
+            <div class="arch-label">Envolvente profesional</div>
+            <div class="arch-title">Área 1</div>
+            <div class="arch-list">Professional Engagement — cómo el docente opera profesionalmente con tecnología.</div>
+          </div>
+          <div class="arch-block core">
+            <div class="arch-label">Núcleo pedagógico</div>
+            <div class="arch-title">Áreas 2-5</div>
+            <div class="arch-list">Digital Resources · Teaching and Learning · Assessment · Empowering Learners. <strong>Competencia digital pedagógica del docente.</strong> Área 5 es transversal a 2-4.</div>
+          </div>
+          <div class="arch-block">
+            <div class="arch-label">Envolvente meta-pedagógica</div>
+            <div class="arch-title">Área 6</div>
+            <div class="arch-list">Facilitating Learners' DC — qué desarrolla el docente en sus estudiantes (conecta con DigComp).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Las 6 áreas y 22 competencias</h3>
+        <div class="areas-list">
+          <div class="area-card">
+            <div class="area-header"><div><span class="area-num">Área 1</span> <span class="area-name">Professional Engagement</span></div><span class="area-count">4 comp.</span></div>
+            <div class="area-desc">Comunicación, colaboración y desarrollo profesional usando tecnologías digitales.</div>
+            <div class="area-comps"><strong>1.1</strong> Organisational communication · <strong>1.2</strong> Professional collaboration · <strong>1.3</strong> Reflective practice · <strong>1.4</strong> Digital Continuous Professional Development</div>
+          </div>
+          <div class="area-card">
+            <div class="area-header"><div><span class="area-num">Área 2</span> <span class="area-name">Digital Resources</span></div><span class="area-count">3 comp.</span></div>
+            <div class="area-desc">Búsqueda, creación y compartición de recursos digitales.</div>
+            <div class="area-comps"><strong>2.1</strong> Selecting · <strong>2.2</strong> Creating and modifying · <strong>2.3</strong> Managing, protecting and sharing</div>
+          </div>
+          <div class="area-card">
+            <div class="area-header"><div><span class="area-num">Área 3</span> <span class="area-name">Teaching and Learning</span></div><span class="area-count">4 comp.</span></div>
+            <div class="area-desc">Gestionar y orquestar el uso de tecnologías digitales en enseñanza. <em>3.1 Teaching es fundacional para todo el marco.</em></div>
+            <div class="area-comps"><strong>3.1</strong> Teaching · <strong>3.2</strong> Guidance · <strong>3.3</strong> Collaborative learning · <strong>3.4</strong> Self-regulated learning</div>
+          </div>
+          <div class="area-card">
+            <div class="area-header"><div><span class="area-num">Área 4</span> <span class="area-name">Assessment</span></div><span class="area-count">3 comp.</span></div>
+            <div class="area-desc">Estrategias y tecnologías digitales para mejorar evaluación.</div>
+            <div class="area-comps"><strong>4.1</strong> Assessment strategies · <strong>4.2</strong> Analysing evidence · <strong>4.3</strong> Feedback and planning</div>
+          </div>
+          <div class="area-card">
+            <div class="area-header"><div><span class="area-num">Área 5</span> <span class="area-name">Empowering Learners</span></div><span class="area-count">3 comp.</span></div>
+            <div class="area-desc">Inclusión, personalización y engagement activo. <em>Transversal a las áreas 2-4.</em></div>
+            <div class="area-comps"><strong>5.1</strong> Accessibility and inclusion · <strong>5.2</strong> Differentiation and personalisation · <strong>5.3</strong> Actively engaging learners</div>
+          </div>
+          <div class="area-card">
+            <div class="area-header"><div><span class="area-num">Área 6</span> <span class="area-name">Facilitating Learners' Digital Competence</span></div><span class="area-count">5 comp.</span></div>
+            <div class="area-desc">Pedagogías específicas para desarrollar la competencia digital de los aprendices. <em>Conecta con DigComp.</em></div>
+            <div class="area-comps"><strong>6.1</strong> Information & media literacy · <strong>6.2</strong> Digital communication & collaboration · <strong>6.3</strong> Digital content creation · <strong>6.4</strong> Responsible use · <strong>6.5</strong> Digital problem solving</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Modelo de progresión — 6 niveles CEFR-inspired</h3>
+        <div class="section-body">
+          <p>DigCompEdu introduce un sistema único basado en el Marco Común Europeo de Referencia para Lenguas (CEFR), con etiquetas motivacionales adicionales (Newcomer → Pioneer).</p>
+        </div>
+        <div class="cefr-levels">
+          <div class="cefr-level">
+            <div class="cefr-code">A1</div>
+            <div class="cefr-label">Newcomer</div>
+            <div class="cefr-focus">Awareness</div>
+            <div class="cefr-keywords">Curiosidad, willingness</div>
+          </div>
+          <div class="cefr-level">
+            <div class="cefr-code">A2</div>
+            <div class="cefr-label">Explorer</div>
+            <div class="cefr-focus">Exploration</div>
+            <div class="cefr-keywords">Meaningful use, variation</div>
+          </div>
+          <div class="cefr-level">
+            <div class="cefr-code">B1</div>
+            <div class="cefr-label">Integrator</div>
+            <div class="cefr-focus">Integration</div>
+            <div class="cefr-keywords">Strategy, diversification</div>
+          </div>
+          <div class="cefr-level">
+            <div class="cefr-code">B2</div>
+            <div class="cefr-label">Expert</div>
+            <div class="cefr-focus">Expertise</div>
+            <div class="cefr-keywords">Reflection, sharing</div>
+          </div>
+          <div class="cefr-level">
+            <div class="cefr-code">C1</div>
+            <div class="cefr-label">Leader</div>
+            <div class="cefr-focus">Leadership</div>
+            <div class="cefr-keywords">Critique, renewal</div>
+          </div>
+          <div class="cefr-level">
+            <div class="cefr-code">C2</div>
+            <div class="cefr-label">Pioneer</div>
+            <div class="cefr-focus">Innovation</div>
+            <div class="cefr-keywords">Desarrollo de prácticas nuevas</div>
+          </div>
+        </div>
+        <div class="bloom-mapping">
+          <div class="bloom-pair"><div class="bloom-bloom">Bloom: Remember/Understand</div><div class="bloom-levels">A1 + A2</div></div>
+          <div class="bloom-pair"><div class="bloom-bloom">Bloom: Apply/Analyse</div><div class="bloom-levels">B1 + B2</div></div>
+          <div class="bloom-pair"><div class="bloom-bloom">Bloom: Evaluate/Create</div><div class="bloom-levels">C1 + C2</div></div>
+        </div>
+        <div class="section-body" style="margin-top: 14px;">
+          <p>Esta inspiración Bloom-revisada (Anderson & Krathwohl, 2001) es <strong>la misma lógica que Yoon et al. (2026)</strong> heredó para sus 3 dimensiones. DigCompEdu es el ancestro estructural.</p>
+          <p>Tres argumentos para la elección CEFR: reconocibilidad (docentes conocen niveles A1-C2 de competencias lingüísticas), coherencia europea, y aceptación de heterogeneidad — <strong>un docente puede tener C1 en un área y A2 en otra</strong>, igual que en competencias lingüísticas. Esta es una idea sofisticada que evita perfiles uniformes irreales.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Roles colaborativos por nivel — uso sofisticado de la progresión</h3>
+        <div class="section-body">
+          <blockquote>"Within a team of educators collaborating on a project, an Integrator (B1) is ideally suited to sourcing new ideas and tools, whereas the colleague at Expert (B2) level may be better at deciding how to go about implementing these; the colleague at Explorer (A2) level can best identify the possible problems learners may encounter."</blockquote>
+          <p><strong>Único en el benchmark:</strong> DigCompEdu usa los niveles para describir <em>roles complementarios en colaboración</em>, no solo competencia individual. Un equipo con niveles distintos opera mejor que uno uniformemente avanzado.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Estructura operativa de cada competencia — 4 capas</h3>
+        <div class="section-body">
+          <p>Para cada una de las 22 competencias, DigCompEdu provee:</p>
+        </div>
+        <div class="dimensions-grid">
+          <div class="dimension-card"><div class="dimension-num">Capa 1</div><div class="dimension-title">Competence descriptor</div><div class="dimension-desc">Título + descripción corta.</div></div>
+          <div class="dimension-card"><div class="dimension-num">Capa 2</div><div class="dimension-title">Activities</div><div class="dimension-desc">Lista no exhaustiva de actividades típicas.</div></div>
+          <div class="dimension-card"><div class="dimension-num">Capa 3</div><div class="dimension-title">Progression</div><div class="dimension-desc">Descripción genérica por nivel A1-C2.</div></div>
+          <div class="dimension-card"><div class="dimension-num">Capa 4</div><div class="dimension-title">Proficiency statements</div><div class="dimension-desc">Afirmaciones para autoevaluación por nivel.</div></div>
+        </div>
+        <div class="section-body" style="margin-top: 14px;">
+          <p>Cada competencia tiene: descriptor + actividades + 6 descripciones de progresión + proficiency statements. Es operativamente densa. <strong>Modelo directamente adoptable</strong> para el marco mexicano.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Validación metodológica</h3>
+        <div class="validation-block">
+          <div class="validation-stat"><div class="validation-num">100+</div><div class="validation-label">Docentes (eTwinning Athens)</div></div>
+          <div class="validation-stat"><div class="validation-num">72</div><div class="validation-label">Stakeholders online</div></div>
+          <div class="validation-stat"><div class="validation-num">DigCompEdu</div><div class="validation-label">Expert Workshop</div></div>
+          <div class="validation-stat"><div class="validation-num">ET 2020</div><div class="validation-label">DSC Working Group</div></div>
+          <div class="validation-stat"><div class="validation-num">14+</div><div class="validation-label">Países adoptantes</div></div>
+        </div>
+        <div class="section-body" style="margin-top: 14px;">
+          <p>Validación clásica institucional europea: consulta a stakeholders + workshops dedicados + expertise distribuida. Distinto a Yoon (Delphi cuantitativo) o Chiu (co-design iterativo). DigCompEdu prioriza <strong>legitimidad institucional</strong> sobre rigor estadístico.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Aportes distintivos al benchmark</h3>
+        <div class="section-body">
+          <p><strong>Audiencia única: educadores incluyendo educación superior.</strong> Único marco del benchmark dirigido específicamente a docentes que cubre explícitamente higher education. Es <em>nuestra</em> audiencia.</p>
+          <p><strong>Sistema CEFR-inspired (A1-C2).</strong> Único marco con anclaje internacional en CEFR + etiquetas motivacionales (Newcomer → Pioneer).</p>
+          <p><strong>Inspiración Bloom-revisada para la progresión.</strong> A1-A2 (Remember/Understand), B1-B2 (Apply/Analyse), C1-C2 (Evaluate/Create). Yoon (2026) hereda esta lógica.</p>
+          <p><strong>Roles colaborativos por nivel.</strong> Único marco que articula cómo niveles distintos en un equipo operan complementariamente.</p>
+          <p><strong>Marco de desarrollo declarativo (no evaluativo).</strong> Posicionamiento explícito que distingue de marcos regulatorios o de performance appraisal.</p>
+          <p><strong>Self-assessment como uso primario.</strong> Proficiency statements diseñados para autoevaluación, no para evaluación externa.</p>
+          <p><strong>Arquitectura núcleo + envolventes.</strong> Áreas 2-5 como núcleo pedagógico; Área 1 (profesional) y Área 6 (meta-pedagógica) como envolventes.</p>
+          <p><strong>Área 5 transversal.</strong> Empowering Learners como principios que aplican a áreas 2-4. Lógica conceptual sofisticada.</p>
+          <p><strong>Conexión explícita con DigComp.</strong> Área 6 mapea con las áreas de DigComp para ciudadanía. El docente desarrolla en learners lo que DigComp espera.</p>
+          <p><strong>22 competencias con 4 capas operativas.</strong> Descriptor + actividades + progresión + proficiency statements. Marco operativamente más denso del benchmark.</p>
+          <p><strong>Ancestro del linaje europeo de competencia digital docente.</strong> Base de SELFIE for Teachers y múltiples instrumentos nacionales. Citado por Yoon et al. (2026).</p>
+          <p><strong>Aceptación explícita de heterogeneidad entre áreas.</strong> Un educador puede tener niveles distintos en áreas distintas, igual que en competencias lingüísticas.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Limitaciones y omisiones</h3>
+        <div class="section-body">
+          <p><strong>Sin AI explícita.</strong> Publicado en 2017, antes de ChatGPT. Trata "competencia digital" en sentido amplio. Es la limitación más importante para nuestro propósito.</p>
+          <p><strong>Sin IA generativa.</strong> No contempla prompt engineering, AI literacy, ni riesgos específicos de modelos generativos.</p>
+          <p><strong>Sin verificación crítica de outputs como competencia explícita.</strong> No es relevante porque no contempla IA generativa.</p>
+          <p><strong>Sin estructura matricial.</strong> Las 22 competencias son elementales, no se cruzan con dominios.</p>
+          <p><strong>Sin K-S-A explícito.</strong> A diferencia de DigComp 2.2/3.0, DigCompEdu no formaliza Knowledge-Skills-Attitudes como dimensión separada.</p>
+          <p><strong>Sin ciudadanía digital como horizonte explícito.</strong> Aparece implícita en 6.4 (Responsible use).</p>
+          <p><strong>Sin sustentabilidad ambiental.</strong> No menciona impacto ecológico de tecnologías digitales.</p>
+          <p><strong>Sin competencia colectiva/organizacional.</strong> Es competencia individual del docente. DigCompOrg cubre lo organizacional.</p>
+          <p><strong>Audiencia europea.</strong> Aunque transferible, las competencias y el lenguaje reflejan el contexto educativo europeo.</p>
+          <p><strong>Algunas áreas de IA están dispersas.</strong> "Analysing evidence" (4.2) contiene lo que hoy llamaríamos learning analytics con IA, pero no se nombra así.</p>
+        </div>
+      </div>
+
+      <aside class="callout">
+        <div class="callout-label">Nota para el marco mexicano — Implicaciones clave</div>
+        <div class="callout-body">
+          <strong>DigCompEdu es la base estructural más relevante para nuestro marco.</strong> Más que Long & Magerko (general), Chiu (K-12) o Yoon (K-12). DigCompEdu cubre <strong>educación superior</strong> y está dirigido <strong>a docentes</strong> — la audiencia y el contexto exacto del marco mexicano. Trece implicaciones específicas: <strong>(1) Mapeo de áreas</strong>: las 6 áreas DigCompEdu mapean razonablemente con nuestras 5 áreas funcionales (F1-F5). Área 3 (Teaching and Learning) ≈ nuestra F3 (Aplicación pedagógica), núcleo central. Área 1 (Professional Engagement) ≈ nuestra F5 + meta-competencia. Área 4 (Assessment) ≈ F2 (Datos y evaluación). Área 5 (Empowering Learners) ≈ transversal en nuestro marco. Área 6 ≈ meta-competencia de "qué desarrolla el docente en estudiantes". <strong>(2) Opción metodológica sobre niveles</strong>: nuestros 4 niveles de agencia (Receptor, Operador, Integrador, Arquitecto) vs los 6 niveles CEFR. Correspondencia aproximada: A1+A2 ≈ Receptor, B1 ≈ Operador, B2 ≈ Integrador, C1+C2 ≈ Arquitecto. <em>Vale la pena considerar si adoptamos 6 niveles con etiquetas motivacionales, lo que ganaría reconocibilidad internacional y granularidad para autoevaluación, o mantenemos 4 niveles más simples</em>. <strong>(3) Estructura operativa de cada competencia adoptable directamente</strong>: descriptor + actividades + progresión + proficiency statements. Cada celda de nuestra matriz 5×4 podría tener esta estructura. <strong>(4) Aceptación de heterogeneidad entre áreas</strong>: comunicar explícitamente que un docente puede estar en distintos niveles en distintas áreas funcionales evita perfiles uniformes irreales y normaliza el desarrollo desigual. <strong>(5) Marco desarrollativo, no evaluativo</strong>: adoptar este posicionamiento declarativo para el marco mexicano gana legitimidad institucional. <strong>(6) Self-assessment como uso primario</strong>: valida nuestro enfoque de Fase 1 (diagnóstico). Los proficiency statements de DigCompEdu son modelo operativo directo para nuestros ítems de Likert. <strong>(7) Roles colaborativos por nivel</strong>: idea sofisticada para el toolkit FIMPES. No buscar que todos los docentes alcancen Nivel 4, sino fomentar ecologías de niveles complementarios en cada IES. <strong>(8) CEFR como lengua franca internacional</strong>: declarar "A2 en F3, B1 en F1" tiene la ventaja de reconocibilidad para movilidad y credenciales. <strong>(9) Lagunas que el marco mexicano debe llenar</strong>: IA generativa, AI literacy/competency, verificación crítica de outputs, soberanía cognitiva, justicia educativa. El marco mexicano puede posicionarse como <strong>"DigCompEdu + IA + perspectiva latinoamericana"</strong>. <strong>(10) Posicionamiento académico</strong>: declarar que adoptamos la arquitectura de DigCompEdu (audiencia, niveles, lógica de progresión) y la extendemos para IA en educación superior latinoamericana. Movimiento legítimo y sólido. <strong>(11) Para FIMPES Fase 1</strong>: los proficiency statements de DigCompEdu son modelo directo para el instrumento de autoevaluación. <strong>(12) Para sección 3.1 de la propuesta</strong>: DigCompEdu debería ser el segundo marco más prominente después de Long & Magerko. Es el referente directo de nuestra audiencia y nivel educativo. <strong>(13) Para colaboración internacional</strong>: adoptar etiquetas DigCompEdu abre puerta a colaboración con instituciones europeas. Es lengua franca en competencia digital docente.
+        </div>
+      </aside>
+
+      <div class="link-row">
+        <a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC107466" class="link-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Ver report en JRC (Open Access)
+        </a>
+        <a href="https://doi.org/10.2760/159770" class="link-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          DOI
+        </a>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<main class="panel" aria-current="false" data-panel="comparativa">
+  <div class="container">
+
+    <div class="comp-intro">
+      <p class="section-label">Progreso del benchmark</p>
+      <div class="progress-track"><div class="progress-fill" style="width: 100%"></div></div>
+      <p class="progress-text">11 de 11 marcos cargados — 100 % · benchmark completo</p>
+      <p style="margin-top: 32px;">La vista comparativa presenta los once marcos del benchmark en cuatro secciones: tabla general de ejes, mapa de competencias, mapa de progresión, y convergencias/divergencias. Los marcos se ordenan cronológicamente — desde DigCompEdu (2017) hasta Yoon et al. (2026) — para mostrar la evolución del campo.</p>
+    </div>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Tabla comparativa general</h2>
+        <p class="compare-section-desc">Treinta y siete ejes derivados inductivamente del análisis comparado de los once marcos. Cada marco aporta dimensiones distintivas: la definición canónica de Long & Magerko (2020), la arquitectura desarrollativa CEFR-inspired de DigCompEdu (2017), la estructura matricial de la familia UNESCO (2024), los Core Values de Digital Promise (2024), la distinción formal literacy/competency de Chiu et al. (2024), las etapas de carrera docente y validación cuantitativa de Yoon et al. (2026), entre otros. Las columnas están ordenadas cronológicamente para mostrar la evolución del campo.</p>
+      </header>
+
+      <div class="compare-wrapper">
+        <div class="compare-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Eje</th>
+                <th>DigCompEdu (2017)<span class="col-meta">Educadores HE</span></th>
+                <th>Long & Magerko (2020)<span class="col-meta">Fundacional</span></th>
+                <th>DigComp 2.2/3.0<span class="col-meta">Fundacional UE</span></th>
+                <th>UNESCO CFT (2024)<span class="col-meta">Docentes</span></th>
+                <th>UNESCO CFS (2024)<span class="col-meta">Estudiantes</span></th>
+                <th>Digital Promise (2024)<span class="col-meta">K-12 Operativo</span></th>
+                <th>Chiu et al. (2024)<span class="col-meta">Literacy vs Comp</span></th>
+                <th>AILit (2025)<span class="col-meta">PISA 2029</span></th>
+                <th>Chee et al. (2025)<span class="col-meta">Académico</span></th>
+                <th>US DOL (2026)<span class="col-meta">Política EUA</span></th>
+                <th>Yoon et al. (2026)<span class="col-meta">Etapas carrera</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Año de publicación</td><td><strong>2017 (pre-ChatGPT)</strong>.</td><td>2020.</td><td>2022/2025.</td><td>2024.</td><td>2024.</td><td>2024.</td><td>2024.</td><td>2025.</td><td>2025.</td><td>2026.</td><td>2026.</td></tr>
+              <tr><td><strong>Audiencia incluye educación superior</strong></td><td><strong>Sí · explícitamente nombrada (único)</strong>.</td><td>Implícita.</td><td>Ciudadanos.</td><td>K-12.</td><td>K-12.</td><td>K-12.</td><td>Middle school.</td><td>K-12.</td><td>Etapa de vida (HE).</td><td>Workforce.</td><td>K-12.</td></tr>
+              <tr><td>Audiencia: docentes</td><td><strong>Educadores todos los niveles</strong>.</td><td>Implícita.</td><td>No.</td><td>Docentes K-12.</td><td>No.</td><td>Líderes K-12.</td><td>No (estudiantes).</td><td>No.</td><td>Múltiple.</td><td>No.</td><td>In-service K-12.</td></tr>
+              <tr><td>Tipo de instrumento</td><td><strong>JRC Science for Policy Report</strong>.</td><td>Paper académico.</td><td>Política UE.</td><td>Marco normativo.</td><td>Marco normativo.</td><td>Marco operativo.</td><td>Co-design empírico.</td><td>Marco evaluativo.</td><td>Revisión sistemática.</td><td>Guía política.</td><td>Académico-aplicado.</td></tr>
+              <tr><td>Estructura dimensional</td><td><strong>6 áreas · 22 competencias elementales</strong>.</td><td>5 preg · 17 comp.</td><td>5 dim · 21 comp.</td><td>5 × 3.</td><td>4 × 3.</td><td>2+3+6+3.</td><td>5 + 5.</td><td>4 dom · 22.</td><td>8 × 18.</td><td>5 + 7.</td><td>3 × 8 × 17 × 51.</td></tr>
+              <tr><td>Eje de progresión</td><td><strong>6 niveles CEFR-inspired (A1-C2)</strong>.</td><td>Sin.</td><td>4 secuenciales.</td><td>3 no jerárq.</td><td>3 espiral.</td><td>Concéntrica.</td><td>Sin.</td><td>Modos paralelos.</td><td>Etapa vida.</td><td>Sin.</td><td>4 etapas carrera.</td></tr>
+              <tr><td><strong>Sistema CEFR-inspired</strong></td><td><strong>Sí · A1-C2 (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td><strong>Etiquetas motivacionales por nivel</strong></td><td><strong>Sí · Newcomer→Pioneer (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>Sí (Induction-Leadership).</td></tr>
+              <tr><td>Inspiración Bloom-revisada</td><td><strong>Sí · 3 bloques de 2 niveles (ancestro)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>Sí (3 dim).</td></tr>
+              <tr><td>Distinción literacy vs competency</td><td>"Digital competence" como genérico.</td><td>Mezclados.</td><td>Implícita.</td><td>Mezclados.</td><td>Mezclados.</td><td>Mezclados.</td><td><strong>Formal</strong>.</td><td>Mezclados.</td><td>Mezclados.</td><td>Mezclados.</td><td>Integrador "AI-digital".</td></tr>
+              <tr><td>Self-reflection como componente</td><td>Competencia 1.3 (Reflective practice).</td><td>No.</td><td>Transversal.</td><td>Lifelong.</td><td>No.</td><td>Estrategia.</td><td><strong>Componente formal</strong>.</td><td>Attitude.</td><td>No.</td><td>Principio.</td><td>Categoría 3.A.</td></tr>
+              <tr><td>Validación empírica con docentes</td><td><strong>100+ docentes + 72 stakeholders + expert workshop</strong>.</td><td>No.</td><td>12 años.</td><td>Consultas globales.</td><td>190 países.</td><td>Práctica.</td><td>30 maestros · 4 ciclos.</td><td>Focus groups.</td><td>No.</td><td>Consultas.</td><td>44 panelistas · Delphi cuantitativo.</td></tr>
+              <tr><td><strong>Marco desarrollativo declarativo (no evaluativo)</strong></td><td><strong>Sí · declarado explícitamente (único)</strong>.</td><td>No declarado.</td><td>Regulatorio.</td><td>Normativo.</td><td>Normativo.</td><td>Operativo.</td><td>Académico.</td><td>Evaluativo.</td><td>No.</td><td>Regulatorio.</td><td>Académico.</td></tr>
+              <tr><td><strong>Proficiency statements para autoevaluación</strong></td><td><strong>Sí · ~132 statements para autoeval por docente (único)</strong>.</td><td>No.</td><td>Sí (Dim 3).</td><td>No.</td><td>No.</td><td>Look Fors (estudiantes).</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>51 indicadores (no autoeval).</td></tr>
+              <tr><td>Aproximación a IA</td><td><strong>Sin IA explícita (limitación)</strong>.</td><td>Dominio.</td><td>Transversal.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>"AI-digital".</td></tr>
+              <tr><td>Contempla IA generativa</td><td><strong>No (pre-ChatGPT)</strong>.</td><td>No.</td><td>Sí.</td><td>Sí.</td><td>Sí.</td><td>Mencionada.</td><td>Explícita.</td><td>Sí.</td><td>Implícita.</td><td>Foco explícito.</td><td>Implícita.</td></tr>
+              <tr><td>Modelo K-S-A explícito</td><td>Integrado en proficiency statements (no separado).</td><td>No.</td><td>Sí.</td><td>No.</td><td>No.</td><td>No.</td><td>K+S+confidence.</td><td>Sí.</td><td>No.</td><td>No.</td><td>Bloom 3D.</td></tr>
+              <tr><td><strong>Aceptación de heterogeneidad entre áreas</strong></td><td><strong>Sí · declarado explícitamente vía analogía CEFR (único)</strong>.</td><td>No.</td><td>Implícita.</td><td>Implícita.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Sí (etapas).</td></tr>
+              <tr><td>Estructura matricial</td><td><strong>No · 22 elementales</strong>.</td><td>No.</td><td>No.</td><td>Sí (5×3).</td><td>Sí (4×3).</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>3D × 4 etapas.</td></tr>
+              <tr><td><strong>Arquitectura núcleo + envolventes</strong></td><td><strong>Sí · áreas 2-5 núcleo + 1+6 envolventes (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>Concéntrica.</td><td>Triangular.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Área transversal explícita</td><td><strong>Sí · Área 5 transversal a áreas 2-4 (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td><strong>Roles colaborativos por nivel</strong></td><td><strong>Sí · ecología de niveles complementarios (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Tratamiento de la ética</td><td>Distribuida (1.4, 2.3, 6.4).</td><td>C16.</td><td>Transversal.</td><td>Aspecto.</td><td>Aspecto.</td><td>Value + Practice.</td><td>Componente.</td><td>Fundacional.</td><td>Independiente.</td><td>Use Responsibly.</td><td>Cats 1.C y 3.B.</td></tr>
+              <tr><td>Tratamiento de la agencia</td><td>Implícita (núcleo pedagógico).</td><td>Implícita.</td><td>Implícita.</td><td>Eje central.</td><td>Eje central.</td><td>Core Value.</td><td>No formalizada.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Implícita.</td></tr>
+              <tr><td>Verificación crítica de outputs</td><td><strong>No central (sin IA generativa)</strong>.</td><td>C5, C13.</td><td>1.2.</td><td>Mindset.</td><td>Mindset.</td><td>Mode + P6.</td><td>Collaboration.</td><td>Dominio 1.</td><td>Sub 6.3.</td><td>Área.</td><td>Assessment.</td></tr>
+              <tr><td>Pedagogía formalizada</td><td><strong>22 competencias pedagógicas operacionalizadas</strong>.</td><td>15 DC.</td><td>No.</td><td>Aspecto.</td><td>No.</td><td>5 estrategias.</td><td>5 experiencias.</td><td>No.</td><td>No.</td><td>7 principios.</td><td>3 dim Bloom.</td></tr>
+              <tr><td>Self-assessment como uso primario</td><td><strong>Sí · diseño primario del marco (único declarativo)</strong>.</td><td>No.</td><td>Sí.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Ciudadanía como horizonte</td><td>Vía conexión a DigComp.</td><td>No.</td><td>Comp 2.3.</td><td>Implícita.</td><td>Explícita.</td><td>Practice 3.</td><td>Community.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Implícita.</td></tr>
+              <tr><td>Sostenibilidad ambiental</td><td>No.</td><td>No.</td><td>Competencia.</td><td>Principio.</td><td>Principio.</td><td>P5.</td><td>No.</td><td>K4.2.</td><td>No.</td><td>No.</td><td>"Sustainable teacher dev".</td></tr>
+              <tr><td>Conexión con otros marcos</td><td><strong>Conecta con DigComp (Área 6)</strong>.</td><td>Original.</td><td>JRC.</td><td>UNESCO.</td><td>UNESCO.</td><td>Mapeo trad.</td><td>Cita LM.</td><td>OECD-EC.</td><td>Sintetiza LM.</td><td>Standalone.</td><td>Cita Chiu + DigCompEdu.</td></tr>
+              <tr><td>Es parte de familia</td><td><strong>JRC (con DigComp, DigCompOrg, etc.)</strong>.</td><td>No.</td><td>JRC.</td><td>UNESCO.</td><td>UNESCO.</td><td>No.</td><td>No.</td><td>OECD-EC.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Anclaje a política pública</td><td><strong>UE Digital Education Action Plan</strong>.</td><td>Ninguno.</td><td>DSI.</td><td>UN.</td><td>UN.</td><td>EdSAFE.</td><td>Ninguno.</td><td>EU AI Act.</td><td>Ninguno.</td><td>EO 14277.</td><td>AIDT Korea.</td></tr>
+              <tr><td>Adopción institucional documentada</td><td><strong>Base de SELFIE for Teachers + múltiples instrumentos nacionales europeos</strong>.</td><td>Citado en literatura.</td><td>14+ países UE.</td><td>Global.</td><td>Global.</td><td>Reciente.</td><td>Académica.</td><td>Reciente (PISA).</td><td>Reciente.</td><td>Federal EUA.</td><td>Reciente.</td></tr>
+              <tr><td>Influencia generativa sobre el campo</td><td><strong>Ancestro digital competence docente · citado por Yoon</strong>.</td><td>Ancestro AI literacy.</td><td>Independiente.</td><td>Cita LM.</td><td>Cita LM.</td><td>Cita LM.</td><td>Cita LM.</td><td>Síntesis.</td><td>Construye.</td><td>Sin influencia.</td><td>Cita Chiu.</td></tr>
+              <tr><td>Base metodológica</td><td><strong>Consulta institucional + workshops + ET 2020 Working Group</strong>.</td><td>Scoping · 150 docs.</td><td>12 años.</td><td>Consultas globales.</td><td>190 países.</td><td>Síntesis.</td><td>Co-design 4 ciclos.</td><td>Expertos.</td><td>PRISMA · 29.</td><td>Stakeholders.</td><td>Delphi + ANOVA.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Mapa de competencias</h2>
+        <p class="compare-section-desc">Comparación lado a lado de las arquitecturas de competencias propuestas por los once marcos. La diversidad arquitectónica refleja la madurez del campo: estructuras interrogativas, unidimensionales, qué/cómo, matriciales bidimensionales, modos paralelos, concéntricas, triangulares, jerárquicas con núcleo y envolventes, y jerárquicas Bloom-based. Columnas ordenadas cronológicamente.</p>
+      </header>
+
+      <div class="competency-map">
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">DigCompEdu</div><div class="map-column-subtitle">6 áreas · 22 comp</div><div class="map-column-count">Núcleo + envolventes</div></div><ul class="map-list"><li><span class="map-list-num">A1</span><div><span class="map-list-name">Professional Engagement</span><span class="map-list-note">Envolvente prof.</span></div></li><li><span class="map-list-num">A2</span><div><span class="map-list-name">Digital Resources</span><span class="map-list-note">Núcleo</span></div></li><li><span class="map-list-num">A3</span><div><span class="map-list-name">Teaching and Learning</span><span class="map-list-note">Núcleo · fundamental</span></div></li><li><span class="map-list-num">A4</span><div><span class="map-list-name">Assessment</span><span class="map-list-note">Núcleo</span></div></li><li><span class="map-list-num">A5</span><div><span class="map-list-name">Empowering Learners</span><span class="map-list-note">Transversal a 2-4<span class="map-tag map-tag-unique">único</span></span></div></li><li><span class="map-list-num">A6</span><div><span class="map-list-name">Facilitating Learners' DC</span><span class="map-list-note">Envolvente meta-pedag.</span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">Long & Magerko</div><div class="map-column-subtitle">5 preg · 17 comp</div><div class="map-column-count">Interrogativa</div></div><ul class="map-list"><li><span class="map-list-num">P1-P5</span><div><span class="map-list-name">¿Qué? ¿Puede? ¿Cómo? ¿Usar? ¿Percibe?</span></div></li><li><span class="map-list-num">+15</span><div><span class="map-list-name">Consideraciones diseño<span class="map-tag map-tag-unique">único</span></span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">DigComp 3.0</div><div class="map-column-subtitle">5 áreas</div><div class="map-column-count">K-S-A</div></div><ul class="map-list"><li><span class="map-list-num">1-5</span><div><span class="map-list-name">Info · Comm · Content · Safety · Problem<span class="map-tag map-tag-shared">JRC</span></span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">UNESCO CFT</div><div class="map-column-subtitle">5 × 3</div><div class="map-column-count">Bidimensional</div></div><ul class="map-list"><li><span class="map-list-num">1-3</span><div><span class="map-list-name">Human-centred · Ethics · AI foundations<span class="map-tag map-tag-shared">UNESCO</span></span></div></li><li><span class="map-list-num">4-5</span><div><span class="map-list-name">Pedagogy · Prof. dev.<span class="map-tag map-tag-unique">único</span></span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">UNESCO CFS</div><div class="map-column-subtitle">4 × 3</div><div class="map-column-count">Bidimensional</div></div><ul class="map-list"><li><span class="map-list-num">1-3</span><div><span class="map-list-name">Human-centred · Ethics · AI techniques<span class="map-tag map-tag-shared">UNESCO</span></span></div></li><li><span class="map-list-num">4</span><div><span class="map-list-name">System design<span class="map-tag map-tag-unique">único</span></span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">Digital Promise</div><div class="map-column-subtitle">2+3+6+3</div><div class="map-column-count">Concéntrica</div></div><ul class="map-list"><li><span class="map-list-num">V</span><div><span class="map-list-name">Core Values<span class="map-tag map-tag-unique">único</span></span></div></li><li><span class="map-list-num">M</span><div><span class="map-list-name">3 Modes</span></div></li><li><span class="map-list-num">P1-P6</span><div><span class="map-list-name">6 Practices con Look Fors</span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">Chiu et al.</div><div class="map-column-subtitle">5 comp</div><div class="map-column-count">Triángulo</div></div><ul class="map-list"><li><span class="map-list-num">1-4</span><div><span class="map-list-name">Tech · Impact · Ethics · Collab</span></div></li><li><span class="map-list-num">5</span><div><span class="map-list-name">Self-reflection<span class="map-tag map-tag-unique">único</span></span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">AILit</div><div class="map-column-subtitle">4 dom</div><div class="map-column-count">Paralelos</div></div><ul class="map-list"><li><span class="map-list-num">1-4</span><div><span class="map-list-name">Engaging · Creating · Managing · Designing</span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">Chee, Ahn & Lee</div><div class="map-column-subtitle">8 comp</div><div class="map-column-count">Unidimensional</div></div><ul class="map-list"><li><span class="map-list-num">1-7</span><div><span class="map-list-name">Device, Data, Problem, Comm, Ethics, Career, Content</span></div></li><li><span class="map-list-num">8</span><div><span class="map-list-name">Affective<span class="map-tag map-tag-unique">único</span></span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">US DOL</div><div class="map-column-subtitle">5 + 7</div><div class="map-column-count">Qué + cómo</div></div><ul class="map-list"><li><span class="map-list-num">1-5</span><div><span class="map-list-name">Understand · Explore · Direct · Evaluate · Use</span></div></li></ul></div>
+        <div class="map-column"><div class="map-column-header"><div class="map-column-title">Yoon et al.</div><div class="map-column-subtitle">3 × 8 × 17</div><div class="map-column-count">Bloom + carrera</div></div><ul class="map-list"><li><span class="map-list-num">D1</span><div><span class="map-list-name">Understand</span></div></li><li><span class="map-list-num">D2</span><div><span class="map-list-name">Apply & Analyze</span></div></li><li><span class="map-list-num">D3</span><div><span class="map-list-name">Evaluate & Create</span></div></li><li><span class="map-list-num">×4</span><div><span class="map-list-name">Etapas carrera<span class="map-tag map-tag-unique">único</span></span></div></li></ul></div>
+      </div>
+
+      <div class="family-box">
+        <div class="family-box-label">Linaje conceptual del campo</div>
+        <div class="family-box-title">Dos linajes paralelos que convergen en Yoon et al. (2026)</div>
+        <div class="family-box-body">
+          <p>El análisis de los once marcos revela que el campo se organiza en <strong>dos linajes paralelos</strong> que convergen recientemente. El marco mexicano puede posicionarse como continuación de ambos linajes simultáneamente.</p>
+        </div>
+        <div class="lineages-grid">
+          <div class="lineage-card">
+            <div class="lineage-label">Linaje 1 · AI literacy/competency académico</div>
+            <div class="lineage-title">Origen HCI · Crítica académica</div>
+            <div class="lineage-chain">Long & Magerko (2020)<br>↓<br>Chiu et al. (2024)<br><em>[crítica + literacy/competency]</em><br>↓<br><strong>Yoon et al. (2026)</strong></div>
+          </div>
+          <div class="lineage-card">
+            <div class="lineage-label">Linaje 2 · Digital competence europeo</div>
+            <div class="lineage-title">Origen JRC · Institucional</div>
+            <div class="lineage-chain">DigComp (2006-2025, 5 ediciones)<br>↓<br><strong>DigCompEdu (2017)</strong><br><em>[adaptación a docentes]</em><br>↓<br>SELFIE for Teachers (2021)<br>↓<br><strong>Yoon et al. (2026)</strong></div>
+          </div>
+        </div>
+        <div class="family-box-body">
+          <p><strong>Yoon et al. (2026) es el punto de convergencia</strong>: cita simultáneamente a Chiu (linaje académico AI) y a DigCompEdu (linaje europeo digital). Es el primer marco del benchmark que sintetiza ambas tradiciones.</p>
+          <p>Para el marco mexicano, esta observación tiene implicación clara: <strong>posicionarse explícitamente como continuación de ambos linajes</strong>. Esto le da identidad propia sin perder anclaje internacional. La síntesis sería: <strong>arquitectura DigCompEdu (audiencia docente + 6 áreas + niveles A1-C2 + marco desarrollativo) + extensión Chiu/Yoon (literacy/competency + self-reflection + agencia) + adaptación específica a IA + perspectiva latinoamericana</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Mapa de progresión</h2>
+        <p class="compare-section-desc">El campo no ha consensuado un modelo único de avance del aprendiz. Entre los once marcos hay <strong>ocho lógicas distintas de progresión</strong>: sin niveles internos, por etapas de vida, secuenciales de 3, 4 o 6 niveles, modos paralelos, concéntrica, etapas de carrera profesional, y CEFR-inspired. Marcos ordenados cronológicamente.</p>
+      </header>
+
+      <div class="progression-grid">
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">DigCompEdu (2017)</div><div class="progression-source">JRC · CE · CEFR-inspired</div></div><span class="progression-tag tag-cefr">6 niveles CEFR · Bloom</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">Long & Magerko (2020)</div><div class="progression-source">Académico fundacional</div></div><span class="progression-tag tag-no-levels">Sin progresión</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">DigComp 3.0 (2025)</div><div class="progression-source">JRC · Comisión Europea</div></div><span class="progression-tag tag-has-levels">4 niveles secuenciales</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">UNESCO CFT (2024)</div><div class="progression-source">Docentes</div></div><span class="progression-tag tag-has-levels">3 niveles no jerárquicos</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">UNESCO CFS (2024)</div><div class="progression-source">Estudiantes</div></div><span class="progression-tag tag-has-levels">3 niveles secuenciales</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">Digital Promise (2024)</div><div class="progression-source">K-12 · concéntrica</div></div><span class="progression-tag tag-concentric">Concéntrica</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">Chiu et al. (2024)</div><div class="progression-source">Académico · co-design</div></div><span class="progression-tag tag-no-levels">Sin progresión</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">AILit Framework (2025)</div><div class="progression-source">OECD-EC · PISA 2029</div></div><span class="progression-tag tag-parallel">Modos paralelos</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">Chee, Ahn & Lee (2025)</div><div class="progression-source">Académico</div></div><span class="progression-tag tag-lifestage">Por etapa de vida</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">US DOL (2026)</div><div class="progression-source">Política pública federal</div></div><span class="progression-tag tag-no-levels">Sin progresión</span></div>
+
+        <div class="progression-card"><div class="progression-header"><div><div class="progression-name">Yoon et al. (2026)</div><div class="progression-source">Académico-aplicado · Corea</div></div><span class="progression-tag tag-career">Etapas de carrera</span></div>
+
+      </div>
+
+      <aside class="callout">
+        <div class="callout-label">Implicación para el marco mexicano</div>
+        <div class="callout-body">
+          La diversidad de lógicas de progresión revela algo importante: <strong>el campo no ha consensuado un modelo único de avance del aprendiz</strong>. La división se ve así: los marcos académicos puros tienden a ser planos sin progresión (Long & Magerko, Chiu, DOL, Chee); los marcos institucionales matriciales introducen niveles (UNESCO CFT/CFS, DigComp); AILit opta por modos paralelos; Digital Promise por concéntrica; DigCompEdu por 6 niveles CEFR-inspired con etiquetas motivacionales; Yoon por etapas de carrera profesional. Para el marco mexicano, esta diversidad sugiere una <strong>arquitectura híbrida</strong>: 4 niveles de agencia (Receptor, Operador, Integrador, Arquitecto) × 5 áreas funcionales × variables de segmentación (etapas de carrera, tipo de IES, área disciplinar). Si en algún momento se busca mayor granularidad y reconocibilidad internacional, mapear nuestros 4 niveles a los 6 niveles CEFR de DigCompEdu (A1+A2 → Receptor, B1 → Operador, B2 → Integrador, C1+C2 → Arquitecto) sería movimiento natural.
+        </div>
+      </aside>
+    </section>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Convergencias y divergencias</h2>
+        <p class="compare-section-desc">Síntesis del análisis comparado de los once marcos.</p>
+      </header>
+
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-label">Convergencias</div>
+          <div class="insight-title">Donde los once marcos coinciden</div>
+          <ul class="insight-list">
+            <li><strong>Verificación crítica de outputs.</strong> Universal en marcos AI; DigCompEdu lo trata como "analysing evidence" sin enfoque IA.</li>
+            <li><strong>Habilidades humanas complementarias.</strong> Los once enfatizan que la tecnología amplifica al humano.</li>
+            <li><strong>Ética como dimensión propia o transversal.</strong> Ninguno la trata como opcional.</li>
+            <li><strong>Dos linajes con ancestro común tardío.</strong> Long & Magerko (2020) ancestro AI; DigComp (2006+) ancestro digital. Convergencia en Yoon et al. (2026).</li>
+            <li><strong>Self-reflection como tendencia.</strong> DigCompEdu lo formaliza desde 2017 (Competencia 1.3); Chiu lo eleva a componente; otros marcos lo incorporan transversalmente.</li>
+            <li><strong>Modelo K-S-A o equivalente como estándar emergente.</strong> DigComp explícito; DigCompEdu integrado en proficiency statements; AILit lo formaliza.</li>
+            <li><strong>Conexión con tradiciones educativas existentes.</strong> Digital Promise y Chiu explícitos; DigCompEdu conecta con DigComp; Yoon conecta linajes.</li>
+            <li><strong>Self-assessment como uso legítimo.</strong> DigCompEdu y DigComp lo formalizan; otros lo permiten implícitamente.</li>
+            <li><strong>Atención a docentes en ejercicio.</strong> UNESCO CFT, DigCompEdu, Yoon explícitamente enfocados.</li>
+            <li><strong>Foco en práctica pedagógica.</strong> DigCompEdu, UNESCO CFT y Yoon ponen pedagogía como núcleo.</li>
+          </ul>
+        </div>
+        <div class="insight-card">
+          <div class="insight-label">Divergencias</div>
+          <div class="insight-title">Donde toman caminos distintos</div>
+          <ul class="insight-list">
+            <li><strong>Aproximación a IA.</strong> Solo DigComp transversal; DigCompEdu sin IA (limitación histórica); los demás como dominio.</li>
+            <li><strong>Audiencia.</strong> DigCompEdu es el único que cubre explícitamente educación superior; otros son K-12, workforce o general.</li>
+            <li><strong>Lógica de progresión.</strong> Ocho lógicas distintas: sin progresión, etapa vida, no jerárquicos, secuenciales 3, secuenciales 4, modos paralelos, concéntrica, etapas carrera, CEFR-inspired.</li>
+            <li><strong>Sistema CEFR-inspired.</strong> Único en DigCompEdu (A1-C2 + Newcomer→Pioneer).</li>
+            <li><strong>Distinción literacy vs competency.</strong> Único en Chiu et al.</li>
+            <li><strong>Etapas de carrera profesional.</strong> Único en Yoon et al.</li>
+            <li><strong>Marco desarrollativo declarativo.</strong> Único en DigCompEdu (no evaluativo, no normativo).</li>
+            <li><strong>Self-reflection como componente formal.</strong> Único en Chiu.</li>
+            <li><strong>Core Values explícitos.</strong> Único en Digital Promise.</li>
+            <li><strong>Hallazgos empíricos sobre grupos.</strong> Único en Yoon (ANOVA + Scheffé).</li>
+            <li><strong>Arquitectura núcleo + envolventes.</strong> Único en DigCompEdu.</li>
+            <li><strong>Confidence como dimensión.</strong> Único en Chiu.</li>
+            <li><strong>Validación cuantitativa rigurosa.</strong> Yoon (CVR ≥ 0.75) el más estricto del benchmark.</li>
+            <li><strong>Área transversal explícita.</strong> Único en DigCompEdu (Área 5).</li>
+            <li><strong>Cultural learning como experiencia formal.</strong> Único en Chiu.</li>
+            <li><strong>Anclaje evaluativo internacional.</strong> Solo AILit (PISA 2029).</li>
+            <li><strong>Aceptación de heterogeneidad entre áreas.</strong> Único declarativo en DigCompEdu.</li>
+            <li><strong>Roles colaborativos por nivel.</strong> Único en DigCompEdu.</li>
+            <li><strong>Anclaje a política nacional concreta.</strong> Yoon (AIDT Korea) y DOL (EO 14277).</li>
+            <li><strong>Estructura Bloom-based para progresión.</strong> DigCompEdu (2017) ancestro; Yoon (2026) lo hereda.</li>
+            <li><strong>Proficiency statements para autoevaluación.</strong> Único en DigCompEdu (~132 statements).</li>
+            <li><strong>Adopción institucional masiva.</strong> DigCompEdu y DigComp (base de instrumentos nacionales europeos).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-block">
+        <h4>Marco IA 2030</h4>
+        <p>Marco Mexicano de Competencias en IA para Educación Superior. Beca FIMPES-Santander Universidades 2026. Alianza Universidad Anáhuac México y UNAM, Facultad de Química.</p>
+      </div>
+      <div class="footer-block">
+        <h4>Versión</h4>
+        <p class="footer-meta">v1.1 · 11 de 11 marcos · benchmark completo</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const today = new Date();
+  const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  document.getElementById('last-update').textContent = today.getDate() + ' ' + months[today.getMonth()] + ' ' + today.getFullYear();
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => { t.setAttribute('aria-selected', t.dataset.tab === tab); });
+    document.querySelectorAll('.panel').forEach(p => { p.setAttribute('aria-current', p.dataset.panel === tab); });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showFicha(id, btn) {
+    document.querySelectorAll('.framework-card').forEach(c => c.setAttribute('aria-pressed', 'false'));
+    btn.setAttribute('aria-pressed', 'true');
+    document.querySelectorAll('.ficha').forEach(f => f.setAttribute('data-active', 'false'));
+    const target = document.getElementById('ficha-' + id);
+    if (target) { target.setAttribute('data-active', 'true'); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+</script>
+
+</body>
+</html>

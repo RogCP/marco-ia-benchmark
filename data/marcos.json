@@ -1,0 +1,269 @@
+{
+  "version": "1.1",
+  "lastUpdated": "2026-06-08",
+  "totalFrameworks": 11,
+  "frameworks": [
+    {
+      "slug": "digcompedu",
+      "title": "DigCompEdu",
+      "author": "Redecker",
+      "year": "2017",
+      "fullAuthors": "Christine Redecker (Author), Yves Punie (Editor)",
+      "publisher": "JRC · Comisión Europea",
+      "doi": "10.2760/159770",
+      "identifiers": "EUR 28775 EN · JRC107466 · ISBN 978-92-79-73494-6",
+      "license": "Reuse autorizado con atribución",
+      "audience": "Educadores en todos los niveles · incluye educación superior",
+      "structure": "6 áreas · 22 competencias elementales",
+      "progression": "6 niveles CEFR-inspired (A1-C2)",
+      "category": "institucional",
+      "lineage": "europeo-digital",
+      "shortDesc": "JRC · CE · Educadores incluyendo HE",
+      "uniqueContributions": [
+        "Audiencia explícita en educación superior",
+        "Sistema CEFR-inspired (A1-C2)",
+        "Marco desarrollativo declarativo",
+        "Roles colaborativos por nivel",
+        "Arquitectura núcleo + envolventes",
+        "Área transversal explícita (Área 5)",
+        "Aceptación declarativa de heterogeneidad entre áreas",
+        "Proficiency statements para autoevaluación"
+      ],
+      "limitations": [
+        "Sin AI explícita (pre-ChatGPT)",
+        "Sin IA generativa",
+        "Sin verificación crítica de outputs"
+      ]
+    },
+    {
+      "slug": "long-magerko",
+      "title": "Long & Magerko",
+      "author": "Long & Magerko",
+      "year": "2020",
+      "fullAuthors": "Duri Long, Brian Magerko",
+      "publisher": "Proceedings of the 2020 CHI Conference · ACM",
+      "doi": "10.1145/3313831.3376727",
+      "identifiers": "ACM Paper 598",
+      "audience": "HCI · educadores",
+      "structure": "5 preguntas · 17 competencias · 15 consideraciones de diseño",
+      "progression": "Sin progresión interna",
+      "category": "academico",
+      "lineage": "ai-literacy-academico",
+      "shortDesc": "CHI · Definición seminal AI literacy",
+      "uniqueContributions": [
+        "Definición canónica de AI literacy",
+        "Ancestro común del campo",
+        "Recognizing AI como competencia fundacional (C1)"
+      ],
+      "limitations": [
+        "Pre-ChatGPT (sin IA generativa)",
+        "Mezcla literacy y competency",
+        "Sin progresión interna"
+      ]
+    },
+    {
+      "slug": "digcomp",
+      "title": "DigComp 2.2 / 3.0",
+      "author": "Vuorikari et al. · Cosgrove & Cachia",
+      "year": "2022 / 2025",
+      "fullAuthors": "Vuorikari et al. (2022); Cosgrove & Cachia (2025)",
+      "publisher": "JRC · Comisión Europea",
+      "identifiers": "JRC128415 · JRC144121",
+      "audience": "Ciudadanos UE",
+      "structure": "5 áreas · 21 competencias · 5 dimensiones",
+      "progression": "8 → 4 niveles secuenciales",
+      "category": "institucional",
+      "lineage": "europeo-digital",
+      "shortDesc": "JRC · CE · 5 ediciones",
+      "uniqueContributions": [
+        "Aproximación a IA transversal (no como dominio)",
+        "Modelo K-S-A formalizado en Dimensión 4",
+        "5 dimensiones operativas",
+        "Base de DSI (Digital Skills Indicator)"
+      ],
+      "limitations": [
+        "Audiencia general (no específica a docentes)",
+        "Sin atención particular a educación superior"
+      ]
+    },
+    {
+      "slug": "unesco-cft",
+      "title": "UNESCO AI CFT",
+      "author": "Miao & Cukurova",
+      "year": "2024",
+      "fullAuthors": "Fengchun Miao, Mutlu Cukurova",
+      "publisher": "UNESCO",
+      "audience": "Docentes y gobiernos",
+      "structure": "5 × 3 = 15 bloques (matricial)",
+      "progression": "3 niveles no jerárquicos (Acquire · Deepen · Create)",
+      "category": "institucional",
+      "lineage": "unesco",
+      "shortDesc": "Competencias para docentes",
+      "uniqueContributions": [
+        "Human agency como bloque fundacional",
+        "Pedagogía y desarrollo profesional como áreas propias"
+      ]
+    },
+    {
+      "slug": "unesco-cfs",
+      "title": "UNESCO AI CFS",
+      "author": "Miao & Cukurova",
+      "year": "2024",
+      "fullAuthors": "Fengchun Miao, Mutlu Cukurova",
+      "publisher": "UNESCO",
+      "audience": "Estudiantes K-12",
+      "structure": "4 × 3 = 12 bloques (matricial)",
+      "progression": "3 niveles secuenciales (Understand · Apply · Create)",
+      "category": "institucional",
+      "lineage": "unesco",
+      "shortDesc": "Competencias para estudiantes",
+      "uniqueContributions": [
+        "Ciudadanía en la era de la IA",
+        "Posicionamiento crítico frente a corporaciones",
+        "AI system design como área"
+      ]
+    },
+    {
+      "slug": "digital-promise",
+      "title": "Digital Promise",
+      "author": "Mills, Ruiz et al.",
+      "year": "2024",
+      "fullAuthors": "Mills, Ruiz, Lee, Coenraad, Fusco, Roschelle & Weisgrau",
+      "publisher": "Digital Promise",
+      "doi": "10.51388/20.500.12265/218",
+      "audience": "Líderes educativos K-12",
+      "structure": "2 + 3 + 6 + 3 (concéntrica)",
+      "progression": "Sin progresión · estructura concéntrica",
+      "category": "institucional",
+      "lineage": "k12-usa",
+      "shortDesc": "K-12 · EUA · Operativo · Core Values",
+      "uniqueContributions": [
+        "Core Values explícitos (Human Judgment + Centering Justice)",
+        "Look Fors operativos",
+        "Mapeo explícito con tradiciones educativas existentes",
+        "5 estrategias de implementación"
+      ]
+    },
+    {
+      "slug": "chiu",
+      "title": "Chiu et al.",
+      "author": "Chiu, Ahmad, Ismailov & Sanusi",
+      "year": "2024",
+      "fullAuthors": "Thomas K.F. Chiu, Zubair Ahmad, Murod Ismailov, Ismaila T. Sanusi",
+      "publisher": "Computers and Education Open, 6, 100171",
+      "doi": "10.1016/j.caeo.2024.100171",
+      "license": "CC-BY 4.0",
+      "audience": "K-12 middle school · transferible a no-expertos",
+      "structure": "5 componentes · 5 experiencias de aprendizaje",
+      "progression": "Sin progresión · marco plano",
+      "category": "academico",
+      "lineage": "ai-literacy-academico",
+      "shortDesc": "Literacy vs competency · CAEO",
+      "uniqueContributions": [
+        "Distinción formal Literacy vs Competency",
+        "Self-reflection como componente formal independiente",
+        "Confidence como dimensión explícita medible",
+        "Co-design empírico con 30 maestros, 4 ciclos, consenso 75%",
+        "Crítica académica explícita a Long & Magerko",
+        "Cultural learning como experiencia formal (con ejemplos no-occidentales)",
+        "Agenda de investigación futura explícita (5 direcciones)"
+      ]
+    },
+    {
+      "slug": "ailit",
+      "title": "AILit Framework",
+      "author": "OECD-EC",
+      "year": "2025",
+      "fullAuthors": "OECD-EC",
+      "publisher": "OECD",
+      "license": "CC-BY-SA 4.0",
+      "audience": "K-12 · diseñadores",
+      "structure": "4 dominios · 22 competencias",
+      "progression": "Modos paralelos",
+      "category": "institucional",
+      "lineage": "oecd-ec",
+      "shortDesc": "OECD + EC · Base para PISA 2029",
+      "uniqueContributions": [
+        "Anclaje a PISA 2029",
+        "Modos paralelos como progresión",
+        "4 personas como herramientas narrativas",
+        "Managing AI como dominio único"
+      ]
+    },
+    {
+      "slug": "chee",
+      "title": "Chee, Ahn & Lee",
+      "author": "Chee, Ahn & Lee",
+      "year": "2025",
+      "fullAuthors": "Chee, Ahn & Lee",
+      "publisher": "British Journal of Educational Technology (BJET), 56, 2146–2182",
+      "doi": "10.1111/bjet.13556",
+      "audience": "Múltiple",
+      "structure": "8 competencias · 18 sub-competencias (revisión PRISMA · 29 estudios)",
+      "progression": "Por etapa de vida (K-12 → Ed. Superior → Fuerza Laboral)",
+      "category": "academico",
+      "lineage": "ai-literacy-academico",
+      "shortDesc": "PRISMA · BJET",
+      "uniqueContributions": [
+        "Affective competences como bloque independiente",
+        "Sub-competencia 6.3 (verificación de resultados)",
+        "Progresión por etapa de vida"
+      ]
+    },
+    {
+      "slug": "dol",
+      "title": "US DOL AI Literacy Framework",
+      "author": "U.S. Department of Labor",
+      "year": "2026",
+      "fullAuthors": "U.S. Department of Labor, ETA",
+      "publisher": "TEN 07-25 (13 feb 2026)",
+      "audience": "Sistema público de workforce",
+      "structure": "5 áreas + 7 principios",
+      "progression": "Plano · sin niveles",
+      "category": "institucional",
+      "lineage": "politica-eua",
+      "shortDesc": "TEN 07-25 · Feb 2026",
+      "uniqueContributions": [
+        "Separación qué/cómo (5 áreas + 7 delivery principles)",
+        "Distinción literacy/proficiency/fluency",
+        "Foco en workforce y mercado laboral",
+        "Anclaje a EO 14277"
+      ]
+    },
+    {
+      "slug": "yoon",
+      "title": "Yoon, Ryu, Kim & Kim",
+      "author": "Yoon et al.",
+      "year": "2026",
+      "fullAuthors": "Ihyeon Yoon, Jeeheon Ryu, Kukhyeon Kim, Inki Kim",
+      "publisher": "Frontiers in Education, 11:1745059",
+      "doi": "10.3389/feduc.2026.1745059",
+      "license": "CC-BY 4.0",
+      "audience": "In-service teachers K-12 · Corea",
+      "structure": "3 dim · 8 categorías · 17 competencias · 51 indicadores conductuales",
+      "progression": "4 etapas de carrera docente (Induction · Development · Mastery · Leadership)",
+      "category": "academico-aplicado",
+      "lineage": "convergencia-ambos-linajes",
+      "shortDesc": "Etapas de carrera docente · Corea",
+      "uniqueContributions": [
+        "Etapas de carrera docente como organizador",
+        "Validación cuantitativa rigurosa (CVR ≥ 0.75)",
+        "Hallazgos empíricos sobre diferencias entre grupos (ANOVA + Scheffé)",
+        "Estructura basada en taxonomía Bloom",
+        "Anclaje a política nacional concreta (AIDT Korea)",
+        "Sustainable teacher development como concepto explícito",
+        "Primer marco del benchmark que cita a otro marco del benchmark (Chiu)"
+      ]
+    }
+  ],
+  "lineages": {
+    "ai-literacy-academico": {
+      "origin": "Comunidad HCI · Crítica académica",
+      "chain": ["long-magerko", "chiu", "yoon"]
+    },
+    "europeo-digital": {
+      "origin": "JRC · Comisión Europea · Institucional",
+      "chain": ["digcomp", "digcompedu", "yoon"]
+    }
+  }
+}
