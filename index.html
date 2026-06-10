@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark de marcos internacionales de competencias en IA — Marco IA 2030</title>
+<meta name="description" content="Benchmark interactivo de marcos internacionales de competencias en inteligencia artificial. Insumo del Marco Mexicano de Competencias en IA 2030, FIMPES-Santander Universidades 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="brand">Marco IA 2030 <span style="color: var(--text-faint); font-weight: 400;">· Benchmark</span></a>
+    <span class="brand-meta">FIMPES-Santander 2026</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Documento de trabajo · v1.1 · Benchmark completo</div>
+    <h1>Once marcos internacionales de competencias en IA, <em>comparados</em> para informar el Marco Mexicano de Competencias en IA para Educación Superior.</h1>
+    <p class="hero-lead">
+      Este benchmark sintetiza los marcos fundacionales, institucionales y académicos que están dando forma a la conversación global sobre alfabetización en inteligencia artificial. Su propósito es informar el diseño del Marco Mexicano que se construye en alianza entre la Universidad Anáhuac México y la UNAM, Facultad de Química.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Marcos analizados</span>
+        <span class="hero-meta-value">11 de 11 · completo</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Última actualización</span>
+        <span class="hero-meta-value" id="last-update">—</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Categorías</span>
+        <span class="hero-meta-value">Fundacionales · Institucionales · Académicos</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="tab-nav" role="tablist">
+  <div class="tab-nav-inner">
+    <button class="tab" role="tab" aria-selected="true" data-tab="marcos" onclick="switchTab('marcos')">Marcos</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="comparativa" onclick="switchTab('comparativa')">Vista comparativa</button>
+  </div>
+</nav>
+
+<main class="panel" aria-current="true" data-panel="marcos">
+  <div class="container">
+    <p class="section-label">Once marcos · ordenados cronológicamente · clic para ver la ficha</p>
+    <div class="framework-grid">
+      <a class="framework-card" href="marcos/digcompedu.html">
+        <div class="fc-header"><span class="fc-title">DigCompEdu (Redecker)</span><span class="fc-badge badge-loaded">2017</span></div>
+        <span class="fc-meta">JRC · CE · Educadores incluyendo HE</span>
+      </a>
+      <a class="framework-card" href="marcos/long-magerko.html">
+        <div class="fc-header"><span class="fc-title">Long & Magerko</span><span class="fc-badge badge-foundational">2020</span></div>
+        <span class="fc-meta">CHI · Definición seminal AI literacy</span>
+      </a>
+      <a class="framework-card" href="marcos/digcomp.html">
+        <div class="fc-header"><span class="fc-title">DigComp 2.2 / 3.0</span><span class="fc-badge badge-loaded">2022 / 2025</span></div>
+        <span class="fc-meta">JRC · CE · 5 ediciones</span>
+      </a>
+      <a class="framework-card" href="marcos/unesco-cft.html">
+        <div class="fc-header"><span class="fc-title">UNESCO AI CFT</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">Competencias para docentes</span>
+      </a>
+      <a class="framework-card" href="marcos/unesco-cfs.html">
+        <div class="fc-header"><span class="fc-title">UNESCO AI CFS</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">Competencias para estudiantes</span>
+      </a>
+      <a class="framework-card" href="marcos/digital-promise.html">
+        <div class="fc-header"><span class="fc-title">Digital Promise (Mills, Ruiz et al.)</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">K-12 · EUA · Operativo</span>
+      </a>
+      <a class="framework-card" href="marcos/chiu.html">
+        <div class="fc-header"><span class="fc-title">Chiu et al.</span><span class="fc-badge badge-loaded">2024</span></div>
+        <span class="fc-meta">Literacy vs competency · CAEO</span>
+      </a>
+      <a class="framework-card" href="marcos/ailit.html">
+        <div class="fc-header"><span class="fc-title">AILit Framework (OECD-EC)</span><span class="fc-badge badge-loaded">2025</span></div>
+        <span class="fc-meta">OECD + EC · Base para PISA 2029</span>
+      </a>
+      <a class="framework-card" href="marcos/chee.html">
+        <div class="fc-header"><span class="fc-title">Chee, Ahn & Lee</span><span class="fc-badge badge-loaded">2025</span></div>
+        <span class="fc-meta">PRISMA · BJET</span>
+      </a>
+      <a class="framework-card" href="marcos/dol.html">
+        <div class="fc-header"><span class="fc-title">US DOL AI Literacy Framework</span><span class="fc-badge badge-loaded">2026</span></div>
+        <span class="fc-meta">TEN 07-25 · Feb 2026</span>
+      </a>
+      <a class="framework-card" href="marcos/yoon.html">
+        <div class="fc-header"><span class="fc-title">Yoon, Ryu, Kim & Kim</span><span class="fc-badge badge-loaded">2026</span></div>
+        <span class="fc-meta">Etapas de carrera docente · Corea</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<main class="panel" aria-current="false" data-panel="comparativa">
+  <div class="container">
+
+    <div class="comp-intro">
+      <p class="section-label">Progreso del benchmark</p>
+      <div class="progress-track"><div class="progress-fill" style="width: 100%"></div></div>
+      <p class="progress-text">11 de 11 marcos cargados — 100 % · benchmark completo</p>
+      <p style="margin-top: 32px;">La vista comparativa presenta los once marcos del benchmark en cuatro secciones: tabla general de ejes, mapa de competencias, mapa de progresión, y convergencias/divergencias. Los marcos se ordenan cronológicamente — desde DigCompEdu (2017) hasta Yoon et al. (2026) — para mostrar la evolución del campo.</p>
+    </div>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Tabla comparativa general</h2>
+        <p class="compare-section-desc">Treinta y siete ejes derivados inductivamente del análisis comparado de los once marcos. Cada marco aporta dimensiones distintivas: la definición canónica de Long & Magerko (2020), la arquitectura desarrollativa CEFR-inspired de DigCompEdu (2017), la estructura matricial de la familia UNESCO (2024), los Core Values de Digital Promise (2024), la distinción formal literacy/competency de Chiu et al. (2024), las etapas de carrera docente y validación cuantitativa de Yoon et al. (2026), entre otros. Las columnas están ordenadas cronológicamente para mostrar la evolución del campo.</p>
+      </header>
+      <div class="compare-wrapper">
+        <div class="compare-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Eje</th>
+                <th>DigCompEdu (2017)<span class="col-meta">Educadores HE</span></th>
+                <th>Long & Magerko (2020)<span class="col-meta">Fundacional</span></th>
+                <th>DigComp 2.2/3.0<span class="col-meta">Fundacional UE</span></th>
+                <th>UNESCO CFT (2024)<span class="col-meta">Docentes</span></th>
+                <th>UNESCO CFS (2024)<span class="col-meta">Estudiantes</span></th>
+                <th>Digital Promise (2024)<span class="col-meta">K-12 Operativo</span></th>
+                <th>Chiu et al. (2024)<span class="col-meta">Literacy vs Comp</span></th>
+                <th>AILit (2025)<span class="col-meta">PISA 2029</span></th>
+                <th>Chee et al. (2025)<span class="col-meta">Académico</span></th>
+                <th>US DOL (2026)<span class="col-meta">Política EUA</span></th>
+                <th>Yoon et al. (2026)<span class="col-meta">Etapas carrera</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Año de publicación</td><td><strong>2017 (pre-ChatGPT)</strong>.</td><td>2020.</td><td>2022/2025.</td><td>2024.</td><td>2024.</td><td>2024.</td><td>2024.</td><td>2025.</td><td>2025.</td><td>2026.</td><td>2026.</td></tr>
+              <tr><td><strong>Audiencia incluye educación superior</strong></td><td><strong>Sí · explícitamente nombrada (único)</strong>.</td><td>Implícita.</td><td>Ciudadanos.</td><td>K-12.</td><td>K-12.</td><td>K-12.</td><td>Middle school.</td><td>K-12.</td><td>Etapa de vida (HE).</td><td>Workforce.</td><td>K-12.</td></tr>
+              <tr><td>Audiencia: docentes</td><td><strong>Educadores todos los niveles</strong>.</td><td>Implícita.</td><td>No.</td><td>Docentes K-12.</td><td>No.</td><td>Líderes K-12.</td><td>No (estudiantes).</td><td>No.</td><td>Múltiple.</td><td>No.</td><td>In-service K-12.</td></tr>
+              <tr><td>Tipo de instrumento</td><td><strong>JRC Science for Policy Report</strong>.</td><td>Paper académico.</td><td>Política UE.</td><td>Marco normativo.</td><td>Marco normativo.</td><td>Marco operativo.</td><td>Co-design empírico.</td><td>Marco evaluativo.</td><td>Revisión sistemática.</td><td>Guía política.</td><td>Académico-aplicado.</td></tr>
+              <tr><td>Estructura dimensional</td><td><strong>6 áreas · 22 competencias elementales</strong>.</td><td>5 preg · 17 comp.</td><td>5 dim · 21 comp.</td><td>5 × 3.</td><td>4 × 3.</td><td>2+3+6+3.</td><td>5 + 5.</td><td>4 dom · 22.</td><td>8 × 18.</td><td>5 + 7.</td><td>3 × 8 × 17 × 51.</td></tr>
+              <tr><td>Eje de progresión</td><td><strong>6 niveles CEFR-inspired (A1-C2)</strong>.</td><td>Sin.</td><td>4 secuenciales.</td><td>3 no jerárq.</td><td>3 espiral.</td><td>Concéntrica.</td><td>Sin.</td><td>Modos paralelos.</td><td>Etapa vida.</td><td>Sin.</td><td>4 etapas carrera.</td></tr>
+              <tr><td><strong>Sistema CEFR-inspired</strong></td><td><strong>Sí · A1-C2 (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td><strong>Etiquetas motivacionales por nivel</strong></td><td><strong>Sí · Newcomer→Pioneer (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>Sí (Induction-Leadership).</td></tr>
+              <tr><td>Inspiración Bloom-revisada</td><td><strong>Sí · 3 bloques de 2 niveles (ancestro)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>Sí (3 dim).</td></tr>
+              <tr><td>Distinción literacy vs competency</td><td>"Digital competence" como genérico.</td><td>Mezclados.</td><td>Implícita.</td><td>Mezclados.</td><td>Mezclados.</td><td>Mezclados.</td><td><strong>Formal</strong>.</td><td>Mezclados.</td><td>Mezclados.</td><td>Mezclados.</td><td>Integrador "AI-digital".</td></tr>
+              <tr><td>Self-reflection como componente</td><td>Competencia 1.3 (Reflective practice).</td><td>No.</td><td>Transversal.</td><td>Lifelong.</td><td>No.</td><td>Estrategia.</td><td><strong>Componente formal</strong>.</td><td>Attitude.</td><td>No.</td><td>Principio.</td><td>Categoría 3.A.</td></tr>
+              <tr><td>Validación empírica con docentes</td><td><strong>100+ docentes + 72 stakeholders + expert workshop</strong>.</td><td>No.</td><td>12 años.</td><td>Consultas globales.</td><td>190 países.</td><td>Práctica.</td><td>30 maestros · 4 ciclos.</td><td>Focus groups.</td><td>No.</td><td>Consultas.</td><td>44 panelistas · Delphi cuantitativo.</td></tr>
+              <tr><td><strong>Marco desarrollativo declarativo (no evaluativo)</strong></td><td><strong>Sí · declarado explícitamente (único)</strong>.</td><td>No declarado.</td><td>Regulatorio.</td><td>Normativo.</td><td>Normativo.</td><td>Operativo.</td><td>Académico.</td><td>Evaluativo.</td><td>No.</td><td>Regulatorio.</td><td>Académico.</td></tr>
+              <tr><td><strong>Proficiency statements para autoevaluación</strong></td><td><strong>Sí · ~132 statements para autoeval por docente (único)</strong>.</td><td>No.</td><td>Sí (Dim 3).</td><td>No.</td><td>No.</td><td>Look Fors (estudiantes).</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>51 indicadores (no autoeval).</td></tr>
+              <tr><td>Aproximación a IA</td><td><strong>Sin IA explícita (limitación)</strong>.</td><td>Dominio.</td><td>Transversal.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>Dominio.</td><td>"AI-digital".</td></tr>
+              <tr><td>Contempla IA generativa</td><td><strong>No (pre-ChatGPT)</strong>.</td><td>No.</td><td>Sí.</td><td>Sí.</td><td>Sí.</td><td>Mencionada.</td><td>Explícita.</td><td>Sí.</td><td>Implícita.</td><td>Foco explícito.</td><td>Implícita.</td></tr>
+              <tr><td>Modelo K-S-A explícito</td><td>Integrado en proficiency statements (no separado).</td><td>No.</td><td>Sí.</td><td>No.</td><td>No.</td><td>No.</td><td>K+S+confidence.</td><td>Sí.</td><td>No.</td><td>No.</td><td>Bloom 3D.</td></tr>
+              <tr><td><strong>Aceptación de heterogeneidad entre áreas</strong></td><td><strong>Sí · declarado explícitamente vía analogía CEFR (único)</strong>.</td><td>No.</td><td>Implícita.</td><td>Implícita.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Sí (etapas).</td></tr>
+              <tr><td>Estructura matricial</td><td><strong>No · 22 elementales</strong>.</td><td>No.</td><td>No.</td><td>Sí (5×3).</td><td>Sí (4×3).</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>3D × 4 etapas.</td></tr>
+              <tr><td><strong>Arquitectura núcleo + envolventes</strong></td><td><strong>Sí · áreas 2-5 núcleo + 1+6 envolventes (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>Concéntrica.</td><td>Triangular.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Área transversal explícita</td><td><strong>Sí · Área 5 transversal a áreas 2-4 (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td><strong>Roles colaborativos por nivel</strong></td><td><strong>Sí · ecología de niveles complementarios (único)</strong>.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Tratamiento de la ética</td><td>Distribuida (1.4, 2.3, 6.4).</td><td>C16.</td><td>Transversal.</td><td>Aspecto.</td><td>Aspecto.</td><td>Value + Practice.</td><td>Componente.</td><td>Fundacional.</td><td>Independiente.</td><td>Use Responsibly.</td><td>Cats 1.C y 3.B.</td></tr>
+              <tr><td>Tratamiento de la agencia</td><td>Implícita (núcleo pedagógico).</td><td>Implícita.</td><td>Implícita.</td><td>Eje central.</td><td>Eje central.</td><td>Core Value.</td><td>No formalizada.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Implícita.</td></tr>
+              <tr><td>Verificación crítica de outputs</td><td><strong>No central (sin IA generativa)</strong>.</td><td>C5, C13.</td><td>1.2.</td><td>Mindset.</td><td>Mindset.</td><td>Mode + P6.</td><td>Collaboration.</td><td>Dominio 1.</td><td>Sub 6.3.</td><td>Área.</td><td>Assessment.</td></tr>
+              <tr><td>Pedagogía formalizada</td><td><strong>22 competencias pedagógicas operacionalizadas</strong>.</td><td>15 DC.</td><td>No.</td><td>Aspecto.</td><td>No.</td><td>5 estrategias.</td><td>5 experiencias.</td><td>No.</td><td>No.</td><td>7 principios.</td><td>3 dim Bloom.</td></tr>
+              <tr><td>Self-assessment como uso primario</td><td><strong>Sí · diseño primario del marco (único declarativo)</strong>.</td><td>No.</td><td>Sí.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Ciudadanía como horizonte</td><td>Vía conexión a DigComp.</td><td>No.</td><td>Comp 2.3.</td><td>Implícita.</td><td>Explícita.</td><td>Practice 3.</td><td>Community.</td><td>Implícita.</td><td>No.</td><td>No.</td><td>Implícita.</td></tr>
+              <tr><td>Sostenibilidad ambiental</td><td>No.</td><td>No.</td><td>Competencia.</td><td>Principio.</td><td>Principio.</td><td>P5.</td><td>No.</td><td>K4.2.</td><td>No.</td><td>No.</td><td>"Sustainable teacher dev".</td></tr>
+              <tr><td>Conexión con otros marcos</td><td><strong>Conecta con DigComp (Área 6)</strong>.</td><td>Original.</td><td>JRC.</td><td>UNESCO.</td><td>UNESCO.</td><td>Mapeo trad.</td><td>Cita LM.</td><td>OECD-EC.</td><td>Sintetiza LM.</td><td>Standalone.</td><td>Cita Chiu + DigCompEdu.</td></tr>
+              <tr><td>Es parte de familia</td><td><strong>JRC (con DigComp, DigCompOrg, etc.)</strong>.</td><td>No.</td><td>JRC.</td><td>UNESCO.</td><td>UNESCO.</td><td>No.</td><td>No.</td><td>OECD-EC.</td><td>No.</td><td>No.</td><td>No.</td></tr>
+              <tr><td>Anclaje a política pública</td><td><strong>UE Digital Education Action Plan</strong>.</td><td>Ninguno.</td><td>DSI.</td><td>UN.</td><td>UN.</td><td>EdSAFE.</td><td>Ninguno.</td><td>EU AI Act.</td><td>Ninguno.</td><td>EO 14277.</td><td>AIDT Korea.</td></tr>
+              <tr><td>Adopción institucional documentada</td><td><strong>Base de SELFIE for Teachers + múltiples instrumentos nacionales europeos</strong>.</td><td>Citado en literatura.</td><td>14+ países UE.</td><td>Global.</td><td>Global.</td><td>Reciente.</td><td>Académica.</td><td>Reciente (PISA).</td><td>Reciente.</td><td>Federal EUA.</td><td>Reciente.</td></tr>
+              <tr><td>Influencia generativa sobre el campo</td><td><strong>Ancestro digital competence docente · citado por Yoon</strong>.</td><td>Ancestro AI literacy.</td><td>Independiente.</td><td>Cita LM.</td><td>Cita LM.</td><td>Cita LM.</td><td>Cita LM.</td><td>Síntesis.</td><td>Construye.</td><td>Sin influencia.</td><td>Cita Chiu.</td></tr>
+              <tr><td>Base metodológica</td><td><strong>Consulta institucional + workshops + ET 2020 Working Group</strong>.</td><td>Scoping · 150 docs.</td><td>12 años.</td><td>Consultas globales.</td><td>190 países.</td><td>Síntesis.</td><td>Co-design 4 ciclos.</td><td>Expertos.</td><td>PRISMA · 29.</td><td>Stakeholders.</td><td>Delphi + ANOVA.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Mapa de competencias</h2>
+        <p class="compare-section-desc">Comparación lado a lado de las arquitecturas de competencias propuestas por los once marcos. La diversidad arquitectónica refleja la madurez del campo: estructuras interrogativas, unidimensionales, qué/cómo, matriciales bidimensionales, modos paralelos, concéntricas, triangulares, jerárquicas con núcleo y envolventes, y jerárquicas Bloom-based. Columnas ordenadas cronológicamente.</p>
+      </header>
+      <div class="competency-map">
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">DigCompEdu</div><div class="map-column-subtitle">6 áreas · 22 comp</div><div class="map-column-count">Núcleo + envolventes</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">A1</span><div><span class="map-list-name">Professional Engagement</span><span class="map-list-note">Envolvente prof.</span></div></li>
+            <li><span class="map-list-num">A2</span><div><span class="map-list-name">Digital Resources</span><span class="map-list-note">Núcleo</span></div></li>
+            <li><span class="map-list-num">A3</span><div><span class="map-list-name">Teaching and Learning</span><span class="map-list-note">Núcleo · fundamental</span></div></li>
+            <li><span class="map-list-num">A4</span><div><span class="map-list-name">Assessment</span><span class="map-list-note">Núcleo</span></div></li>
+            <li><span class="map-list-num">A5</span><div><span class="map-list-name">Empowering Learners</span><span class="map-list-note">Transversal a 2-4<span class="map-tag map-tag-unique">único</span></span></div></li>
+            <li><span class="map-list-num">A6</span><div><span class="map-list-name">Facilitating Learners' DC</span><span class="map-list-note">Envolvente meta-pedag.</span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">Long & Magerko</div><div class="map-column-subtitle">5 preg · 17 comp</div><div class="map-column-count">Interrogativa</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">P1-P5</span><div><span class="map-list-name">¿Qué? ¿Puede? ¿Cómo? ¿Usar? ¿Percibe?</span></div></li>
+            <li><span class="map-list-num">+15</span><div><span class="map-list-name">Consideraciones diseño<span class="map-tag map-tag-unique">único</span></span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">DigComp 3.0</div><div class="map-column-subtitle">5 áreas</div><div class="map-column-count">K-S-A</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">1-5</span><div><span class="map-list-name">Info · Comm · Content · Safety · Problem<span class="map-tag map-tag-shared">JRC</span></span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">UNESCO CFT</div><div class="map-column-subtitle">5 × 3</div><div class="map-column-count">Bidimensional</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">1-3</span><div><span class="map-list-name">Human-centred · Ethics · AI foundations<span class="map-tag map-tag-shared">UNESCO</span></span></div></li>
+            <li><span class="map-list-num">4-5</span><div><span class="map-list-name">Pedagogy · Prof. dev.<span class="map-tag map-tag-unique">único</span></span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">UNESCO CFS</div><div class="map-column-subtitle">4 × 3</div><div class="map-column-count">Bidimensional</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">1-3</span><div><span class="map-list-name">Human-centred · Ethics · AI techniques<span class="map-tag map-tag-shared">UNESCO</span></span></div></li>
+            <li><span class="map-list-num">4</span><div><span class="map-list-name">System design<span class="map-tag map-tag-unique">único</span></span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">Digital Promise</div><div class="map-column-subtitle">2+3+6+3</div><div class="map-column-count">Concéntrica</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">V</span><div><span class="map-list-name">Core Values<span class="map-tag map-tag-unique">único</span></span></div></li>
+            <li><span class="map-list-num">M</span><div><span class="map-list-name">3 Modes</span></div></li>
+            <li><span class="map-list-num">P1-P6</span><div><span class="map-list-name">6 Practices con Look Fors</span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">Chiu et al.</div><div class="map-column-subtitle">5 comp</div><div class="map-column-count">Triángulo</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">1-4</span><div><span class="map-list-name">Tech · Impact · Ethics · Collab</span></div></li>
+            <li><span class="map-list-num">5</span><div><span class="map-list-name">Self-reflection<span class="map-tag map-tag-unique">único</span></span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">AILit</div><div class="map-column-subtitle">4 dom</div><div class="map-column-count">Paralelos</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">1-4</span><div><span class="map-list-name">Engaging · Creating · Managing · Designing</span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">Chee, Ahn & Lee</div><div class="map-column-subtitle">8 comp</div><div class="map-column-count">Unidimensional</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">1-7</span><div><span class="map-list-name">Device, Data, Problem, Comm, Ethics, Career, Content</span></div></li>
+            <li><span class="map-list-num">8</span><div><span class="map-list-name">Affective<span class="map-tag map-tag-unique">único</span></span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">US DOL</div><div class="map-column-subtitle">5 + 7</div><div class="map-column-count">Qué + cómo</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">1-5</span><div><span class="map-list-name">Understand · Explore · Direct · Evaluate · Use</span></div></li>
+          </ul>
+        </div>
+        <div class="map-column">
+          <div class="map-column-header"><div class="map-column-title">Yoon et al.</div><div class="map-column-subtitle">3 × 8 × 17</div><div class="map-column-count">Bloom + carrera</div></div>
+          <ul class="map-list">
+            <li><span class="map-list-num">D1</span><div><span class="map-list-name">Understand</span></div></li>
+            <li><span class="map-list-num">D2</span><div><span class="map-list-name">Apply & Analyze</span></div></li>
+            <li><span class="map-list-num">D3</span><div><span class="map-list-name">Evaluate & Create</span></div></li>
+            <li><span class="map-list-num">×4</span><div><span class="map-list-name">Etapas carrera<span class="map-tag map-tag-unique">único</span></span></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="family-box">
+        <div class="family-box-label">Linaje conceptual del campo</div>
+        <div class="family-box-title">Dos linajes paralelos que convergen en Yoon et al. (2026)</div>
+        <div class="family-box-body">
+          <p>El análisis de los once marcos revela que el campo se organiza en <strong>dos linajes paralelos</strong> que convergen recientemente. El marco mexicano puede posicionarse como continuación de ambos linajes simultáneamente.</p>
+        </div>
+        <div class="lineages-grid">
+          <div class="lineage-card">
+            <div class="lineage-label">Linaje 1 · AI literacy/competency académico</div>
+            <div class="lineage-title">Origen HCI · Crítica académica</div>
+            <div class="lineage-chain">Long & Magerko (2020)<br>↓<br>Chiu et al. (2024)<br><em>[crítica + literacy/competency]</em><br>↓<br><strong>Yoon et al. (2026)</strong></div>
+          </div>
+          <div class="lineage-card">
+            <div class="lineage-label">Linaje 2 · Digital competence europeo</div>
+            <div class="lineage-title">Origen JRC · Institucional</div>
+            <div class="lineage-chain">DigComp (2006-2025, 5 ediciones)<br>↓<br><strong>DigCompEdu (2017)</strong><br><em>[adaptación a docentes]</em><br>↓<br>SELFIE for Teachers (2021)<br>↓<br><strong>Yoon et al. (2026)</strong></div>
+          </div>
+        </div>
+        <div class="family-box-body">
+          <p><strong>Yoon et al. (2026) es el punto de convergencia</strong>: cita simultáneamente a Chiu (linaje académico AI) y a DigCompEdu (linaje europeo digital). Es el primer marco del benchmark que sintetiza ambas tradiciones.</p>
+          <p>Para el marco mexicano, esta observación tiene implicación clara: <strong>posicionarse explícitamente como continuación de ambos linajes</strong>. Esto le da identidad propia sin perder anclaje internacional. La síntesis sería: <strong>arquitectura DigCompEdu (audiencia docente + 6 áreas + niveles A1-C2 + marco desarrollativo) + extensión Chiu/Yoon (literacy/competency + self-reflection + agencia) + adaptación específica a IA + perspectiva latinoamericana</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Mapa de progresión</h2>
+        <p class="compare-section-desc">El campo no ha consensuado un modelo único de avance del aprendiz. Entre los once marcos hay <strong>ocho lógicas distintas de progresión</strong>: sin niveles internos, por etapas de vida, secuenciales de 3, 4 o 6 niveles, modos paralelos, concéntrica, etapas de carrera profesional, y CEFR-inspired. Marcos ordenados cronológicamente.</p>
+      </header>
+      <div class="progression-grid">
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">DigCompEdu (2017)</div><div class="progression-source">JRC · CE · CEFR-inspired</div></div><span class="progression-tag tag-cefr">6 niveles CEFR · Bloom</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">Long & Magerko (2020)</div><div class="progression-source">Académico fundacional</div></div><span class="progression-tag tag-no-levels">Sin progresión</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">DigComp 3.0 (2025)</div><div class="progression-source">JRC · Comisión Europea</div></div><span class="progression-tag tag-has-levels">4 niveles secuenciales</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">UNESCO CFT (2024)</div><div class="progression-source">Docentes</div></div><span class="progression-tag tag-has-levels">3 niveles no jerárquicos</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">UNESCO CFS (2024)</div><div class="progression-source">Estudiantes</div></div><span class="progression-tag tag-has-levels">3 niveles secuenciales</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">Digital Promise (2024)</div><div class="progression-source">K-12 · concéntrica</div></div><span class="progression-tag tag-concentric">Concéntrica</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">Chiu et al. (2024)</div><div class="progression-source">Académico · co-design</div></div><span class="progression-tag tag-no-levels">Sin progresión</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">AILit Framework (2025)</div><div class="progression-source">OECD-EC · PISA 2029</div></div><span class="progression-tag tag-parallel">Modos paralelos</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">Chee, Ahn & Lee (2025)</div><div class="progression-source">Académico</div></div><span class="progression-tag tag-lifestage">Por etapa de vida</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">US DOL (2026)</div><div class="progression-source">Política pública federal</div></div><span class="progression-tag tag-no-levels">Sin progresión</span></div>
+        </div>
+        <div class="progression-card">
+          <div class="progression-header"><div><div class="progression-name">Yoon et al. (2026)</div><div class="progression-source">Académico-aplicado · Corea</div></div><span class="progression-tag tag-career">Etapas de carrera</span></div>
+        </div>
+      </div>
+
+      <aside class="callout">
+        <div class="callout-label">Implicación para el marco mexicano</div>
+        <div class="callout-body">
+          La diversidad de lógicas de progresión revela algo importante: <strong>el campo no ha consensuado un modelo único de avance del aprendiz</strong>. La división se ve así: los marcos académicos puros tienden a ser planos sin progresión (Long & Magerko, Chiu, DOL, Chee); los marcos institucionales matriciales introducen niveles (UNESCO CFT/CFS, DigComp); AILit opta por modos paralelos; Digital Promise por concéntrica; DigCompEdu por 6 niveles CEFR-inspired con etiquetas motivacionales; Yoon por etapas de carrera profesional. Para el marco mexicano, esta diversidad sugiere una <strong>arquitectura híbrida</strong>: 4 niveles de agencia (Receptor, Operador, Integrador, Arquitecto) × 5 áreas funcionales × variables de segmentación (etapas de carrera, tipo de IES, área disciplinar). Si en algún momento se busca mayor granularidad y reconocibilidad internacional, mapear nuestros 4 niveles a los 6 niveles CEFR de DigCompEdu (A1+A2 → Receptor, B1 → Operador, B2 → Integrador, C1+C2 → Arquitecto) sería movimiento natural.
+        </div>
+      </aside>
+    </section>
+
+    <section class="compare-section">
+      <header class="compare-section-header">
+        <h2 class="compare-section-title">Convergencias y divergencias</h2>
+        <p class="compare-section-desc">Síntesis del análisis comparado de los once marcos.</p>
+      </header>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-label">Convergencias</div>
+          <div class="insight-title">Donde los once marcos coinciden</div>
+          <ul class="insight-list">
+            <li><strong>Verificación crítica de outputs.</strong> Universal en marcos AI; DigCompEdu lo trata como "analysing evidence" sin enfoque IA.</li>
+            <li><strong>Habilidades humanas complementarias.</strong> Los once enfatizan que la tecnología amplifica al humano.</li>
+            <li><strong>Ética como dimensión propia o transversal.</strong> Ninguno la trata como opcional.</li>
+            <li><strong>Dos linajes con ancestro común tardío.</strong> Long & Magerko (2020) ancestro AI; DigComp (2006+) ancestro digital. Convergencia en Yoon et al. (2026).</li>
+            <li><strong>Self-reflection como tendencia.</strong> DigCompEdu lo formaliza desde 2017 (Competencia 1.3); Chiu lo eleva a componente; otros marcos lo incorporan transversalmente.</li>
+            <li><strong>Modelo K-S-A o equivalente como estándar emergente.</strong> DigComp explícito; DigCompEdu integrado en proficiency statements; AILit lo formaliza.</li>
+            <li><strong>Conexión con tradiciones educativas existentes.</strong> Digital Promise y Chiu explícitos; DigCompEdu conecta con DigComp; Yoon conecta linajes.</li>
+            <li><strong>Self-assessment como uso legítimo.</strong> DigCompEdu y DigComp lo formalizan; otros lo permiten implícitamente.</li>
+            <li><strong>Atención a docentes en ejercicio.</strong> UNESCO CFT, DigCompEdu, Yoon explícitamente enfocados.</li>
+            <li><strong>Foco en práctica pedagógica.</strong> DigCompEdu, UNESCO CFT y Yoon ponen pedagogía como núcleo.</li>
+          </ul>
+        </div>
+        <div class="insight-card">
+          <div class="insight-label">Divergencias</div>
+          <div class="insight-title">Donde toman caminos distintos</div>
+          <ul class="insight-list">
+            <li><strong>Aproximación a IA.</strong> Solo DigComp transversal; DigCompEdu sin IA (limitación histórica); los demás como dominio.</li>
+            <li><strong>Audiencia.</strong> DigCompEdu es el único que cubre explícitamente educación superior; otros son K-12, workforce o general.</li>
+            <li><strong>Lógica de progresión.</strong> Ocho lógicas distintas: sin progresión, etapa vida, no jerárquicos, secuenciales 3, secuenciales 4, modos paralelos, concéntrica, etapas carrera, CEFR-inspired.</li>
+            <li><strong>Sistema CEFR-inspired.</strong> Único en DigCompEdu (A1-C2 + Newcomer→Pioneer).</li>
+            <li><strong>Distinción literacy vs competency.</strong> Único en Chiu et al.</li>
+            <li><strong>Etapas de carrera profesional.</strong> Único en Yoon et al.</li>
+            <li><strong>Marco desarrollativo declarativo.</strong> Único en DigCompEdu (no evaluativo, no normativo).</li>
+            <li><strong>Self-reflection como componente formal.</strong> Único en Chiu.</li>
+            <li><strong>Core Values explícitos.</strong> Único en Digital Promise.</li>
+            <li><strong>Hallazgos empíricos sobre grupos.</strong> Único en Yoon (ANOVA + Scheffé).</li>
+            <li><strong>Arquitectura núcleo + envolventes.</strong> Único en DigCompEdu.</li>
+            <li><strong>Confidence como dimensión.</strong> Único en Chiu.</li>
+            <li><strong>Validación cuantitativa rigurosa.</strong> Yoon (CVR ≥ 0.75) el más estricto del benchmark.</li>
+            <li><strong>Área transversal explícita.</strong> Único en DigCompEdu (Área 5).</li>
+            <li><strong>Cultural learning como experiencia formal.</strong> Único en Chiu.</li>
+            <li><strong>Anclaje evaluativo internacional.</strong> Solo AILit (PISA 2029).</li>
+            <li><strong>Aceptación de heterogeneidad entre áreas.</strong> Único declarativo en DigCompEdu.</li>
+            <li><strong>Roles colaborativos por nivel.</strong> Único en DigCompEdu.</li>
+            <li><strong>Anclaje a política nacional concreta.</strong> Yoon (AIDT Korea) y DOL (EO 14277).</li>
+            <li><strong>Estructura Bloom-based para progresión.</strong> DigCompEdu (2017) ancestro; Yoon (2026) lo hereda.</li>
+            <li><strong>Proficiency statements para autoevaluación.</strong> Único en DigCompEdu (~132 statements).</li>
+            <li><strong>Adopción institucional masiva.</strong> DigCompEdu y DigComp (base de instrumentos nacionales europeos).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-block">
+        <h4>Marco IA 2030</h4>
+        <p>Marco Mexicano de Competencias en IA para Educación Superior. Beca FIMPES-Santander Universidades 2026. Alianza Universidad Anáhuac México y UNAM, Facultad de Química.</p>
+      </div>
+      <div class="footer-block">
+        <h4>Versión</h4>
+        <p class="footer-meta">v1.1 · 11 de 11 marcos · benchmark completo</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const today = new Date();
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('last-update').textContent = today.getDate() + ' ' + months[today.getMonth()] + ' ' + today.getFullYear();
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => { t.setAttribute('aria-selected', t.dataset.tab === tab); });
+    document.querySelectorAll('.panel').forEach(p => { p.setAttribute('aria-current', p.dataset.panel === tab); });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
