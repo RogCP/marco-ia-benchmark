@@ -90,7 +90,7 @@ Benchmark Interactivo/
 ### CSS y diseño
 
 - **Fonts (Google Fonts):** Fraunces (display, serif), Inter (body, sans-serif), JetBrains Mono (mono).
-- **Paleta:** beige/piedra con acento marrón (`--accent: #5b4733`). Modo oscuro automático vía `prefers-color-scheme`.
+- **Paleta:** beige/piedra con acento marrón (`--accent: #5b4733`). **Modo claro fijo** — el modo oscuro automático vía `prefers-color-scheme` se deshabilitó (algunos elementos de color no se distinguían bien contra fondo oscuro); pendiente definir una paleta oscura específica antes de reactivarlo.
 - **CSS variables** definidas en `:root`. Nunca hardcodear colores ni medidas que ya tienen variable.
 - **Sin frameworks** (no Tailwind, no Bootstrap). CSS puro.
 - **Sin build step.** El HTML se sirve tal cual.

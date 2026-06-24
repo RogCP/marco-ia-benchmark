@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototipo — Marco Mexicano de Competencias en IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde:       #1a7a4a;
+      --verde-bg:    #e8f5ee;
+      --amarillo:    #a05a00;
+      --amarillo-bg: #fff3e0;
+      --rojo:        #b32828;
+      --rojo-bg:     #fdecea;
+      --purpura:     #5c35a0;
+      --purpura-bg:  #f0eaf8;
+      --gris-texto:  #1a1a2e;
+      --gris-medio:  #666;
+      --gris-borde:  #ddd;
+      --fondo:       #f2f2f5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--fondo);
+      color: var(--gris-texto);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* ─── HEADER ─── */
+    .site-header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 24px 40px 20px;
+      border-bottom: 4px solid #e63946;
+    }
+    .site-header .kicker {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      opacity: 0.55;
+      margin-bottom: 6px;
+    }
+    .site-header h1 {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .site-header .meta {
+      font-size: 12px;
+      opacity: 0.5;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 36px 40px;
+    }
+
+    .seccion { margin-bottom: 52px; }
+
+    .seccion-titulo {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gris-medio);
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gris-borde);
+    }
+
+    .seccion-intro {
+      font-size: 13px;
+      color: var(--gris-medio);
+      margin-bottom: 20px;
+      max-width: 780px;
+      line-height: 1.7;
+    }
+
+    /* ─── LEYENDA ─── */
+    .leyenda {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      background: #fff;
+      border: 1px solid var(--gris-borde);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 36px;
+    }
+    .leyenda-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #444;
+    }
+    .leyenda-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── GRID ÁREAS ─── */
+    .areas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .area-full { grid-column: 1 / -1; }
+
+    /* ─── CARD ÁREA ─── */
+    .area-card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid var(--gris-borde);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .area-card.estado-cubierto { border-left: 5px solid var(--verde); }
+    .area-card.estado-parcial  { border-left: 5px solid var(--amarillo); }
+    .area-card.estado-gap      { border-left: 5px solid var(--rojo); }
+
+    .area-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--gris-borde);
+    }
+    .area-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--gris-medio);
+      margin-bottom: 4px;
+    }
+    .area-nombre {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+    .badge.cubierto  { background: var(--verde-bg);    color: var(--verde); }
+    .badge.parcial   { background: var(--amarillo-bg); color: var(--amarillo); }
+    .badge.gap       { background: var(--rojo-bg);     color: var(--rojo); }
+
+    /* barra de cobertura */
+    .cobertura {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .cob-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gris-medio);
+      min-width: 32px;
+    }
+    .cob-track {
+      flex: 1;
+      height: 5px;
+      background: #e8e8e8;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .cob-fill { height: 100%; border-radius: 3px; }
+    .cob-fill.alta  { background: var(--verde);    }
+    .cob-fill.media { background: var(--amarillo); }
+    .cob-fill.baja  { background: var(--rojo);     }
+
+    .area-body {
+      padding: 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* columnas internas (Área 7) */
+    .area-body-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .sub-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--gris-medio);
+      margin-bottom: 8px;
+    }
+
+    .comp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .comp-list li {
+      font-size: 13px;
+      padding-left: 14px;
+      position: relative;
+      color: #333;
+      line-height: 1.5;
+    }
+    .comp-list li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--gris-medio);
+    }
+
+    .fuentes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .fuente {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 2px 8px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      color: #444;
+    }
+
+    .callout {
+      border-radius: 7px;
+      padding: 11px 14px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .callout strong {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      opacity: 0.75;
+    }
+    .callout.gap-callout {
+      background: var(--rojo-bg);
+      color: var(--rojo);
+      border-left: 3px solid var(--rojo);
+    }
+    .callout.ec-callout {
+      background: var(--purpura-bg);
+      color: var(--purpura);
+      border-left: 3px solid var(--purpura);
+    }
+
+    /* ─── MAPEO FIMPES ─── */
+    .mapeo-panel, .cob-leyenda-panel {
+      background: #fff;
+      border: 1px solid var(--gris-borde);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .mapeo-panel h3, .cob-leyenda-panel h3 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gris-medio);
+      margin-bottom: 14px;
+    }
+    .mapeo-fila {
+      display: grid;
+      grid-template-columns: 1fr 20px 1fr;
+      align-items: start;
+      gap: 0 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f0f0f0;
+      font-size: 13px;
+    }
+    .mapeo-fila:first-of-type { border-top: none; }
+    .mapeo-origen { color: var(--gris-medio); }
+    .mapeo-origen .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      background: #f0f0f0;
+      padding: 2px 7px;
+      border-radius: 4px;
+      color: #555;
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+    .mapeo-flecha { color: #aaa; font-size: 14px; text-align: center; padding-top: 2px; }
+    .mapeo-destino { font-weight: 500; color: var(--gris-texto); }
+    .tipo-cambio {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .tipo-nuevo        { background: #e3f5e9; color: #1a7a4a; }
+    .tipo-directo      { background: #e8eaf6; color: #3949ab; }
+    .tipo-renombrado   { background: var(--amarillo-bg); color: var(--amarillo); }
+    .tipo-desglose     { background: var(--purpura-bg); color: var(--purpura); }
+    .tipo-elevado      { background: var(--rojo-bg); color: var(--rojo); }
+    .tipo-distribuido  { background: #e0f7fa; color: #00695c; }
+
+    /* ─── LEYENDA COBERTURA ─── */
+    .cob-leyenda-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .cob-leyenda-item {
+      border-radius: 7px;
+      padding: 12px 14px;
+    }
+    .cob-leyenda-item.nivel-alto   { background: var(--verde-bg);    border-left: 3px solid var(--verde); }
+    .cob-leyenda-item.nivel-medio  { background: var(--amarillo-bg); border-left: 3px solid var(--amarillo); }
+    .cob-leyenda-item.nivel-bajo   { background: var(--rojo-bg);     border-left: 3px solid var(--rojo); }
+    .cob-leyenda-escala {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .cob-leyenda-label { font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+    .cob-leyenda-desc  { font-size: 12px; line-height: 1.55; color: #444; }
+
+    /* ─── BADGE ORIGEN FIMPES ─── */
+    .fimpes-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 2px 9px 2px 7px;
+      border-radius: 4px;
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      background: #f0f0f5;
+      color: #555;
+      border: 1px solid #ddd;
+      line-height: 1.6;
+    }
+
+    /* ─── TABLA PROGRESIÓN ─── */
+    .progresion-tabla {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+      font-size: 13px;
+    }
+    .progresion-tabla thead th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 11px 13px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .progresion-tabla thead th:first-child {
+      background: #14142a;
+      min-width: 155px;
+    }
+    .progresion-tabla tbody td {
+      padding: 13px;
+      border-bottom: 1px solid var(--gris-borde);
+      vertical-align: top;
+    }
+    .progresion-tabla tbody tr:last-child td { border-bottom: none; }
+
+    .nivel-cel {
+      background: #f7f7fc;
+      border-right: 1px solid var(--gris-borde);
+    }
+    .nivel-nombre {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 3px;
+    }
+    .nivel-sub {
+      font-size: 11px;
+      color: var(--gris-medio);
+      margin-bottom: 7px;
+    }
+    .nivel-etiqueta {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .etq-a { background: var(--verde-bg);    color: var(--verde); }
+    .etq-b { background: var(--amarillo-bg); color: var(--amarillo); }
+    .etq-c { background: var(--rojo-bg);     color: var(--rojo); }
+
+    .progresion-tabla td p {
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: #444;
+    }
+
+    /* ─── ENTRECOMP DISEÑO ─── */
+    .ec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .ec-card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid var(--gris-borde);
+      border-top: 4px solid var(--purpura);
+      padding: 20px;
+    }
+    .ec-titulo {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--purpura);
+      margin-bottom: 10px;
+    }
+    .ec-desc {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .ec-ejemplo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: #f5f0ff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: var(--purpura);
+      line-height: 1.7;
+    }
+
+    /* ─── PREGUNTAS ─── */
+    .preguntas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .pregunta-card {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--gris-borde);
+      padding: 18px 20px;
+    }
+    .pregunta-card h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    .pregunta-card ol {
+      padding-left: 18px;
+      font-size: 13px;
+      line-height: 2;
+      color: #444;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #1a1a2e;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 780px) {
+      .container { padding: 20px; }
+      .site-header { padding: 20px; }
+      .areas-grid, .ec-grid, .preguntas-grid { grid-template-columns: 1fr; }
+      .area-full { grid-column: 1; }
+      .area-body-2col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="kicker">Documento de trabajo · Borrador interno · No citar</div>
+  <h1>Prototipo — Marco Mexicano de Competencias en IA para Educación Superior</h1>
+  <div class="meta">Anáhuac / UNAM · Proyecto FIMPES-Santander 2026 · 17 junio 2026</div>
+</header>
+
+<div class="container">
+
+  <!-- LEYENDA -->
+  <div class="leyenda">
+    <div class="leyenda-item">
+      <div class="leyenda-dot" style="background:var(--verde)"></div>
+      <span>Bien cubierto por el benchmark (≥6 de 11 marcos)</span>
+    </div>
+    <div class="leyenda-item">
+      <div class="leyenda-dot" style="background:var(--amarillo)"></div>
+      <span>Cubierto parcialmente (2–5 marcos)</span>
+    </div>
+    <div class="leyenda-item">
+      <div class="leyenda-dot" style="background:var(--rojo)"></div>
+      <span>Gap — ausente o muy débil en el benchmark</span>
+    </div>
+    <div class="leyenda-item">
+      <div class="leyenda-dot" style="background:var(--purpura)"></div>
+      <span>Aporte específico de EntreComp</span>
+    </div>
+  </div>
+
+
+  <!-- ════ SECCIÓN 1: ÁREAS ════ -->
+  <div class="seccion">
+    <div class="seccion-titulo">Áreas propuestas del Marco Mexicano</div>
+    <p class="seccion-intro">
+      Siete áreas emergentes de la síntesis del benchmark. Los colores del borde indican qué tan bien cubierta
+      está cada área por los 11 marcos analizados. Las Áreas 1–4 tienen alta convergencia; las Áreas 5–7
+      requieren trabajo de construcción adicional.
+    </p>
+
+    <!-- MAPEO FIMPES ↔ PROTOTIPO -->
+    <div class="mapeo-panel">
+      <h3>Evolución desde la propuesta FIMPES (§3.2) — ¿qué cambió y por qué?</h3>
+
+      <div class="mapeo-fila">
+        <div class="mapeo-origen"><div class="tag">F1</div> Fundamentos y funcionamiento de IA</div>
+        <div class="mapeo-flecha">→</div>
+        <div class="mapeo-destino">Área 01 · Comprensión de la IA <span class="tipo-cambio tipo-renombrado">Renombrada y ampliada</span></div>
+      </div>
+
+      <div class="mapeo-fila">
+        <div class="mapeo-origen"><div class="tag">F2</div> Datos y evaluación de outputs</div>
+        <div class="mapeo-flecha">→</div>
+        <div class="mapeo-destino">Área 02 · Uso efectivo &amp; Área 03 · Evaluación crítica <span class="tipo-cambio tipo-desglose">Desglosada en 2 áreas</span></div>
+      </div>
+
+      <div class="mapeo-fila">
+        <div class="mapeo-origen"><div class="tag">F3</div> Aplicación pedagógica / profesional</div>
+        <div class="mapeo-flecha">→</div>
+        <div class="mapeo-destino">Área 06 · Aplicación profesional y disciplinar <span class="tipo-cambio tipo-renombrado">Generalizada (no solo pedagógica)</span></div>
+      </div>
+
+      <div class="mapeo-fila">
+        <div class="mapeo-origen"><div class="tag">F4</div> Ética, privacidad y uso responsable</div>
+        <div class="mapeo-flecha">→</div>
+        <div class="mapeo-destino">Área 04 · Ética y uso responsable <span class="tipo-cambio tipo-directo">Mapeo directo</span></div>
+      </div>
+
+      <div class="mapeo-fila">
+        <div class="mapeo-origen"><div class="tag">F5</div> Colaboración humano-IA</div>
+        <div class="mapeo-flecha">→</div>
+        <div class="mapeo-destino">Distribuida en Áreas 02, 05 y 07 — sin área propia <span class="tipo-cambio tipo-distribuido">Ningún marco la tiene como área independiente</span></div>
+      </div>
+
+      <div class="mapeo-fila">
+        <div class="mapeo-origen"><div class="tag">Meta</div> Aprendizaje continuo y adaptación <em style="font-size:11px">(meta-competencia transversal)</em></div>
+        <div class="mapeo-flecha">→</div>
+        <div class="mapeo-destino">Área 07 · Agencia, liderazgo y aprendizaje continuo <span class="tipo-cambio tipo-elevado">Elevada a área completa</span></div>
+      </div>
+
+      <div class="mapeo-fila">
+        <div class="mapeo-origen" style="color:#bbb;font-style:italic">No existía en la propuesta FIMPES</div>
+        <div class="mapeo-flecha">→</div>
+        <div class="mapeo-destino">Área 05 · Creación e innovación con IA <span class="tipo-cambio tipo-nuevo">Nueva — aporte del benchmark</span></div>
+      </div>
+    </div>
+
+    <!-- LEYENDA DE COBERTURA -->
+    <div class="cob-leyenda-panel">
+      <h3>¿Qué significa la cobertura X/11?</h3>
+      <div class="cob-leyenda-grid">
+        <div class="cob-leyenda-item nivel-alto">
+          <div class="cob-leyenda-escala">≥ 6 / 11</div>
+          <div class="cob-leyenda-label" style="color:var(--verde)">Bien cubierta</div>
+          <div class="cob-leyenda-desc">El área existe como tema central en 6 o más marcos. El benchmark ofrece base sólida — podemos extraer competencias, descriptores e indicadores directamente.</div>
+        </div>
+        <div class="cob-leyenda-item nivel-medio">
+          <div class="cob-leyenda-escala">2 – 5 / 11</div>
+          <div class="cob-leyenda-label" style="color:var(--amarillo)">Cobertura parcial</div>
+          <div class="cob-leyenda-desc">El área aparece en 2–5 marcos pero no como tema central. Hay consenso emergente. El Marco Mexicano debe desarrollar las competencias con apoyo del benchmark y de EntreComp.</div>
+        </div>
+        <div class="cob-leyenda-item nivel-bajo">
+          <div class="cob-leyenda-escala">0 – 1 / 11</div>
+          <div class="cob-leyenda-label" style="color:var(--rojo)">Gap crítico</div>
+          <div class="cob-leyenda-desc">El área es prácticamente inexistente en el benchmark. El Marco Mexicano construye desde cero. EntreComp actúa como marco de diseño. Oportunidad de aporte original al campo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="areas-grid">
+
+      <!-- ÁREA 1 -->
+      <div class="area-card estado-cubierto">
+        <div class="area-header">
+          <div class="area-num">Área 01</div>
+          <div class="area-nombre">Comprensión de la IA</div>
+          <span class="badge cubierto">✓ Bien cubierta</span>
+          <div class="cobertura">
+            <span class="cob-label">9/11</span>
+            <div class="cob-track"><div class="cob-fill alta" style="width:82%"></div></div>
+          </div>
+          <div class="fimpes-tag">⤷ Viene de F1 FIMPES — renombrada y ampliada</div>
+        </div>
+        <div class="area-body">
+          <div>
+            <div class="sub-label">Competencias tentativas</div>
+            <ul class="comp-list">
+              <li>Qué es la IA: definición, tipos y capacidades actuales</li>
+              <li>Cómo aprende una máquina (datos, patrones, modelos)</li>
+              <li>Limitaciones técnicas, alucinaciones y errores sistémicos</li>
+              <li>Reconocer la IA en el entorno cotidiano y profesional</li>
+              <li>Distinguir IA de procesos computacionales no-IA</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-label">Fuentes del benchmark</div>
+            <div class="fuentes">
+              <span class="fuente">Long &amp; Magerko</span>
+              <span class="fuente">DigComp</span>
+              <span class="fuente">AILit D1</span>
+              <span class="fuente">Chee C1–C2</span>
+              <span class="fuente">DOL Área 1</span>
+              <span class="fuente">Yoon D1</span>
+              <span class="fuente">Chiu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA 2 -->
+      <div class="area-card estado-cubierto">
+        <div class="area-header">
+          <div class="area-num">Área 02</div>
+          <div class="area-nombre">Uso efectivo de herramientas de IA</div>
+          <span class="badge cubierto">✓ Bien cubierta</span>
+          <div class="cobertura">
+            <span class="cob-label">8/11</span>
+            <div class="cob-track"><div class="cob-fill alta" style="width:73%"></div></div>
+          </div>
+          <div class="fimpes-tag">⤷ Viene de F2 FIMPES — primera mitad (uso de herramientas)</div>
+        </div>
+        <div class="area-body">
+          <div>
+            <div class="sub-label">Competencias tentativas</div>
+            <ul class="comp-list">
+              <li>Operar plataformas, apps y modelos de IA</li>
+              <li>Diseñar prompts efectivos y contextualizados</li>
+              <li>Iterar y refinar resultados con criterio</li>
+              <li>Seleccionar la herramienta adecuada para cada tarea</li>
+              <li>Gestionar datos de entrada: relevancia, calidad, privacidad</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-label">Fuentes del benchmark</div>
+            <div class="fuentes">
+              <span class="fuente">DOL Áreas 2–3</span>
+              <span class="fuente">AILit D2</span>
+              <span class="fuente">DigComp</span>
+              <span class="fuente">DigCompEdu</span>
+              <span class="fuente">Chee C1</span>
+              <span class="fuente">Long &amp; Magerko</span>
+            </div>
+          </div>
+          <div class="callout ec-callout">
+            <strong>Aporte EntreComp</strong>
+            "Mobilising resources" incluye gestionar recursos digitales y competencias técnicas a través de alianzas — útil para definir el nivel C de esta área (diseñar flujos para equipos).
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA 3 -->
+      <div class="area-card estado-cubierto">
+        <div class="area-header">
+          <div class="area-num">Área 03</div>
+          <div class="area-nombre">Evaluación crítica de outputs</div>
+          <span class="badge cubierto">✓ Bien cubierta</span>
+          <div class="cobertura">
+            <span class="cob-label">7/11</span>
+            <div class="cob-track"><div class="cob-fill alta" style="width:64%"></div></div>
+          </div>
+          <div class="fimpes-tag">⤷ Viene de F2 FIMPES — segunda mitad, ahora área independiente</div>
+        </div>
+        <div class="area-body">
+          <div>
+            <div class="sub-label">Competencias tentativas</div>
+            <ul class="comp-list">
+              <li>Verificar exactitud factual de outputs de IA</li>
+              <li>Detectar sesgos, errores lógicos y omisiones</li>
+              <li>Juzgar adecuación al propósito y al contexto</li>
+              <li>Contrastar con fuentes primarias y conocimiento disciplinar</li>
+              <li>Aplicar juicio humano sobre decisiones asistidas por IA</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-label">Fuentes del benchmark</div>
+            <div class="fuentes">
+              <span class="fuente">DOL Área 4</span>
+              <span class="fuente">Long &amp; Magerko C9</span>
+              <span class="fuente">Chiu</span>
+              <span class="fuente">Chee C6.3</span>
+              <span class="fuente">DigComp</span>
+              <span class="fuente">AILit</span>
+            </div>
+          </div>
+          <div class="callout ec-callout">
+            <strong>Aporte EntreComp</strong>
+            "Coping with uncertainty and ambiguity" añade la dimensión de tomar decisiones cuando el output es parcial o ambiguo — va más allá de verificar hacia actuar con información incompleta.
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA 4 -->
+      <div class="area-card estado-cubierto">
+        <div class="area-header">
+          <div class="area-num">Área 04</div>
+          <div class="area-nombre">Ética y uso responsable</div>
+          <span class="badge cubierto">✓ Convergencia máxima</span>
+          <div class="cobertura">
+            <span class="cob-label">11/11</span>
+            <div class="cob-track"><div class="cob-fill alta" style="width:100%"></div></div>
+          </div>
+          <div class="fimpes-tag">⤷ Viene de F4 FIMPES — mapeo directo, mismo contenido</div>
+        </div>
+        <div class="area-body">
+          <div>
+            <div class="sub-label">Competencias tentativas</div>
+            <ul class="comp-list">
+              <li>Proteger datos sensibles y privacidad en el uso de IA</li>
+              <li>Identificar y mitigar sesgos algorítmicos</li>
+              <li>Transparencia y atribución en contenidos generados con IA</li>
+              <li>Asumir responsabilidad sobre decisiones asistidas por IA</li>
+              <li>Conocer el marco legal y normativo aplicable</li>
+              <li>Reflexionar sobre el impacto ambiental y social de la IA</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-label">Fuentes del benchmark</div>
+            <div class="fuentes">
+              <span class="fuente">Todos los 11 marcos</span>
+            </div>
+          </div>
+          <div class="callout ec-callout">
+            <strong>Aporte EntreComp</strong>
+            "Ethical and sustainable thinking" agrega el <em>thread</em> de accountability — rendir cuentas a stakeholders, no solo cumplir normas. Más accionable para el nivel C de ES.
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA 5 -->
+      <div class="area-card estado-parcial">
+        <div class="area-header">
+          <div class="area-num">Área 05</div>
+          <div class="area-nombre">Creación e innovación con IA</div>
+          <span class="badge parcial">⚠ Cubierta parcialmente</span>
+          <div class="cobertura">
+            <span class="cob-label">4/11</span>
+            <div class="cob-track"><div class="cob-fill media" style="width:36%"></div></div>
+          </div>
+          <div class="fimpes-tag" style="background:#e3f5e9;color:#1a7a4a;border-color:#a8d5b8">★ Nueva — no estaba en FIMPES. Aporte del análisis del benchmark</div>
+        </div>
+        <div class="area-body">
+          <div>
+            <div class="sub-label">Competencias tentativas</div>
+            <ul class="comp-list">
+              <li>Crear contenido original con asistencia de IA</li>
+              <li>Diseñar soluciones a problemas de la propia disciplina</li>
+              <li>Co-crear con sistemas de IA (agentes, pipelines)</li>
+              <li>Integrar IA en flujos de trabajo propios</li>
+              <li>Programar o personalizar modelos de IA (nivel avanzado)</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-label">Fuentes del benchmark</div>
+            <div class="fuentes">
+              <span class="fuente">Chee C7</span>
+              <span class="fuente">Long &amp; Magerko (design)</span>
+              <span class="fuente">UNESCO-CFS (AI design)</span>
+              <span class="fuente">AILit (parcial)</span>
+            </div>
+          </div>
+          <div class="callout gap-callout">
+            <strong>Gap del benchmark — ¿por qué importa?</strong>
+            La IA generativa (ChatGPT, nov 2022) llegó <em>después</em> de que 7 de los 11 marcos ya eran públicos. Los marcos pre-2023 describen el uso de IA pero no la competencia de crear <em>con</em> IA. Los 4 que sí la incluyen (Chee, Long &amp; Magerko, UNESCO-CFS, AILit) lo hacen superficialmente o para K-12. El Marco Mexicano de ES debe desarrollarla para el contexto universitario — territorio prácticamente inexplorado en el benchmark.
+          </div>
+          <div class="callout ec-callout">
+            <strong>Aporte EntreComp</strong>
+            "Creativity" (design value, prototyping) + "Spotting opportunities" + "Valuing ideas" dan el andamiaje para esta área. Son transferibles al contexto de IA generativa y de agentes.
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA 6 -->
+      <div class="area-card estado-parcial">
+        <div class="area-header">
+          <div class="area-num">Área 06</div>
+          <div class="area-nombre">Aplicación profesional y disciplinar</div>
+          <span class="badge parcial">⚠ Cubierta parcialmente</span>
+          <div class="cobertura">
+            <span class="cob-label">3/11</span>
+            <div class="cob-track"><div class="cob-fill media" style="width:27%"></div></div>
+          </div>
+          <div class="fimpes-tag">⤷ Viene de F3 FIMPES — generalizada para ES (no solo pedagógica)</div>
+        </div>
+        <div class="area-body">
+          <div>
+            <div class="sub-label">Competencias tentativas</div>
+            <ul class="comp-list">
+              <li>Aplicar IA en el campo profesional propio</li>
+              <li>Usar IA en investigación y generación de conocimiento disciplinar</li>
+              <li>Transferir competencias a contextos y disciplinas nuevas</li>
+              <li>Colaborar con equipos interdisciplinares que usan IA</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-label">Fuentes del benchmark</div>
+            <div class="fuentes">
+              <span class="fuente">Yoon (docentes K-12)</span>
+              <span class="fuente">DOL (workforce)</span>
+              <span class="fuente">DigCompEdu (parcial)</span>
+            </div>
+          </div>
+          <div class="callout gap-callout">
+            <strong>Gap del benchmark — ¿por qué importa?</strong>
+            Ningún marco del benchmark fue diseñado para educación superior general. Yoon (2026) aplica a docentes K-12 en Corea; DOL (2026) aplica a trabajadores adultos en EUA. La especificidad disciplinar —cómo un estudiante de química, derecho, medicina o diseño usa IA en su campo— prácticamente no existe. Esta área es donde el Marco Mexicano tiene mayor potencial de aporte original al campo internacional.
+          </div>
+          <div class="callout ec-callout">
+            <strong>Aporte EntreComp</strong>
+            "Working with others" + "Planning and management" dan competencias de colaboración y gestión de proyectos con IA transferibles a cualquier disciplina y a equipos interprofesionales.
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA 7 — GAP CRÍTICO — ancho completo -->
+      <div class="area-card estado-gap area-full">
+        <div class="area-header">
+          <div class="area-num">Área 07</div>
+          <div class="area-nombre">Agencia, liderazgo y aprendizaje continuo</div>
+          <span class="badge gap">✗ Gap crítico en el benchmark</span>
+          <div class="cobertura">
+            <span class="cob-label">1/11</span>
+            <div class="cob-track"><div class="cob-fill baja" style="width:9%"></div></div>
+          </div>
+          <div class="fimpes-tag" style="background:#fdecea;color:#b32828;border-color:#f5b5b5">↑ Meta-competencia FIMPES — elevada a área completa con aporte de EntreComp</div>
+        </div>
+        <div class="area-body">
+          <div class="area-body-2col">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <div class="sub-label">Competencias tentativas</div>
+                <ul class="comp-list">
+                  <li>Iniciar proyectos con IA de forma autónoma</li>
+                  <li>Movilizar y orientar equipos para usar IA con propósito</li>
+                  <li>Gestionar la incertidumbre ante una IA en cambio permanente</li>
+                  <li>Sostener el aprendizaje continuo — mantenerse actualizado</li>
+                  <li>Desarrollar visión estratégica sobre IA en el propio campo</li>
+                  <li>Meta-cognición: reflexionar sobre el propio uso de IA y mejorar</li>
+                </ul>
+              </div>
+              <div>
+                <div class="sub-label">Fuentes del benchmark</div>
+                <div class="fuentes">
+                  <span class="fuente">DOL Principio 7 (agility)</span>
+                  <span class="fuente">Chee C8 (affective)</span>
+                </div>
+              </div>
+              <div class="callout gap-callout">
+                <strong>Gap crítico — ¿por qué importa?</strong>
+                La IA cambia más rápido que cualquier currículo. Solo 1 de 11 marcos (DOL) menciona la adaptación/agility, y lo hace como principio institucional —no como competencia del egresado. Ningún marco desarrolla sistemáticamente el "cómo seguir aprendiendo IA" para universitarios. En un campo donde las herramientas cambian cada 6–12 meses, esta omisión es estructural. El Marco Mexicano puede ser el primero en desarrollarla de forma explícita para ES en español — y el aporte más distintivo del proyecto FIMPES al campo internacional.
+              </div>
+            </div>
+            <div>
+              <div class="callout ec-callout" style="height:100%">
+                <strong>Aporte principal de EntreComp — núcleo del área "Into action"</strong>
+                Esta es la área donde EntreComp aporta <em>contenido</em>, no solo tecnología de diseño:
+                <br><br>
+                <strong>Taking the initiative</strong><br>
+                Iniciar proyectos con IA sin esperar instrucción externa. Actuar sobre oportunidades.
+                <br><br>
+                <strong>Coping with uncertainty, ambiguity and risk</strong><br>
+                Decidir con información incompleta sobre herramientas cambiantes. Testar ideas antes de comprometerse.
+                <br><br>
+                <strong>Learning through experience</strong><br>
+                Reflexionar sobre el propio uso de IA y mejorar iterativamente. Aprender del error como método.
+                <br><br>
+                <strong>Motivation and perseverance</strong><br>
+                Sostener la curva de aprendizaje ante la obsolescencia acelerada de herramientas.
+                <br><br>
+                <strong>Self-awareness and self-efficacy</strong><br>
+                Creer en la propia capacidad de aprender nuevas herramientas pese a la incertidumbre tecnológica.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /areas-grid -->
+  </div><!-- /seccion -->
+
+
+  <!-- ════ SECCIÓN 2: PROGRESIÓN ════ -->
+  <div class="seccion">
+    <div class="seccion-titulo">Modelo de progresión propuesto para Educación Superior</div>
+    <p class="seccion-intro">
+      Tres etapas adaptadas de la lógica bidimensional de EntreComp (autonomía × complejidad del contexto)
+      al trayecto universitario. A diferencia de los 8 niveles de EntreComp o los 6 de DigCompEdu,
+      se anclan a momentos reconocibles en la trayectoria formativa.
+      Las etiquetas entre corchetes son los niveles correspondientes de EntreComp.
+    </p>
+    <table class="progresion-tabla">
+      <thead>
+        <tr>
+          <th>Nivel</th>
+          <th>01 Comprensión</th>
+          <th>02 Uso efectivo</th>
+          <th>03 Evaluación crítica</th>
+          <th>04 Ética</th>
+          <th>05 Creación</th>
+          <th>06 Aplicación<br>profesional</th>
+          <th>07 Agencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="nivel-cel">
+            <div class="nivel-nombre">A · Exploración</div>
+            <div class="nivel-sub">Con apoyo · contextos guiados</div>
+            <div class="nivel-etiqueta etq-a">Discover → Experiment</div>
+          </td>
+          <td><p>Identifica qué es IA y qué no. Reconoce tipos básicos y sus limitaciones técnicas.</p></td>
+          <td><p>Opera herramientas comunes con instrucción. Construye prompts básicos y evalúa si el resultado sirve.</p></td>
+          <td><p>Identifica cuándo un output puede ser incorrecto. Verifica con orientación del docente.</p></td>
+          <td><p>Reconoce riesgos éticos básicos: privacidad, atribución, sesgo. Aplica políticas institucionales.</p></td>
+          <td><p>Genera contenido asistido con supervisión. Experimenta con herramientas en proyectos guiados.</p></td>
+          <td><p>Usa IA en tareas de su disciplina cuando se le indica. Identifica herramientas relevantes para su campo con orientación.</p></td>
+          <td><p>Reconoce la necesidad de aprendizaje continuo. Mantiene apertura ante herramientas nuevas.</p></td>
+        </tr>
+        <tr>
+          <td class="nivel-cel">
+            <div class="nivel-nombre">B · Autonomía</div>
+            <div class="nivel-sub">Independiente · contextos disciplinares</div>
+            <div class="nivel-etiqueta etq-b">Dare → Reinforce</div>
+          </td>
+          <td><p>Explica cómo funcionan los modelos en su área. Interpreta limitaciones en contexto disciplinar.</p></td>
+          <td><p>Selecciona herramientas adecuadas sin guía. Itera con criterio propio. Gestiona sus datos.</p></td>
+          <td><p>Evalúa outputs con criterio disciplinar propio. Detecta errores específicos de su campo.</p></td>
+          <td><p>Aplica principios éticos en su disciplina. Justifica sus decisiones ante pares y docentes.</p></td>
+          <td><p>Crea soluciones con IA en su campo. Integra IA en proyectos propios con propósito claro.</p></td>
+          <td><p>Aplica IA en proyectos propios de su disciplina sin guía. Selecciona herramientas adecuadas para su área. Colabora en equipos con integración de IA.</p></td>
+          <td><p>Inicia proyectos con IA de forma autónoma. Gestiona la ambigüedad tecnológica sin paralizarse.</p></td>
+        </tr>
+        <tr>
+          <td class="nivel-cel">
+            <div class="nivel-nombre">C · Transformación</div>
+            <div class="nivel-sub">Responsable · contextos complejos</div>
+            <div class="nivel-etiqueta etq-c">Expand → Transform</div>
+          </td>
+          <td><p>Anticipa implicaciones de nuevas IA. Evalúa capacidades emergentes de forma crítica e informada.</p></td>
+          <td><p>Diseña flujos de trabajo con IA para equipos. Se adapta ágilmente ante herramientas nuevas.</p></td>
+          <td><p>Desarrolla criterios de evaluación propios para su equipo u organización. Juzga en contextos inciertos.</p></td>
+          <td><p>Promueve el uso ético en su entorno. Contribuye al diseño de políticas y prácticas responsables.</p></td>
+          <td><p>Lidera proyectos de innovación con IA. Crea valor para otros, no solo para sí mismo.</p></td>
+          <td><p>Lidera la integración de IA en su disciplina. Colabora con equipos interprofesionales. Transfiere competencias a colegas y a nuevos contextos.</p></td>
+          <td><p>Moviliza equipos con propósito. Aprende de forma sistemática. Desarrolla visión estratégica con IA.</p></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ════ SECCIÓN 3: TECNOLOGÍA DE DISEÑO ════ -->
+  <div class="seccion">
+    <div class="seccion-titulo">Qué tomar de EntreComp: tecnología de diseño de competencias</div>
+    <p class="seccion-intro">
+      Más allá del contenido, EntreComp ofrece una arquitectura para describir competencias que ningún marco de IA del benchmark iguala.
+      Estas tres herramientas de diseño pueden aplicarse al contenido de IA que el benchmark ya sintetizó.
+    </p>
+    <div class="ec-grid">
+
+      <div class="ec-card">
+        <div class="ec-titulo">Hint — la exhortación</div>
+        <div class="ec-desc">
+          Una frase corta en segunda persona que convierte la competencia en invitación a la acción.
+          Hace el marco pedagógico, no solo taxonómico. Ningún marco de IA del benchmark lo usa.
+        </div>
+        <div class="ec-ejemplo">
+          Área 03 · Evaluación crítica<br>
+          <em>"Sé el último filtro"</em><br><br>
+          Área 04 · Ética<br>
+          <em>"Responde por lo que haces con IA"</em><br><br>
+          Área 07 · Agencia<br>
+          <em>"Aprende a aprender de nuevo"</em>
+        </div>
+      </div>
+
+      <div class="ec-card">
+        <div class="ec-titulo">Descriptor — los aspectos constitutivos</div>
+        <div class="ec-desc">
+          Desglosa cada competencia en 3–4 aspectos que la constituyen, no solo la repiten
+          con otras palabras. Permite traducir directamente a objetivos de aprendizaje y rúbricas.
+        </div>
+        <div class="ec-ejemplo">
+          Área 03 · "Evaluación crítica de outputs":<br>
+          · Verificar exactitud factual<br>
+          · Detectar errores lógicos y omisiones<br>
+          · Juzgar adecuación al propósito<br>
+          · Aplicar criterio disciplinar propio<br>
+          · Decidir con información incompleta
+        </div>
+      </div>
+
+      <div class="ec-card">
+        <div class="ec-titulo">Indicadores "Yo puedo…"</div>
+        <div class="ec-desc">
+          Formulados en primera persona para autoevaluación directa. Combinan la observabilidad
+          de los indicadores conductuales de Yoon con la agencia del aprendiz de EntreComp.
+        </div>
+        <div class="ec-ejemplo">
+          Nivel A: "Puedo identificar cuándo un output de IA puede contener errores"<br><br>
+          Nivel B: "Puedo evaluar la exactitud de un output en mi disciplina con mis propios criterios"<br><br>
+          Nivel C: "Puedo diseñar y comunicar criterios de evaluación para mi equipo u organización"
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ════ SECCIÓN 4: PREGUNTAS ABIERTAS ════ -->
+  <div class="seccion">
+    <div class="seccion-titulo">Preguntas abiertas para la discusión del equipo</div>
+    <div class="preguntas-grid">
+
+      <div class="pregunta-card">
+        <h4>Estructura del marco</h4>
+        <ol>
+          <li>¿7 áreas es el número correcto, o conviene colapsar alguna?</li>
+          <li>¿El Área 06 (disciplinar) es una capa transversal a todas, no un área independiente?</li>
+          <li>¿El Área 07 (agencia) puede ser una "meta-competencia" que envuelve a las demás, al estilo de cómo EntreComp ve la motivación y la ética?</li>
+          <li>¿Usamos "áreas" o "dimensiones" (lenguaje de Yoon)?</li>
+        </ol>
+      </div>
+
+      <div class="pregunta-card">
+        <h4>Modelo de progresión</h4>
+        <ol>
+          <li>¿3 niveles (A, B, C) es suficiente para ES, o hace falta más granularidad interna?</li>
+          <li>¿Los niveles aplican a toda la trayectoria universitaria o a cada competencia de forma independiente?</li>
+          <li>¿Adoptamos las etiquetas de acción de EntreComp (Discover, Dare, Transform…) o creamos las propias en español?</li>
+          <li>¿Cómo articular con los niveles de DigCompEdu que algunos socios institucionales ya usan?</li>
+        </ol>
+      </div>
+
+      <div class="pregunta-card">
+        <h4>Especificidad mexicana</h4>
+        <ol>
+          <li>¿Qué es específicamente mexicano en este marco, más allá del contexto de aplicación?</li>
+          <li>¿Cómo incorporar la brecha de acceso digital (no todos los estudiantes llegan con el mismo nivel previo)?</li>
+          <li>¿Qué rol juegan el español, las lenguas indígenas y los contextos culturales no-occidentales?</li>
+          <li>¿Cómo alinear con el Marco Curricular Común de la SEP y con los planes de estudio del ANUIES?</li>
+        </ol>
+      </div>
+
+      <div class="pregunta-card">
+        <h4>Relación con EntreComp</h4>
+        <ol>
+          <li>¿Adoptamos su tecnología de diseño (hints, descriptores, "yo puedo") sin acreditar a EntreComp como fuente de competencias en IA?</li>
+          <li>¿El Área 07 se cita explícitamente como inspirada en "Into action" de EntreComp?</li>
+          <li>¿Cómo diferenciamos este marco de EntreComp en publicaciones y convocatorias?</li>
+          <li>¿Vale la pena explorar una colaboración con Punie o Bacigalupo? (Mismos autores de DigComp y DigCompEdu — conocen bien el ecosistema.)</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  Documento de trabajo interno · Marco Mexicano de Competencias en IA para Educación Superior · Anáhuac / UNAM · FIMPES-Santander 2026
+</footer>
+
+</body>
+</html>

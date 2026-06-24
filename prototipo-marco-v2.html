@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototipo v2 — Modelo espiral · Marco Mexicano de Competencias en IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde:       #1a7a4a;
+    --verde-bg:    #e8f5ee;
+    --amarillo:    #a05a00;
+    --amarillo-bg: #fff3e0;
+    --rojo:        #b32828;
+    --rojo-bg:     #fdecea;
+    --purpura:     #5c35a0;
+    --purpura-bg:  #f0eaf8;
+    --azul:        #2b6cb0;
+    --azul-bg:     #e7f0fa;
+    --gris-texto:  #1a1a2e;
+    --gris-medio:  #666;
+    --gris-borde:  #ddd;
+    --fondo:       #f2f2f5;
+    --r01: #2b6cb0;
+    --r02: #2f855a;
+    --r03: #38a169;
+    --r05: #b7791f;
+    --r06: #c05621;
+    --envolvente: #553c9a;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--gris-texto);line-height:1.6;font-size:15px;}
+  .site-header{background:#1a1a2e;color:#fff;padding:24px 40px 20px;border-bottom:4px solid #553c9a;}
+  .site-header .kicker{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:.55;margin-bottom:6px;}
+  .site-header h1{font-size:21px;font-weight:700;margin-bottom:4px;}
+  .site-header .meta{font-size:12px;opacity:.5;}
+  .container{max-width:1120px;margin:0 auto;padding:36px 40px;}
+  .seccion{margin-bottom:52px;}
+  .seccion-titulo{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gris-medio);margin-bottom:18px;padding-bottom:8px;border-bottom:2px solid var(--gris-borde);}
+  .seccion-intro{font-size:13px;color:var(--gris-medio);margin-bottom:20px;max-width:780px;line-height:1.7;}
+  .seccion-intro strong{color:var(--gris-texto);}
+
+  /* ─── SVG ESPIRAL ─── */
+  .espiral-panel{background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:24px;margin-bottom:18px;display:flex;justify-content:center;}
+  .espiral-leyenda{display:flex;flex-wrap:wrap;gap:14px 22px;background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;margin-bottom:36px;font-size:12.5px;}
+  .ley-item{display:flex;align-items:center;gap:7px;}
+  .ley-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .ley-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 7px;border-radius:4px;}
+
+  /* ─── ÁREAS GRID ─── */
+  .areas-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .area-card{background:#fff;border-radius:10px;border:1px solid var(--gris-borde);overflow:hidden;display:flex;flex-direction:column;}
+  .area-header{padding:16px 18px 12px;border-bottom:1px solid var(--gris-borde);display:flex;align-items:flex-start;gap:10px;}
+  .ring-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+  .area-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--gris-medio);margin-bottom:3px;}
+  .area-nombre{font-size:15.5px;font-weight:700;margin-bottom:5px;}
+  .area-def{font-size:12.5px;color:var(--gris-medio);line-height:1.5;}
+
+  .comp-list-prov{list-style:none;padding:14px 18px;display:flex;flex-direction:column;gap:9px;}
+  .comp-list-prov li{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;font-size:13px;line-height:1.5;border-bottom:1px solid #f3f3f3;padding-bottom:8px;}
+  .comp-list-prov li:last-child{border-bottom:none;padding-bottom:0;}
+  .prov-text{flex:1 1 auto;min-width:200px;color:#333;}
+  .prov-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0;}
+  .prov-tag.clara{background:var(--verde-bg);color:var(--verde);border:1px solid #b8e0c8;}
+  .prov-tag.parcial{background:var(--amarillo-bg);color:var(--amarillo);border:1px dashed #e0b266;}
+  .prov-tag.nuevo{background:var(--purpura-bg);color:var(--purpura);border:1px solid #d2c0ec;}
+  .prov-tag.contexto{background:#e0f7fa;color:#00695c;border:1px solid #80cbc4;}
+
+  /* ─── ENVOLVENTE ─── */
+  .envolvente-wrap{border:2px dashed var(--envolvente);border-radius:14px;padding:22px;background:#faf8ff;}
+  .envolvente-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--envolvente);margin-bottom:14px;text-align:center;}
+  .envolvente-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .envolvente-grid .area-card{border-color:#d2c0ec;}
+  .envolvente-grid .area-header{background:#f5f0fc;}
+
+  /* ─── CALLOUTS ─── */
+  .callout{border-radius:7px;padding:13px 16px;font-size:13px;line-height:1.65;margin-bottom:12px;}
+  .callout strong{display:block;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;opacity:.8;}
+  .callout.info{background:var(--azul-bg);color:#1e4e8c;border-left:3px solid var(--azul);}
+  .callout.gap{background:var(--rojo-bg);color:var(--rojo);border-left:3px solid var(--rojo);}
+  .callout.fuera{background:#f2f2f2;color:#555;border-left:3px solid #aaa;}
+
+  .stats-row{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
+  .stat-box{flex:1;min-width:120px;background:#fff;border:1px solid var(--gris-borde);border-radius:8px;padding:14px 16px;text-align:center;}
+  .stat-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;}
+  .stat-label{font-size:11px;color:var(--gris-medio);margin-top:4px;}
+
+  .preguntas-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .pregunta-card{background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:18px 20px;}
+  .pregunta-card h4{font-size:13px;font-weight:700;margin-bottom:10px;}
+  .pregunta-card ol{padding-left:18px;display:flex;flex-direction:column;gap:6px;}
+  .pregunta-card li{font-size:13px;color:#444;line-height:1.55;}
+
+  @media (max-width:780px){
+    .areas-grid,.envolvente-grid,.preguntas-grid{grid-template-columns:1fr;}
+    .espiral-panel{overflow-x:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="kicker">Documento de trabajo interno · no público</div>
+  <h1>Prototipo v2 — Modelo espiral del Marco Mexicano de Competencias en IA</h1>
+  <div class="meta">Espiral de progresión sobre 5 áreas núcleo, rodeada por una capa envolvente de ética y habilidades blandas · competencias cruzadas contra los 11 marcos del benchmark y el contexto mexicano · no sustituye al prototipo v1, es una exploración paralela</div>
+</div>
+
+<div class="container">
+
+  <div class="seccion">
+    <p class="seccion-intro">
+      Este prototipo no reemplaza al primero — explora una idea distinta que surgió de la discusión de equipo: en vez de
+      presentar las áreas como una cuadrícula plana, organizarlas como una <strong>espiral de progresión</strong> sobre
+      5 áreas núcleo (Comprensión → Uso efectivo → Evaluación crítica → Creación → Aplicación profesional), con
+      <strong>Ética y Agencia/Habilidades blandas como una capa envolvente</strong> que no es un paso más de la secuencia,
+      sino una condición presente en cualquier punto del recorrido. Cada competencia indica su procedencia: antecedente
+      verificado en el benchmark, antecedente parcial, aporte nuevo sin antecedente, o contexto específicamente mexicano.
+    </p>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">El modelo espiral</div>
+    <div class="espiral-panel">
+      <svg id="espiralSvg" width="620" height="620" viewBox="0 0 620 620"></svg>
+      <script>
+      (function(){
+        var svg = document.getElementById('espiralSvg');
+        var NS = 'http://www.w3.org/2000/svg';
+        var cx = 310, cy = 300;
+        var Rcore = 175;   // límite del núcleo (5 áreas)
+        var Renv  = 210;   // anillo de la capa envolvente
+
+        function toRad(deg){ return deg*Math.PI/180; }
+        function ptAt(angleDeg, r){
+          var rad = toRad(angleDeg);
+          return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
+        }
+        function addEl(tag, attrs, parent){
+          var el = document.createElementNS(NS, tag);
+          for (var k in attrs) el.setAttribute(k, attrs[k]);
+          (parent||svg).appendChild(el);
+          return el;
+        }
+
+        // ── 1. FONDO: 5 cuñas iguales (72° cada una = 1/5 del círculo) — una por área núcleo
+        var areas = [
+          {n:'1', nombre:'Comprensión',            color:'#2b6cb0', a0:-90, a1:-18},
+          {n:'2', nombre:'Uso efectivo',           color:'#2f855a', a0:-18, a1:54},
+          {n:'3', nombre:'Evaluación crítica',     color:'#38a169', a0:54,  a1:126},
+          {n:'4', nombre:'Creación',               color:'#b7791f', a0:126, a1:198},
+          {n:'5', nombre:'Aplicación profesional', color:'#c05621', a0:198, a1:270}
+        ];
+        areas.forEach(function(area){
+          var p0 = ptAt(area.a0, Rcore), p1 = ptAt(area.a1, Rcore);
+          var d = 'M '+cx+','+cy+' L '+p0[0].toFixed(1)+','+p0[1].toFixed(1)+
+                  ' A '+Rcore+','+Rcore+' 0 0,1 '+p1[0].toFixed(1)+','+p1[1].toFixed(1)+' Z';
+          addEl('path', {d:d, fill:area.color, 'fill-opacity':0.16, stroke:'none'});
+        });
+        // líneas divisorias entre cuñas
+        [-90,-18,54,126,198].forEach(function(deg){
+          var p = ptAt(deg, Rcore);
+          addEl('line', {x1:cx,y1:cy,x2:p[0],y2:p[1], stroke:'#ccc','stroke-width':1, opacity:0.7});
+        });
+        // borde del núcleo
+        addEl('circle', {cx:cx, cy:cy, r:Rcore, fill:'none', stroke:'#bbb', 'stroke-width':1.3});
+
+        // ── 2. BANDAS DE NIVEL (radios) — A · B · C, atraviesan las 5 cuñas
+        var rA = Rcore*0.36, rB = Rcore*0.66; // límites de nivel: A→B y B→C
+        [rA, rB].forEach(function(r){
+          addEl('circle', {cx:cx, cy:cy, r:r, fill:'none', stroke:'#999', 'stroke-width':1, 'stroke-dasharray':'3,4', opacity:0.55});
+        });
+        var nivelLabels = [
+          {r:rA*0.5,        txt:'A · Exploración'},
+          {r:(rA+rB)/2,     txt:'B · Autonomía'},
+          {r:(rB+Rcore)/2,  txt:'C · Transformación'}
+        ];
+        nivelLabels.forEach(function(nl){
+          var p = ptAt(-90, nl.r);
+          var t = addEl('text', {x:p[0]+8, y:p[1]+3, 'font-size':10.5, 'font-style':'italic', fill:'#777'});
+          t.textContent = nl.txt;
+        });
+
+        // ── 3. LA ESPIRAL — una sola curva, 3 vueltas (= niveles A→B→C), atraviesa las 5 áreas en cada vuelta
+        var thetaMax = 6*Math.PI; // 3 vueltas completas
+        var rStart = 8, rEnd = Rcore - 8;
+        var b = (rEnd - rStart) / thetaMax;
+        var N = 220, d = '';
+        for (var k=0;k<=N;k++){
+          var th = thetaMax*(k/N);
+          var r = rStart + b*th;
+          // theta=0 alineado a -90° (arriba), mismo origen angular que las cuñas
+          var ang = -Math.PI/2 + th;
+          var x = cx + r*Math.cos(ang), y = cy + r*Math.sin(ang);
+          d += (k===0?'M':'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+        }
+        addEl('path', {d:d, fill:'none', stroke:'#2d3748', 'stroke-width':3.5, 'stroke-linecap':'round'});
+        var pStart = ptAt(-90, rStart);
+        addEl('circle', {cx:pStart[0], cy:pStart[1], r:4, fill:'#2d3748'});
+
+        // ── 4. ETIQUETAS DE ÁREA — dentro de cada cuña, con halo blanco para legibilidad
+        areas.forEach(function(area){
+          var mid = (area.a0+area.a1)/2;
+          var p = ptAt(mid, Rcore*0.74);
+          addEl('rect', {x:p[0]-58, y:p[1]-19, width:116, height:36, rx:6, fill:'#fff', opacity:0.78});
+          var t1 = addEl('text', {x:p[0], y:p[1]-2, 'text-anchor':'middle', 'font-size':12.5, 'font-weight':700, fill:area.color});
+          t1.textContent = area.n;
+          var t2 = addEl('text', {x:p[0], y:p[1]+13, 'text-anchor':'middle', 'font-size':10.5, 'font-weight':600, fill:area.color});
+          t2.textContent = area.nombre;
+        });
+
+        // ── 5. CAPA ENVOLVENTE — Ética + Agencia, fuera del núcleo, sin numeración
+        addEl('circle', {cx:cx, cy:cy, r:Renv, fill:'none', stroke:'#553c9a', 'stroke-width':2.5, 'stroke-dasharray':'7,6', opacity:0.7});
+        [0,60,120,180,240,300].forEach(function(deg){
+          var p0 = ptAt(deg, Rcore+3), p1 = ptAt(deg, Renv);
+          addEl('line', {x1:p0[0],y1:p0[1],x2:p1[0],y2:p1[1], stroke:'#553c9a', 'stroke-width':1.5, 'stroke-dasharray':'3,3', opacity:0.5});
+        });
+        var l1 = addEl('text', {x:cx, y:cy+Renv+35, 'text-anchor':'middle', 'font-size':12.5, 'font-weight':700, fill:'#553c9a'});
+        l1.textContent = 'Ética y Habilidades blandas';
+        var l2 = addEl('text', {x:cx, y:cy+Renv+51, 'text-anchor':'middle', 'font-size':11, fill:'#888'});
+        l2.textContent = 'capa envolvente · no es un paso, es una condición permanente';
+      })();
+      </script>
+    </div>
+
+    <div class="espiral-leyenda">
+      <div class="ley-item"><span class="ley-dot" style="background:var(--r01)"></span> Núcleo: Área 1 Comprensión</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--r02)"></span> Área 2 Uso efectivo</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--r03)"></span> Área 3 Evaluación crítica</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--r05)"></span> Área 4 Creación</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--r06)"></span> Área 5 Aplicación profesional</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--envolvente);border-radius:3px"></span> Envolvente: Ética + Agencia</div>
+      <div class="ley-item"><span class="ley-tag" style="background:var(--verde-bg);color:var(--verde);border:1px solid #b8e0c8">antecedente claro</span></div>
+      <div class="ley-item"><span class="ley-tag" style="background:var(--amarillo-bg);color:var(--amarillo);border:1px dashed #e0b266">antecedente parcial</span></div>
+      <div class="ley-item"><span class="ley-tag" style="background:var(--purpura-bg);color:var(--purpura);border:1px solid #d2c0ec">★ nuevo aporte</span></div>
+      <div class="ley-item"><span class="ley-tag" style="background:#e0f7fa;color:#00695c;border:1px solid #80cbc4">Contexto MX</span></div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Áreas núcleo — 1 a 5</div>
+    <p class="seccion-intro">
+      Es notable que el grueso del Área 1 venga de <strong>Long &amp; Magerko (2020)</strong> — el único marco del
+      benchmark escrito antes de la ola generativa, y por eso el que mejor distingue Machine Learning de "solo prompting".
+    </p>
+    <div class="areas-grid">
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--r01)"></span>
+          <div>
+            <div class="area-num">Área 1</div>
+            <div class="area-nombre">Comprensión de la IA</div>
+            <div class="area-def">Qué es la IA, cómo funciona, sus tipos y sus límites técnicos.</div>
+          </div>
+        </div>
+        <ul class="comp-list-prov">
+          <li><span class="prov-text">Analizar críticamente qué hace "inteligente" a una entidad; diferencias entre inteligencia humana y artificial.</span><span class="prov-tag clara">Long &amp; Magerko · C2</span></li>
+          <li><span class="prov-text">Comprensión técnica básica de cómo funciona la IA (Machine Learning, IA generativa).</span><span class="prov-tag clara">UNESCO CFT · Aspecto 3</span></li>
+          <li><span class="prov-text">Comprensión de datos, reconocimiento de patrones y algoritmos.</span><span class="prov-tag clara">UNESCO CFS</span></li>
+          <li><span class="prov-text">Diferencia práctica entre IA estrecha (narrow) y de propósito general.</span><span class="prov-tag parcial">Long &amp; Magerko C4 — "general" en 2020 era AGI especulativa, no GenAI</span></li>
+          <li><span class="prov-text">Conocer con exactitud las fronteras técnicas actuales — qué no puede hacer todavía.</span><span class="prov-tag clara">Long &amp; Magerko · C5</span></li>
+          <li><span class="prov-text">Identificar la lógica de algoritmos detrás de recomendaciones o clasificaciones.</span><span class="prov-tag clara">Chee, Ahn &amp; Lee</span></li>
+          <li><span class="prov-text">Cómo las máquinas traducen el mundo real en datos y símbolos.</span><span class="prov-tag clara">Long &amp; Magerko · C7</span></li>
+          <li><span class="prov-text">El concepto central de Machine Learning: aprender patrones de datos, no programar línea a línea.</span><span class="prov-tag clara">Long &amp; Magerko · C12</span></li>
+          <li><span class="prov-text">Cómo perciben los sistemas de IA el mundo físico (cámaras, micrófonos).</span><span class="prov-tag clara">Long &amp; Magerko · C15</span></li>
+          <li><span class="prov-text">Distinguir tecnologías de reglas duras de sistemas que usan IA.</span><span class="prov-tag clara">Long &amp; Magerko · C1</span></li>
+          <li><span class="prov-text">Identificar qué componentes de un sistema actúan de forma autónoma y cuáles reciben directrices (IA agéntica).</span><span class="prov-tag nuevo">★ Ningún marco del benchmark anticipó la IA agéntica</span></li>
+          <li><span class="prov-text">Análisis de datos (Big Data): trabajar, interpretar y discriminar grandes volúmenes de información.</span><span class="prov-tag contexto">Contexto MX</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--r02)"></span>
+          <div>
+            <div class="area-num">Área 2</div>
+            <div class="area-nombre">Uso efectivo de herramientas de IA</div>
+            <div class="area-def">Operar, dirigir e iterar con herramientas de IA, generativas y no generativas.</div>
+          </div>
+        </div>
+        <ul class="comp-list-prov">
+          <li><span class="prov-text">Dirigir sistemas generativos con instrucciones, contexto y criterios de evaluación específicos.</span><span class="prov-tag clara">AILit OECD-EC · "Creating with AI"</span></li>
+          <li><span class="prov-text">Cómo los motores de búsqueda y sistemas de IA seleccionan y muestran información.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 1.1</span></li>
+          <li><span class="prov-text">Cómo los sistemas de IA recopilan, organizan y procesan datos.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 1.3</span></li>
+          <li><span class="prov-text">Interactuar efectivamente con agentes conversacionales y asistentes virtuales.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 2.1</span></li>
+          <li><span class="prov-text">Cómo los algoritmos de redes sociales recomiendan y difunden contenido.</span><span class="prov-tag parcial">DigComp 2.2 cubre que el contenido entrena IA (2.2), pero la difusión algorítmica está en 1.1</span></li>
+          <li><span class="prov-text">Identificar cuándo un prompt o sistema automatizado no funciona correctamente.</span><span class="prov-tag parcial">DigComp 5.1 es troubleshooting genérico — IA solo tangencial</span></li>
+          <li><span class="prov-text">Estructurar instrucciones como antecedente del prompt engineering.</span><span class="prov-tag parcial">Long &amp; Magerko C17 trata que el agente está programado, no es "magia" — no exactamente esto</span></li>
+          <li><span class="prov-text">Interpretar, interrogar y evaluar críticamente outputs vía prompts.</span><span class="prov-tag nuevo">★ Sin antecedente directo — se solapa con Área 3</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--r03)"></span>
+          <div>
+            <div class="area-num">Área 3</div>
+            <div class="area-nombre">Evaluación crítica de outputs</div>
+            <div class="area-def">Verificar, contrastar y juzgar la calidad de lo que produce un sistema de IA.</div>
+          </div>
+        </div>
+        <ul class="comp-list-prov">
+          <li><span class="prov-text">Identificar sesgos algorítmicos, reconocer contenido sintético/deepfakes, entender que los outputs pueden tener errores.</span><span class="prov-tag clara">DigComp 2.2 · 1.2</span></li>
+          <li><span class="prov-text">Mantener escepticismo saludable y verificar la veracidad de las respuestas.</span><span class="prov-tag clara">Digital Promise · "Centering Human Judgment"</span></li>
+          <li><span class="prov-text">Verificar la precisión del trabajo de la IA y mitigar el riesgo de error en entornos laborales.</span><span class="prov-tag clara">DOL · Área 4 "Evaluate AI Outputs"</span></li>
+          <li><span class="prov-text">Evaluar calidad, procedencia, representatividad y sesgos de los datos de entrenamiento.</span><span class="prov-tag clara">Long &amp; Magerko · C11 + C13</span></li>
+          <li><span class="prov-text">Distinguir contenido real de sintético (deepfakes, alucinaciones).</span><span class="prov-tag nuevo">★ Sin antecedente directo — valioso por la actualidad del problema</span></li>
+          <li><span class="prov-text">Pensamiento crítico y reflexivo: detectar sesgos algorítmicos y "verdades" manufacturadas.</span><span class="prov-tag contexto">Contexto MX</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--r05)"></span>
+          <div>
+            <div class="area-num">Área 4</div>
+            <div class="area-nombre">Creación e innovación con IA</div>
+            <div class="area-def">Diseñar, co-crear y desarrollar soluciones propias con apoyo de IA.</div>
+          </div>
+        </div>
+        <ul class="comp-list-prov">
+          <li><span class="prov-text">Formulación de problemas, pensamiento computacional, creación/iteración de soluciones con IA.</span><span class="prov-tag clara">UNESCO CFS · "AI system design"</span></li>
+          <li><span class="prov-text">Usar IA generativa para co-crear textos, imágenes, código o música.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 3.1</span></li>
+          <li><span class="prov-text">Principios básicos del entrenamiento de algoritmos y el código que sustenta la IA.</span><span class="prov-tag clara">DigComp 3.0 · 3.4 — adición 2025, no está en 2.2</span></li>
+          <li><span class="prov-text">Creatividad e innovación: pensamiento lateral para soluciones originales.</span><span class="prov-tag contexto">Contexto MX</span></li>
+          <li><span class="prov-text">Resolución de problemas complejos en ambientes multiculturales y multidisciplinarios.</span><span class="prov-tag contexto">Contexto MX</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--r06)"></span>
+          <div>
+            <div class="area-num">Área 5</div>
+            <div class="area-nombre">Aplicación profesional y disciplinar</div>
+            <div class="area-def">Usar IA en el campo profesional propio — la zona más débil del benchmark.</div>
+          </div>
+        </div>
+        <ul class="comp-list-prov">
+          <li><span class="prov-text">Cómo la IA automatiza o asiste tareas específicas del propio sector.</span><span class="prov-tag parcial">Apoyo débil en Chee y DOL — ninguno la desarrolla como área propia</span></li>
+          <li><span class="prov-text">Seleccionar la herramienta de IA más adecuada para una tarea específica.</span><span class="prov-tag parcial">DigComp 5.2 es genérico de competencia digital — IA solo como ejemplo</span></li>
+          <li><span class="prov-text">Pensamiento computacional aplicado a <em>todas</em> las disciplinas, no solo ingeniería, para descomponer problemas y diseñar soluciones algorítmicas.</span><span class="prov-tag contexto">Contexto MX</span></li>
+        </ul>
+        <div class="callout gap" style="margin:0 18px 16px">
+          <strong>Sigue siendo el gap más grande, con un primer refuerzo mexicano</strong>
+          Ni el benchmark internacional (3/11) ni el relevamiento adicional aportaron antecedentes claros aquí. El primer
+          respaldo sólido viene del contexto mexicano — pensamiento computacional transdisciplinar — pero confirma que
+          esta área requiere construcción casi desde cero.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Capa envolvente — Ética y Habilidades blandas</div>
+    <p class="seccion-intro">
+      No avanzan con la espiral, la rodean. Son relevantes en el núcleo (Área 1) igual que en la aplicación profesional
+      (Área 5) — por eso se presentan aparte, con borde punteado, y sin numeración secuencial.
+    </p>
+    <div class="envolvente-wrap">
+      <div class="envolvente-label">Presentes en cualquier punto de la espiral</div>
+      <div class="envolvente-grid">
+
+        <div class="area-card">
+          <div class="area-header">
+            <div>
+              <div class="area-num">Envolvente</div>
+              <div class="area-nombre">Ética y uso responsable</div>
+              <div class="area-def">Privacidad, sesgo, propiedad intelectual, impacto social — convergencia máxima en el benchmark (11/11).</div>
+            </div>
+          </div>
+          <ul class="comp-list-prov">
+            <li><span class="prov-text">Agencia humana, inclusión, equidad, rol docente frente a la IA.</span><span class="prov-tag clara">UNESCO CFT · Aspecto 1</span></li>
+            <li><span class="prov-text">Uso responsable, privacidad de datos, sesgos algorítmicos.</span><span class="prov-tag clara">UNESCO CFT · Aspecto 2</span></li>
+            <li><span class="prov-text">Cumplimiento normativo de datos y uso seguro en el puesto de trabajo.</span><span class="prov-tag parcial">DOL "Use AI Responsibly" — no menciona propiedad intelectual explícitamente</span></li>
+            <li><span class="prov-text">Implicaciones de derechos de autor al mezclar contenido propio con outputs de IA.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 3.2</span></li>
+            <li><span class="prov-text">Riesgos de ciberseguridad asociados a herramientas de IA.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 4.1</span></li>
+            <li><span class="prov-text">Rastro de datos compartido para entrenar modelos, normativas como el GDPR.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 4.2</span></li>
+            <li><span class="prov-text">Impacto moral, derechos individuales, responsabilidad de los desarrolladores.</span><span class="prov-tag parcial">Digital Promise "Ethics and Impact" — no enfocado en desarrolladores específicamente</span></li>
+            <li><span class="prov-text">Entender quién crea los sistemas de IA, con qué intenciones, y a quién se dirigen.</span><span class="prov-tag parcial">AILit describe propósito/usuarios/límites de un modelo, no autoría ni intereses comerciales</span></li>
+            <li><span class="prov-text">Prejuicios y fallas de equidad por datos históricos viciados.</span><span class="prov-tag clara">Long &amp; Magerko (refuerzo en Chiu 2024)</span></li>
+            <li><span class="prov-text">Exigir que un sistema de IA justifique sus conclusiones.</span><span class="prov-tag clara">Long &amp; Magerko · Diseño 1 "Explainability"</span></li>
+            <li><span class="prov-text">Participar conscientemente en entornos donde la IA influye en decisiones públicas.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 2.3</span></li>
+            <li><span class="prov-text">Impacto de la interacción continua con IA en salud mental y desconexión digital.</span><span class="prov-tag clara">DigComp 3.0 · 4.3 — adición 2025, no en 2.2</span></li>
+            <li><span class="prov-text">Cómo la automatización y la IA reconfiguran empleos, economía y sociedad.</span><span class="prov-tag clara">Long &amp; Magerko · Gran Idea 5</span></li>
+            <li><span class="prov-text">Discernimiento ético: principios universales, integridad académica, bien común.</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Conciencia ambiental y sostenibilidad — "economía verde".</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Aprecio por la diversidad: interculturalidad, género, cultura, ideología.</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Ciudadanía algorítmica: convivir ética y democráticamente con sistemas de IA.</span><span class="prov-tag contexto">Contexto MX</span></li>
+          </ul>
+        </div>
+
+        <div class="area-card">
+          <div class="area-header">
+            <div>
+              <div class="area-num">Envolvente</div>
+              <div class="area-nombre">Agencia, liderazgo y aprendizaje continuo</div>
+              <div class="area-def">El gap crítico del benchmark original (1/11) — el refuerzo adicional fue limitado.</div>
+            </div>
+          </div>
+          <ul class="comp-list-prov">
+            <li><span class="prov-text">Autorreflexión sobre el propio uso de IA: cuestionar por qué se acepta o se da por buena una respuesta — "¿por qué confío en este resultado?"</span><span class="prov-tag clara">Chiu et al. (2024) · Self-reflection</span></li>
+            <li><span class="prov-text">Actualizar continuamente las propias habilidades ante la evolución de la IA.</span><span class="prov-tag clara">DigComp 2.2/3.0 · 5.4</span></li>
+            <li><span class="prov-text">Trabajar de forma conjunta y fluida con sistemas de IA como socios de tarea.</span><span class="prov-tag clara">Chiu et al. (2024) · "Collaboration"</span></li>
+            <li><span class="prov-text">Diagnosticar si un problema se resuelve mejor con IA o con métodos tradicionales.</span><span class="prov-tag clara">Digital Promise · "Right tool for the job"</span></li>
+            <li><span class="prov-text">Metacognición: reflexionar sobre los propios procesos de aprendizaje y regularlos.</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Inteligencia emocional y resiliencia ante crisis o cambios drásticos.</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Trabajo colaborativo en entornos híbridos (presenciales y virtuales).</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Comunicación efectiva: argumentación y diálogo interdisciplinario.</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Liderazgo e influencia social para movilizar equipos en entornos globalizados.</span><span class="prov-tag contexto">Contexto MX</span></li>
+            <li><span class="prov-text">Aprendizaje permanente (lifelong learning) para evitar la obsolescencia de saberes.</span><span class="prov-tag contexto">Contexto MX</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Hallazgos del relevamiento de competencias adicionales</div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num" style="color:var(--verde)">35</div><div class="stat-label">antecedente claro</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--amarillo)">9</div><div class="stat-label">antecedente parcial</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--purpura)">3</div><div class="stat-label">sin antecedente — nuevo aporte</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:#888">2</div><div class="stat-label">fuera de alcance — rol docente</div></div>
+    </div>
+
+    <div class="callout info">
+      <strong>Corrección de atribución</strong>
+      Tres ítems estaban atribuidos a AILit (Fundamentos y aplicaciones de IA, Diseño de sistemas de IA, Técnicas y
+      aplicaciones de IA), pero en realidad provienen de <strong>UNESCO AI CFT/CFS</strong> (Miao &amp; Cukurova, 2024).
+    </div>
+
+    <div class="callout info">
+      <strong>Distinción a mantener: competencia digital con ejemplo de IA vs. competencia de IA nativa</strong>
+      Varios "antecedentes parciales" dependen de ejemplos marcados <code>[AI-E]</code> dentro de DigComp 2.2/3.0 — son
+      competencias digitales genéricas (ej. "resolver problemas técnicos") con un ejemplo de IA añadido, no competencias
+      de IA en sí. Útil diferenciarlo para no inflar la cobertura real.
+    </div>
+
+    <div class="callout gap">
+      <strong>Tres ítems sin antecedente verificable</strong>
+      "Representaciones y Realidades" (deepfakes/alucinaciones), "Mensajes y Significados" (interrogar outputs vía
+      prompts) y "Direccionalidad/Agencia" (autonomía de componentes del sistema) no aparecen, con esos nombres ni en
+      sustancia equivalente, en ninguno de los 11 marcos. Se marcan como aporte nuevo, pendiente de decidir si se
+      incorporan formalmente al marco.
+    </div>
+
+    <div class="callout fuera">
+      <strong>Fuera de alcance — específicas para docentes, no para estudiantes</strong>
+      "Pedagogía de la IA" y "IA para el aprendizaje profesional" vienen del Aspecto 4 y 5 de <strong>UNESCO AI CFT</strong>,
+      que es un marco para <em>docentes</em>, no estudiantes. Nuestro marco es para estudiantes de educación superior, así
+      que no aplican directamente — a menos que el equipo decida abrir una rama paralela de formación docente.
+    </div>
+
+    <div class="callout fuera">
+      <strong>Fuera de alcance — empleabilidad general, no competencias de IA</strong>
+      Especialización sectorial (electromobilidad, semiconductores, energías limpias, ciberseguridad), multilingüismo y
+      emprendimiento son competencias de empleabilidad ligadas al nearshoring, identificadas en el análisis del contexto
+      mexicano. Relevantes para el proyecto FIMPES en su conjunto, pero no son competencias de IA — no se fuerzan dentro
+      de las 5 áreas núcleo.
+    </div>
+
+    <div class="callout info">
+      <strong>El hallazgo más estratégico — soberanía tecnológica y algorítmica</strong>
+      El análisis del contexto mexicano identifica una corriente crítica que va más allá de "usar bien las herramientas":
+      <em>mentefactura</em> (innovación y conocimiento propio, no mano de obra barata), <em>diseño de tecnología propia</em>
+      ("las universidades están para desarrollar, no para comprar"), ser <em>protagonistas y no espectadores</em> de la
+      revolución algorítmica, y el desarrollo de modelos de IA propios (Short Model Languages por disciplina). Esto da
+      un anclaje institucional concreto para que las Áreas 4, 5 y la capa envolvente de Agencia no se queden en "usar con
+      criterio", sino que aspiren a diseñar y liderar — exactamente lo que premia el criterio formal de
+      <strong>Vanguardia</strong> ya incorporado en el SEAES, el nuevo sistema de acreditación de educación superior en
+      México. Es el primer hallazgo que conecta el marco directamente con un mecanismo de acreditación institucional vigente.
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Preguntas abiertas de esta versión</div>
+    <div class="preguntas-grid">
+      <div class="pregunta-card">
+        <h4>Sobre el modelo espiral</h4>
+        <ol>
+          <li>¿La espiral comunica mejor la progresión que la cuadrícula del prototipo v1, o complica la lectura para quien no participó en la discusión?</li>
+          <li>¿La capa envolvente necesita niveles A/B/C como las demás áreas, o es más bien binaria — presente o ausente — en cada punto de la espiral?</li>
+          <li>¿Qué pasa con el Área 5 (Aplicación profesional) si sigue siendo la más débil incluso después del refuerzo adicional?</li>
+        </ol>
+      </div>
+      <div class="pregunta-card">
+        <h4>Sobre los nuevos aportes</h4>
+        <ol>
+          <li>¿Incluimos la IA agéntica (Área 1) como competencia formal, dado que ningún marco del benchmark la anticipó?</li>
+          <li>¿Incorporamos los tres ítems sin antecedente verificable (deepfakes/alucinaciones, interrogar outputs vía prompts, autonomía de componentes del sistema) como aporte nuevo del marco?</li>
+          <li>¿Abrimos una rama paralela de formación docente para no perder las dos competencias de UNESCO CFT que quedaron fuera de alcance?</li>
+        </ol>
+      </div>
+      <div class="pregunta-card">
+        <h4>Sobre el contexto mexicano</h4>
+        <ol>
+          <li>¿Incorporamos explícitamente "soberanía algorítmica / diseño de tecnología propia" como diferenciador del marco mexicano, anclado al criterio de Vanguardia del SEAES?</li>
+          <li>¿Cómo tratamos las competencias de empleabilidad general (nearshoring, multilingüismo, emprendimiento) — quedan fuera del marco de IA, pero entran al proyecto FIMPES por otra vía?</li>
+          <li>¿El refuerzo del Área 5 (pensamiento computacional transdisciplinar) es suficiente para empezar a redactar competencias concretas, o sigue siendo insuficiente como evidencia?</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* ========================
+   Marco IA 2030 · Benchmark Interactivo
+   prototipo.css — estilos exclusivos del Marco prototipo (modelo espiral)
+   Reutiliza los tokens de main.css (colores, tipografías, radios) para
+   mantener consistencia visual con el resto del sitio.
+   ======================== */
+
+.proto-intro { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 760px; margin-bottom: 20px; }
+.proto-intro strong { color: var(--text); }
+
+/* ─── Espiral ─── */
+.proto-espiral-panel { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px; margin-bottom: 18px; display: flex; justify-content: center; }
+.proto-leyenda { display: flex; flex-wrap: wrap; gap: 12px 20px; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 32px; font-size: 12.5px; color: var(--text-muted); }
+.proto-ley-item { display: flex; align-items: center; gap: 7px; }
+.proto-ley-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.proto-ley-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: 600; }
+
+/* ─── Grid de áreas ─── */
+.proto-areas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.proto-area-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; }
+.proto-area-header { padding: 16px 18px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 10px; }
+.proto-ring-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.proto-area-num { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+.proto-area-name { font-family: var(--font-display); font-size: 17px; font-weight: 500; color: var(--text); letter-spacing: -0.005em; margin-bottom: 5px; }
+.proto-area-def { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+.proto-comp-list { list-style: none; padding: 14px 18px; display: flex; flex-direction: column; gap: 9px; margin: 0; }
+.proto-comp-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-size: 13px; line-height: 1.5; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.proto-comp-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.proto-comp-text { flex: 1 1 auto; min-width: 200px; }
+.proto-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; font-weight: 500; }
+.proto-tag.clara    { background: var(--c-device-bg);    color: var(--c-device); }
+.proto-tag.parcial  { background: var(--c-ethics-bg);    color: var(--c-ethics); }
+.proto-tag.nuevo    { background: var(--c-problem-bg);   color: var(--c-problem); }
+.proto-tag.contexto { background: var(--c-affective-bg); color: var(--c-affective); }
+
+.proto-area-card .proto-callout { margin: 0 18px 16px; }
+
+/* ─── Capa envolvente ─── */
+.proto-envolvente-wrap { border: 2px dashed var(--c-agency); border-radius: var(--radius-lg); padding: 20px; background: var(--bg-subtle); }
+.proto-envolvente-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-agency); margin-bottom: 14px; text-align: center; }
+.proto-envolvente-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.proto-envolvente-grid .proto-area-card { border-color: color-mix(in srgb, var(--c-agency) 35%, var(--border)); }
+
+/* ─── Hallazgos ─── */
+.proto-stats-row { display: flex; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+.proto-stat-box { flex: 1; min-width: 110px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; text-align: center; }
+.proto-stat-num { font-family: var(--font-display); font-size: 24px; font-weight: 500; }
+.proto-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+.proto-callout { border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 16px 20px; font-size: 13.5px; line-height: 1.65; margin-bottom: 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); color: var(--accent-text); }
+.proto-callout strong { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; opacity: 0.85; }
+.proto-callout.gap   { border-left-color: var(--c-career); background: var(--c-career-bg); color: var(--text); }
+.proto-callout.fuera { border-left-color: var(--border-strong); background: var(--bg-subtle); color: var(--text-muted); }
+.proto-callout code  { font-family: var(--font-mono); font-size: 12px; background: var(--bg-elevated); padding: 1px 5px; border-radius: 3px; }
+
+/* ─── Preguntas abiertas ─── */
+.proto-preguntas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.proto-pregunta-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px 20px; }
+.proto-pregunta-card h4 { font-family: var(--font-display); font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+.proto-pregunta-card ol { padding-left: 18px; display: flex; flex-direction: column; gap: 6px; margin: 0; }
+.proto-pregunta-card li { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+@media (max-width: 720px) {
+  .proto-areas-grid, .proto-envolvente-grid, .proto-preguntas-grid { grid-template-columns: 1fr; }
+  .proto-espiral-panel { overflow-x: auto; }
+}

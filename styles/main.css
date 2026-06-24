@@ -43,30 +43,10 @@
   --radius-lg: 14px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #16161a;
-    --bg-elevated: #1f1f24;
-    --bg-subtle: #25252b;
-    --bg-accent: #2d2d33;
-    --text: #ecebe5;
-    --text-muted: #a8a7a0;
-    --text-faint: #6f6e68;
-    --border: #34343b;
-    --border-strong: #4a4a52;
-    --accent: #d4b896;
-    --accent-soft: #2e271e;
-    --accent-text: #e8d4b6;
-    --c-ethics-bg: #3a2f1c;
-    --c-data-bg: #1f2e3d;
-    --c-device-bg: #1f2e26;
-    --c-problem-bg: #2c1f33;
-    --c-career-bg: #3a221a;
-    --c-affective-bg: #1f2e2e;
-    --c-agency-bg: #1c2c38;
-    --c-pedagogy-bg: #2e2818;
-  }
-}
+/* Modo oscuro deshabilitado intencionalmente: el sitio se mantiene en fondo
+   claro de forma fija. Algunos elementos (etiquetas de color, diagrama de
+   espiral) no se distinguían bien contra fondo oscuro. Pendiente definir una
+   paleta oscura específica antes de reactivarlo. */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -85,6 +65,9 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
 .hero h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 52px); font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; max-width: 800px; }
 .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
 .hero-lead { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 680px; font-family: var(--font-display); font-weight: 400; }
+.hero-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; padding: 11px 18px; background: var(--accent); color: var(--bg-elevated); border-radius: var(--radius-md); font-size: 14px; font-weight: 500; text-decoration: none; transition: opacity 0.15s; }
+.hero-cta:hover { opacity: 0.88; }
+.hero-cta svg { width: 15px; height: 15px; flex-shrink: 0; }
 .hero-meta { display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
 .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
 .hero-meta-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); }
