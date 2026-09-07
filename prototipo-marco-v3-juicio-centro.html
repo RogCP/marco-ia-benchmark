@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototipo v3 — Modelo espiral con Juicio al centro · Marco Mexicano de Competencias en IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:        #2b6cb0;
+    --azul-bg:     #e7f0fa;
+    --verde1:      #2f855a;
+    --verde2:      #38a169;
+    --verde3:      #48bb78;
+    --ambar:       #a05a00;
+    --ambar-bg:    #fff3e0;
+    --naranja:     #c05621;
+    --naranja-bg:  #fdf0e6;
+    --agencia:     #553c9a;
+    --resp:        #b32828;
+    --gris-texto:  #1a1a2e;
+    --gris-medio:  #666;
+    --gris-borde:  #ddd;
+    --fondo:       #f2f2f5;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--gris-texto);line-height:1.6;font-size:15px;}
+  .site-header{background:#1a1a2e;color:#fff;padding:24px 40px 20px;border-bottom:4px solid var(--ambar);}
+  .site-header .kicker{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:.55;margin-bottom:6px;}
+  .site-header h1{font-size:21px;font-weight:700;margin-bottom:4px;}
+  .site-header .meta{font-size:12px;opacity:.5;}
+  .container{max-width:1120px;margin:0 auto;padding:36px 40px;}
+  .seccion{margin-bottom:52px;}
+  .seccion-titulo{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gris-medio);margin-bottom:18px;padding-bottom:8px;border-bottom:2px solid var(--gris-borde);}
+  .seccion-intro{font-size:13px;color:var(--gris-medio);margin-bottom:20px;max-width:780px;line-height:1.7;}
+  .seccion-intro strong{color:var(--gris-texto);}
+
+  .espiral-panel{background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:24px;margin-bottom:18px;display:flex;justify-content:center;}
+  .espiral-leyenda{display:flex;flex-wrap:wrap;gap:14px 22px;background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;margin-bottom:36px;font-size:12.5px;}
+  .ley-item{display:flex;align-items:center;gap:7px;}
+  .ley-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .ley-dot.sq{border-radius:3px;}
+  .ley-dot.diamond{border-radius:2px;transform:rotate(45deg);}
+  .ley-dot.mem{border-radius:50%;border:2px dashed #777;background:#ccc;}
+
+  .areas-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .area-card{background:#fff;border-radius:10px;border:1px solid var(--gris-borde);overflow:hidden;padding:16px 18px;}
+  .area-header{display:flex;align-items:flex-start;gap:10px;}
+  .ring-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+  .area-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--gris-medio);margin-bottom:3px;}
+  .area-nombre{font-size:15.5px;font-weight:700;margin-bottom:5px;}
+  .area-def{font-size:12.5px;color:var(--gris-medio);line-height:1.5;}
+  .area-eje{font-size:11px;color:#888;font-style:italic;margin-top:6px;}
+  .niveles{margin-top:10px;padding-top:10px;border-top:1px solid #eee;display:flex;flex-direction:column;gap:4px;}
+  .nivel-item{font-size:12px;color:#555;line-height:1.5;}
+  .nivel-item b{color:var(--gris-texto);font-family:'JetBrains Mono',monospace;font-size:11px;}
+
+  .nucleo-wrap{border:2px solid var(--ambar);border-radius:14px;padding:22px;background:var(--ambar-bg);margin-bottom:0;}
+  .nucleo-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ambar);margin-bottom:14px;text-align:center;}
+
+  .envolvente-wrap{border:2px dashed var(--agencia);border-radius:14px;padding:22px;background:#faf8ff;}
+  .envolvente-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--agencia);margin-bottom:14px;text-align:center;}
+  .envolvente-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+
+  .callout{border-radius:7px;padding:13px 16px;font-size:13px;line-height:1.65;margin-bottom:12px;}
+  .callout strong{display:block;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;opacity:.8;}
+  .callout.info{background:var(--azul-bg);color:#1e4e8c;border-left:3px solid var(--azul);}
+  .callout.nota{background:var(--ambar-bg);color:#6b4300;border-left:3px solid var(--ambar);}
+
+  @media (max-width:780px){
+    .areas-grid,.envolvente-grid{grid-template-columns:1fr;}
+    .espiral-panel{overflow-x:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="kicker">Documento de trabajo interno · no público</div>
+  <h1>Prototipo v3 — Modelo espiral con Juicio al centro</h1>
+  <div class="meta">Reutiliza el lenguaje visual del prototipo v2 (espiral de progresión sobre cuñas), aplicado a la estructura que emergió del análisis de las entrevistas mexicanas — no al benchmark de los 11 marcos internacionales</div>
+</div>
+
+<div class="container">
+
+  <div class="seccion">
+    <p class="seccion-intro">
+      Este prototipo usa el mismo formato visual que <strong>prototipo-marco-v2.html</strong> — espiral que atraviesa
+      cuñas núcleo, capa envolvente punteada alrededor — pero con una estructura distinta, que no viene del benchmark
+      de los 11 marcos sino del análisis de las 15 entrevistas mexicanas: <strong>Juicio deja de ser una cuña y pasa
+      al centro</strong>, como el pivote del que parte todo lo demás. Entre Juicio y las tres zonas de Uso hay una
+      <strong>membrana — "Decidir el uso"</strong> — que no es territorio propio, es lo que el propio Juicio construye
+      antes de llegar a usar. Aplicación profesional tampoco es territorio — es una <strong>salida</strong> que se
+      desprende del punto más avanzado de la espiral. Agencia y Responsabilidad envuelven todo el conjunto, cada una
+      en su propio anillo. Los niveles N1-N2-N3 <strong>no significan lo mismo en cada pieza</strong> — cada una tiene
+      su propio eje, explicado en las tarjetas más abajo.
+    </p>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">El modelo espiral, con Juicio al centro</div>
+    <div class="espiral-panel">
+      <svg id="espiralSvg" width="700" height="800" viewBox="0 0 700 800"></svg>
+      <script>
+      (function(){
+        var svg = document.getElementById('espiralSvg');
+        var NS = 'http://www.w3.org/2000/svg';
+        var cx = 350, cy = 380;
+        var Rhub  = 48;    // radio del núcleo Juicio
+        var Rmem  = 78;    // borde exterior de la membrana "Decidir el uso"
+        var Rcore = 175;   // techo real del territorio (Comprensión y Resolver y orquestar llegan aquí)
+        var Renv1 = 218;   // anillo Agencia
+        var Renv2 = 258;   // anillo Responsabilidad
+
+        function toRad(deg){ return deg*Math.PI/180; }
+        function ptAt(angleDeg, r){
+          var rad = toRad(angleDeg);
+          return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
+        }
+        function addEl(tag, attrs, parent){
+          var el = document.createElementNS(NS, tag);
+          for (var k in attrs) el.setAttribute(k, attrs[k]);
+          (parent||svg).appendChild(el);
+          return el;
+        }
+
+        // ── niveles: N1/N2 y N2/N3, sobre el rango Rhub→Rcore (el significado varía por pieza — ver tarjetas)
+        var rA = Rhub + (Rcore-Rhub)*0.36;
+        var rB = Rhub + (Rcore-Rhub)*0.68;   // techo real de Consultar y Co-crear e iterar
+
+        // ── 1. FONDO: Comprensión llega desde el hub; las 3 zonas de Uso arrancan después de la membrana
+        var areas = [
+          {n:'1',  nombre:'Comprensión',           color:'#2b6cb0', a0:-90, a1:30,  rIn:Rhub, rOut:Rcore},
+          {n:'2a', nombre:'Consultar',             color:'#2f855a', a0:30,  a1:110, rIn:Rmem, rOut:rB},
+          {n:'2b', nombre:'Co-crear e iterar',     color:'#38a169', a0:110, a1:190, rIn:Rmem, rOut:rB},
+          {n:'2c', nombre:'Resolver y orquestar',  color:'#48bb78', a0:190, a1:270, rIn:Rmem, rOut:Rcore}
+        ];
+        areas.forEach(function(area){
+          var p0o = ptAt(area.a0, area.rOut), p1o = ptAt(area.a1, area.rOut);
+          var p0i = ptAt(area.a0, area.rIn),  p1i = ptAt(area.a1, area.rIn);
+          var d = 'M '+p0i[0].toFixed(1)+','+p0i[1].toFixed(1)+
+                  ' L '+p0o[0].toFixed(1)+','+p0o[1].toFixed(1)+
+                  ' A '+area.rOut+','+area.rOut+' 0 0,1 '+p1o[0].toFixed(1)+','+p1o[1].toFixed(1)+
+                  ' L '+p1i[0].toFixed(1)+','+p1i[1].toFixed(1)+
+                  ' A '+area.rIn+','+area.rIn+' 0 0,0 '+p0i[0].toFixed(1)+','+p0i[1].toFixed(1)+' Z';
+          addEl('path', {d:d, fill:area.color, 'fill-opacity':0.16, stroke:'none'});
+        });
+        // divisores: Comprensión/Resolver (hub→Rcore), Comprensión/Consultar (hub→Rcore), internos de Uso (Rmem→rB)
+        [[-90,Rhub,Rcore],[30,Rhub,Rcore],[110,Rmem,rB],[190,Rmem,rB]].forEach(function(b){
+          var pi = ptAt(b[0], b[1]), po = ptAt(b[0], b[2]);
+          addEl('line', {x1:pi[0],y1:pi[1],x2:po[0],y2:po[1], stroke:'#ccc','stroke-width':1, opacity:0.7});
+        });
+        addEl('circle', {cx:cx, cy:cy, r:Rcore, fill:'none', stroke:'#bbb', 'stroke-width':1.3});
+
+        // ── 2. NOTA de techo — Consultar y Co-crear no llegan a N3
+        var pTecho = ptAt(70, (rB+Rcore)/2);
+        var tt1 = addEl('text', {x:pTecho[0], y:pTecho[1]-6, 'text-anchor':'middle', 'font-size':9.5, 'font-style':'italic', fill:'#888'});
+        tt1.textContent = 'Consultar y Co-crear';
+        var tt2 = addEl('text', {x:pTecho[0], y:pTecho[1]+7, 'text-anchor':'middle', 'font-size':9.5, 'font-style':'italic', fill:'#888'});
+        tt2.textContent = 'no llegan a N3';
+
+        // ── 3. BANDAS DE NIVEL — guía visual, el significado de cada N varía por pieza (ver tarjetas)
+        [rA, rB].forEach(function(r){
+          addEl('circle', {cx:cx, cy:cy, r:r, fill:'none', stroke:'#999', 'stroke-width':1, 'stroke-dasharray':'3,4', opacity:0.55});
+        });
+        var nivelLabels = [
+          {r:(Rhub+rA)/2,   txt:'N1'},
+          {r:(rA+rB)/2,     txt:'N2'},
+          {r:(rB+Rcore)/2,  txt:'N3'}
+        ];
+        nivelLabels.forEach(function(nl){
+          var p = ptAt(-90, nl.r);
+          var t = addEl('text', {x:p[0]+8, y:p[1]+3, 'font-size':11, 'font-weight':700, fill:'#777'});
+          t.textContent = nl.txt;
+        });
+        var nivelNote = addEl('text', {x:cx, y:cy-Rcore-16, 'text-anchor':'middle', 'font-size':10, 'font-style':'italic', fill:'#888'});
+        nivelNote.textContent = 'lo que significa cada nivel es propio de cada pieza — ver tarjetas abajo';
+
+        // ── 4. LA ESPIRAL — arranca justo afuera del hub de Juicio, recorre las cuñas en 3 vueltas
+        var thetaMax = 6*Math.PI;
+        var rStart = Rhub + 6, rEnd = Rcore - 8;
+        var b = (rEnd - rStart) / thetaMax;
+        var N = 220, d = '';
+        for (var k=0;k<=N;k++){
+          var th = thetaMax*(k/N);
+          var r = rStart + b*th;
+          var ang = -Math.PI/2 + th;
+          var x = cx + r*Math.cos(ang), y = cy + r*Math.sin(ang);
+          d += (k===0?'M':'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+        }
+        addEl('path', {d:d, fill:'none', stroke:'#2d3748', 'stroke-width':3.5, 'stroke-linecap':'round'});
+
+        // ── 5. MEMBRANA — "Decidir el uso", entre el hub de Juicio y las 3 zonas de Uso (no frente a Comprensión)
+        var memP0o = ptAt(30, Rmem), memP1o = ptAt(270, Rmem);
+        var memP0i = ptAt(30, Rhub), memP1i = ptAt(270, Rhub);
+        var dMem = 'M '+memP0i[0].toFixed(1)+','+memP0i[1].toFixed(1)+
+                   ' L '+memP0o[0].toFixed(1)+','+memP0o[1].toFixed(1)+
+                   ' A '+Rmem+','+Rmem+' 0 1,1 '+memP1o[0].toFixed(1)+','+memP1o[1].toFixed(1)+
+                   ' L '+memP1i[0].toFixed(1)+','+memP1i[1].toFixed(1)+
+                   ' A '+Rhub+','+Rhub+' 0 1,0 '+memP0i[0].toFixed(1)+','+memP0i[1].toFixed(1)+' Z';
+        addEl('path', {d:dMem, fill:'#999', 'fill-opacity':0.22, stroke:'#777', 'stroke-width':1.6, 'stroke-dasharray':'4,3'});
+        var pMemLbl = ptAt(155, (Rhub+Rmem)/2);
+        var mt1 = addEl('text', {x:pMemLbl[0], y:pMemLbl[1]-3, 'text-anchor':'middle', 'font-size':9.5, 'font-weight':700, fill:'#555'});
+        mt1.textContent = 'Decidir el uso';
+        var mt2 = addEl('text', {x:pMemLbl[0], y:pMemLbl[1]+9, 'text-anchor':'middle', 'font-size':7.5, 'font-style':'italic', fill:'#777'});
+        mt2.textContent = 'membrana, no zona';
+
+        // ── 6. NÚCLEO — Juicio, no es una cuña, es el centro del que parte la espiral
+        addEl('circle', {cx:cx, cy:cy, r:Rhub, fill:'#a05a00', 'fill-opacity':0.28, stroke:'#a05a00', 'stroke-width':2.5});
+        var jt1 = addEl('text', {x:cx, y:cy-3, 'text-anchor':'middle', 'font-size':15, 'font-weight':700, fill:'#7a4400'});
+        jt1.textContent = 'Juicio';
+        var jt2 = addEl('text', {x:cx, y:cy+13, 'text-anchor':'middle', 'font-size':9, fill:'#7a4400', 'font-style':'italic'});
+        jt2.textContent = 'núcleo, no cuña';
+
+        // ── 7. ETIQUETAS DE ÁREA
+        areas.forEach(function(area){
+          var mid = (area.a0+area.a1)/2;
+          var rMid = (area.rIn + Math.min(area.rOut,Rcore))*0.5 + (area.rOut>rB+5 ? 25:0);
+          var p = ptAt(mid, rMid);
+          var w = area.nombre.length > 14 ? 118 : 100;
+          addEl('rect', {x:p[0]-w/2, y:p[1]-19, width:w, height:36, rx:6, fill:'#fff', opacity:0.85});
+          var t1 = addEl('text', {x:p[0], y:p[1]-2, 'text-anchor':'middle', 'font-size':11.5, 'font-weight':700, fill:area.color});
+          t1.textContent = area.n;
+          var t2 = addEl('text', {x:p[0], y:p[1]+13, 'text-anchor':'middle', 'font-size':9.5, 'font-weight':600, fill:area.color});
+          t2.textContent = area.nombre;
+        });
+
+        // ── 8. SALIDA — Aplicación profesional, se desprende de la zona más avanzada (N3), no es territorio
+        var spurAngle = 230; // punto medio de "Resolver y orquestar"
+        var pSpurStart = ptAt(spurAngle, Rcore);
+        var pSpurEnd = ptAt(spurAngle, Renv1 + 14);
+        addEl('line', {x1:pSpurStart[0],y1:pSpurStart[1],x2:pSpurEnd[0],y2:pSpurEnd[1], stroke:'#c05621', 'stroke-width':2.5, 'stroke-dasharray':'6,4'});
+        var spurPts = [
+          [pSpurEnd[0], pSpurEnd[1]-16],[pSpurEnd[0]+16, pSpurEnd[1]],
+          [pSpurEnd[0], pSpurEnd[1]+16],[pSpurEnd[0]-16, pSpurEnd[1]]
+        ];
+        addEl('polygon', {points: spurPts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1);}).join(' '),
+                           fill:'#fdf0e6', stroke:'#c05621', 'stroke-width':2});
+        var st1 = addEl('text', {x:pSpurEnd[0], y:pSpurEnd[1]+38, 'text-anchor':'middle', 'font-size':11, 'font-weight':700, fill:'#c05621'});
+        st1.textContent = 'Aplicación';
+        var st2 = addEl('text', {x:pSpurEnd[0], y:pSpurEnd[1]+51, 'text-anchor':'middle', 'font-size':11, 'font-weight':700, fill:'#c05621'});
+        st2.textContent = 'profesional';
+        var st3 = addEl('text', {x:pSpurEnd[0], y:pSpurEnd[1]+65, 'text-anchor':'middle', 'font-size':9, 'font-style':'italic', fill:'#a3521a'});
+        st3.textContent = 'salida, no territorio';
+
+        // ── 9. ENVOLVENTES — Agencia (anillo interior) y Responsabilidad (anillo exterior), cada una aparte
+        addEl('circle', {cx:cx, cy:cy, r:Renv1, fill:'none', stroke:'#553c9a', 'stroke-width':2.2, 'stroke-dasharray':'7,6', opacity:0.7});
+        addEl('circle', {cx:cx, cy:cy, r:Renv2, fill:'none', stroke:'#b32828', 'stroke-width':2.2, 'stroke-dasharray':'7,6', opacity:0.7});
+        [15,105,195,285].forEach(function(deg){
+          var p0 = ptAt(deg, Rcore+3), p1 = ptAt(deg, Renv1);
+          addEl('line', {x1:p0[0],y1:p0[1],x2:p1[0],y2:p1[1], stroke:'#553c9a', 'stroke-width':1.3, 'stroke-dasharray':'3,3', opacity:0.45});
+          var p2 = ptAt(deg, Renv1), p3 = ptAt(deg, Renv2);
+          addEl('line', {x1:p2[0],y1:p2[1],x2:p3[0],y2:p3[1], stroke:'#b32828', 'stroke-width':1.3, 'stroke-dasharray':'3,3', opacity:0.4});
+        });
+        var la = ptAt(-35, Renv1);
+        var lat = addEl('text', {x:la[0], y:la[1], 'text-anchor':'middle', 'font-size':11.5, 'font-weight':700, fill:'#553c9a'});
+        lat.textContent = 'Agencia';
+        var lr = ptAt(-35, Renv2+14);
+        var lrt = addEl('text', {x:lr[0], y:lr[1], 'text-anchor':'middle', 'font-size':11.5, 'font-weight':700, fill:'#b32828'});
+        lrt.textContent = 'Responsabilidad';
+
+        var footL = addEl('text', {x:cx, y:cy+Renv2+40, 'text-anchor':'middle', 'font-size':11, fill:'#888', 'font-style':'italic'});
+        footL.textContent = 'las dos envolventes están presentes en cualquier punto de la espiral, no son un paso más';
+      })();
+      </script>
+    </div>
+
+    <div class="espiral-leyenda">
+      <div class="ley-item"><span class="ley-dot" style="background:#a05a00"></span> Núcleo: Juicio (pivote, no cuña)</div>
+      <div class="ley-item"><span class="ley-dot mem"></span> Membrana: Decidir el uso (Juicio → Uso)</div>
+      <div class="ley-item"><span class="ley-dot" style="background:#2b6cb0"></span> Comprensión</div>
+      <div class="ley-item"><span class="ley-dot" style="background:#2f855a"></span> Consultar</div>
+      <div class="ley-item"><span class="ley-dot" style="background:#38a169"></span> Co-crear e iterar</div>
+      <div class="ley-item"><span class="ley-dot" style="background:#48bb78"></span> Resolver y orquestar</div>
+      <div class="ley-item"><span class="ley-dot diamond" style="background:#fdf0e6;border:2px solid #c05621"></span> Aplicación profesional (salida)</div>
+      <div class="ley-item"><span class="ley-dot sq" style="background:#553c9a"></span> Envolvente: Agencia</div>
+      <div class="ley-item"><span class="ley-dot sq" style="background:#b32828"></span> Envolvente: Responsabilidad</div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">El núcleo — Juicio</div>
+    <div class="nucleo-wrap">
+      <div class="nucleo-label">No es un paso de la secuencia — es el pivote del que parte todo lo demás</div>
+      <div class="area-card" style="border-color:#e0c080">
+        <div class="area-nombre" style="color:#7a4400">Juicio</div>
+        <div class="area-def">
+          Evaluar la calidad y confiabilidad de lo que produce la IA, resistir dejarse convencer solo por la forma
+          de la respuesta, y calibrar cuánto confiar según el riesgo de la situación — no es un paso de la secuencia,
+          es una cualidad que atraviesa todo lo demás.
+        </div>
+        <div class="niveles">
+          <div class="nivel-item"><b>N1:</b> reconocer que la IA puede fallar y evaluar su confiabilidad básica.</div>
+          <div class="nivel-item"><b>N2:</b> verificar activamente, resistir la persuasión de la forma, detectar sesgo.</div>
+          <div class="nivel-item"><b>N3:</b> calibrar la confianza según el riesgo, incluido saber cuándo no usarla.</div>
+        </div>
+        <div class="area-eje">Eje: profundidad del juicio crítico. Sus dos competencias ancla son las únicas dos con evidencia universal en las 15 entrevistas — pero no tienen grupo propio en la codificación ciega. Esa combinación es la firma de algo transversal, no de un área más.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">El puente — Decidir el uso</div>
+    <div class="area-card" style="border-color:#ccc;background:#fafafa">
+      <div class="area-nombre" style="color:#555">Decidir el uso</div>
+      <div class="area-def">
+        El puente que el propio Juicio construye antes de llegar a usar: decidir si conviene usar la IA para una
+        tarea dada, qué herramienta elegir, y si el costo —tiempo, dinero, tokens— se justifica frente al beneficio.
+      </div>
+      <div class="area-eje">No tiene niveles propios — hereda la progresión de Juicio, la capa que la alimenta. Por eso es membrana, no zona: se dibuja entre el núcleo y las tres cuñas de Uso, nunca frente a Comprensión.</div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Las cuñas — Comprensión y las tres zonas de Uso</div>
+    <div class="areas-grid">
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:#2b6cb0"></span>
+          <div>
+            <div class="area-num">Territorio</div>
+            <div class="area-nombre">Comprensión</div>
+            <div class="area-def">
+              Qué es la IA, cómo funciona, sus tipos y sus límites. Incluye también el entendimiento de dimensiones
+              estructurales —propiedad intelectual, impacto ambiental y social— que antes vivían en Ética-impacto:
+              analizarlas es un acto de comprensión, distinto de practicar la responsabilidad que exigen.
+            </div>
+            <div class="niveles">
+              <div class="nivel-item"><b>N1:</b> reconocer que existe la IA y distinguir tipos.</div>
+              <div class="nivel-item"><b>N2:</b> entender el mecanismo (cómo aprende, cómo representa el conocimiento, cómo decide).</div>
+              <div class="nivel-item"><b>N3:</b> evaluar límites y propósito, conectar con impacto, anticipar el futuro.</div>
+            </div>
+            <div class="area-eje">Eje: profundidad de comprensión.</div>
+          </div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:#2f855a"></span>
+          <div>
+            <div class="area-num">Construir y usar · zona 1</div>
+            <div class="area-nombre">Consultar</div>
+            <div class="area-def">Interacción básica: preguntar una vez, pedir una tarea puntual y ya. Puede involucrar juicio —leer con cuidado, formular un buen prompt, no creerse todo— pero el patrón de interacción sigue siendo simple, no iterativo.</div>
+            <div class="niveles">
+              <div class="nivel-item"><b>N1:</b> interacción básica, generación simple.</div>
+              <div class="nivel-item"><b>N2:</b> seleccionar, iterar con criterio, colaborar activamente.</div>
+              <div class="nivel-item"><b>N3:</b> no aplica aquí — el techo real del territorio vive en Resolver y orquestar.</div>
+            </div>
+            <div class="area-eje">Eje del territorio completo: madurez de uso (consulta única → iteración con criterio → delegación de flujos).</div>
+          </div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:#38a169"></span>
+          <div>
+            <div class="area-num">Construir y usar · zona 2</div>
+            <div class="area-nombre">Co-crear e iterar</div>
+            <div class="area-def">Producir y refinar contenido en colaboración activa con la IA — ida y vuelta, reforzada por más juicio conforme se repite el ciclo.</div>
+            <div class="niveles">
+              <div class="nivel-item"><b>N1:</b> interacción básica, generación simple.</div>
+              <div class="nivel-item"><b>N2:</b> seleccionar, iterar con criterio, colaborar activamente.</div>
+              <div class="nivel-item"><b>N3:</b> tampoco aplica aquí — mismo techo que Consultar, en Resolver y orquestar.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:#48bb78"></span>
+          <div>
+            <div class="area-num">Construir y usar · zona 3</div>
+            <div class="area-nombre">Resolver y orquestar</div>
+            <div class="area-def">Delegar, descomponer problemas complejos, y también construir y personalizar agentes o flujos con herramientas de IA — esto último no exige programación, perfiles no técnicos ya lo hacen con herramientas no-code.</div>
+            <div class="niveles">
+              <div class="nivel-item"><b>N1:</b> interacción básica (heredado del territorio).</div>
+              <div class="nivel-item"><b>N2:</b> seleccionar, iterar con criterio (heredado).</div>
+              <div class="nivel-item"><b>N3:</b> delegar, descomponer problemas complejos, construir y personalizar agentes o flujos.</div>
+            </div>
+            <div class="area-eje">Aquí vive el N3 real de todo el territorio — el techo del territorio completo, no de cada zona por separado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Las envolventes y la salida</div>
+    <div class="envolvente-wrap">
+      <div class="envolvente-label">Presentes en cualquier punto de la espiral</div>
+      <div class="envolvente-grid">
+        <div class="area-card">
+          <div class="area-nombre" style="color:#553c9a">Agencia y autodesarrollo</div>
+          <div class="area-def">
+            Autoactualización continua, vigilancia sobre la propia dependencia de la IA, y reflexión sobre el valor
+            humano más allá de la productividad profesional.
+          </div>
+          <div class="niveles">
+            <div class="nivel-item"><b>N1:</b> ejercer agencia básica, reconocer oportunidades y riesgos.</div>
+            <div class="nivel-item"><b>N2:</b> sostenerla activamente — autoevaluación continua, confianza, involucramiento.</div>
+            <div class="nivel-item"><b>N3:</b> reflexión crítica sobre cómo la IA transforma la propia identidad profesional.</div>
+          </div>
+          <div class="area-eje">Eje: profundidad reflexiva. N3 es el punto más profundo del eje, no un asunto de alcance social — por eso vive aquí y no en Responsabilidad.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-nombre" style="color:#b32828">Responsabilidad</div>
+          <div class="area-def">
+            Riesgo proporcional al impacto, rendición de cuentas, límites éticos y legales — no es comprensión ni
+            profundidad reflexiva, es qué tan lejos llega el involucramiento con el tema, no qué tan grande es el tema.
+          </div>
+          <div class="niveles">
+            <div class="nivel-item"><b>N1:</b> práctica de un principio ético básico.</div>
+            <div class="nivel-item"><b>N2:</b> práctica activa: cumplir, rendir cuentas, promover, gestionar en las propias decisiones.</div>
+            <div class="nivel-item"><b>N3:</b> moldear normas para otros, o anticipar efectos que rebasan el propio actuar.</div>
+          </div>
+          <div class="area-eje">Eje: alcance de responsabilidad.</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout nota" style="margin-top:18px">
+      <strong>Aplicación profesional — por qué es una salida y no una cuña</strong>
+      No tiene eje propio: hereda el del territorio que instruye aplicar (Comprensión o Construir y usar, según la
+      fila) dentro de una disciplina específica. Por eso no compite por espacio en el anillo núcleo — se desprende
+      del punto más avanzado de la espiral (Resolver y orquestar) hacia afuera, como la salida de un proceso.
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="callout info">
+      <strong>Cómo se relaciona con prototipo-marco-v2.html</strong>
+      Mismo formato visual, misma familia de variables CSS y misma lógica de espiral-sobre-cuñas — pero el contenido
+      de este prototipo viene del análisis de las 15 entrevistas mexicanas (Marco C+ reorganizado), no del benchmark
+      de los 11 marcos internacionales que documenta v2. Son dos exploraciones paralelas sobre la misma idea visual,
+      con dos fuentes de datos distintas — no se deben fusionar sin dejar esa distinción explícita.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
