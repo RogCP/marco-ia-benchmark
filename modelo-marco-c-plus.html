@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo del Marco Mexicano de Competencias en IA — documento para revisión</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde:#1a7a4a; --verde-bg:#e8f5ee;
+    --amarillo:#a05a00; --amarillo-bg:#fff3e0;
+    --rojo:#b32828; --rojo-bg:#fdecea;
+    --purpura:#5c35a0; --purpura-bg:#f0eaf8;
+    --azul:#2b6cb0; --azul-bg:#e7f0fa;
+    --gris-texto:#1a1a2e; --gris-medio:#666; --gris-borde:#ddd; --fondo:#f2f2f5;
+    --c1:#2b6cb0; --c2:#2f855a; --c3:#38a169; --c4:#b7791f; --c5:#c05621;
+    --e1:#553c9a; --e2:#8a4712; --e3:#a02c5a;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--gris-texto);line-height:1.6;font-size:15px;}
+  .site-header{background:#1a1a2e;color:#fff;padding:24px 40px 20px;border-bottom:4px solid #553c9a;}
+  .site-header .kicker{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:.55;margin-bottom:6px;}
+  .site-header h1{font-size:21px;font-weight:700;margin-bottom:4px;}
+  .site-header .meta{font-size:12px;opacity:.5;}
+  .container{max-width:1120px;margin:0 auto;padding:36px 40px 60px;}
+  .seccion{margin-bottom:52px;}
+  .seccion-titulo{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gris-medio);margin-bottom:18px;padding-bottom:8px;border-bottom:2px solid var(--gris-borde);}
+  .seccion-intro{font-size:13.5px;color:#444;margin-bottom:20px;max-width:820px;line-height:1.75;}
+  .seccion-intro strong{color:var(--gris-texto);}
+  .seccion-intro + .seccion-intro{margin-top:-8px;}
+
+  .espiral-panel{background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:24px;margin-bottom:18px;display:flex;justify-content:center;}
+  .espiral-leyenda{display:flex;flex-wrap:wrap;gap:14px 22px;background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:12.5px;}
+  .ley-item{display:flex;align-items:center;gap:7px;}
+  .ley-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .ley-dot.sq{border-radius:3px;}
+
+  .areas-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .area-card{background:#fff;border-radius:10px;border:1px solid var(--gris-borde);overflow:hidden;display:flex;flex-direction:column;}
+  .area-header{padding:16px 18px 12px;border-bottom:1px solid var(--gris-borde);display:flex;align-items:flex-start;gap:10px;}
+  .ring-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+  .area-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--gris-medio);margin-bottom:3px;}
+  .area-nombre{font-size:15.5px;font-weight:700;margin-bottom:5px;}
+  .area-def{font-size:12.5px;color:var(--gris-medio);line-height:1.5;}
+  .comp-list{list-style:none;padding:14px 18px;display:flex;flex-direction:column;gap:8px;}
+  .comp-list li{display:flex;align-items:baseline;gap:9px;font-size:13px;line-height:1.5;border-bottom:1px solid #f3f3f3;padding-bottom:8px;}
+  .comp-list li:last-child{border-bottom:none;padding-bottom:0;}
+  .niv{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:2px 6px;border-radius:9px;flex-shrink:0;background:#eef0f4;color:#556;border:1px solid #dfe3ea;}
+
+  .envolvente-wrap{border:2px dashed var(--e1);border-radius:14px;padding:22px;background:#faf8ff;}
+  .envolvente-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--e1);margin-bottom:14px;text-align:center;}
+  .envolvente-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+  .callout{border-radius:7px;padding:14px 17px;font-size:13.5px;line-height:1.7;margin-bottom:12px;}
+  .callout strong{display:block;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;opacity:.8;}
+  .callout.info{background:var(--azul-bg);color:#1e4e8c;border-left:3px solid var(--azul);}
+  .callout.obs{background:#fff;color:#333;border:1px solid var(--gris-borde);border-left:3px solid var(--amarillo);}
+  .callout.nota{background:#f7f7f9;color:#444;border-left:3px solid #aaa;}
+
+  .preg-list{list-style:none;display:flex;flex-direction:column;gap:14px;}
+  .preg-list li{background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;font-size:13.5px;line-height:1.7;}
+  .preg-list .preg-q{font-weight:600;display:block;margin-bottom:5px;}
+  .preg-list .preg-ctx{color:var(--gris-medio);font-size:12.5px;}
+
+  @media (max-width:820px){
+    .areas-grid,.envolvente-grid{grid-template-columns:1fr;}
+    .espiral-panel{overflow-x:auto;}
+    .container{padding:24px 18px 40px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="kicker">Documento de investigación · para revisión del panel experto</div>
+  <h1>Marco Mexicano de Competencias en IA — el modelo</h1>
+  <div class="meta">Cinco áreas núcleo recorridas en tres niveles de profundidad, con tres capas envolventes · 76 competencias · Universidad Anáhuac México y UNAM Facultad de Química</div>
+</div>
+
+<div class="container">
+
+  <div class="seccion">
+    <p class="seccion-intro">
+      Este documento presenta la estructura del Marco Mexicano de Competencias en IA para egresados de educación
+      superior, para que puedas evaluarla. El marco organiza <strong>76 competencias</strong> en
+      <strong>cinco áreas núcleo</strong> —Comprensión de la IA, Uso efectivo, Evaluación crítica, Creación e innovación,
+      y Aplicación profesional o disciplinar— y <strong>tres capas envolventes</strong> —Ética y uso responsable,
+      Agencia y desarrollo continuo, e Impacto social, equidad y ciudadanía.
+    </p>
+    <p class="seccion-intro">
+      Las cinco áreas se representan como una <strong>espiral</strong>: no son etapas que se completan una tras otra,
+      sino cinco dominios que se recorren una y otra vez a <strong>tres niveles de profundidad</strong> —N1 Exploración,
+      N2 Autonomía, N3 Transformación—. Una misma persona puede estar en N3 en un área y en N1 en otra. Las tres capas
+      envolventes no son un paso más de ese recorrido: rodean al conjunto, porque son igual de pertinentes en el primer
+      contacto con una herramienta que en el ejercicio profesional avanzado.
+    </p>
+    <p class="seccion-intro">
+      El marco se dirige a estudiantes y docentes de educación superior; la mirada docente vive como especialización
+      dentro del Área 5, no como un área aparte.
+    </p>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">El modelo</div>
+    <div class="espiral-panel">
+      <svg id="espiralSvg" width="700" height="700" viewBox="0 0 700 700"></svg>
+      <script>
+      (function(){
+        var svg = document.getElementById('espiralSvg');
+        var NS = 'http://www.w3.org/2000/svg';
+        var cx = 350, cy = 320;
+        var Rcore = 168;
+        var envRings = [
+          {r:196, color:'#553c9a', nombre:'E1 · Ética y uso responsable'},
+          {r:222, color:'#8a4712', nombre:'E2 · Agencia y desarrollo continuo'},
+          {r:248, color:'#a02c5a', nombre:'E3 · Impacto social, equidad y ciudadanía'}
+        ];
+
+        function toRad(d){ return d*Math.PI/180; }
+        function ptAt(a, r){ var t = toRad(a); return [cx + r*Math.cos(t), cy + r*Math.sin(t)]; }
+        function addEl(tag, attrs, parent){
+          var el = document.createElementNS(NS, tag);
+          for (var k in attrs) el.setAttribute(k, attrs[k]);
+          (parent||svg).appendChild(el);
+          return el;
+        }
+
+        // ── 1. Las 5 áreas núcleo, como cuñas iguales
+        var areas = [
+          {n:'1', nombre:'Comprensión',            color:'#2b6cb0', a0:-90, a1:-18},
+          {n:'2', nombre:'Uso efectivo',           color:'#2f855a', a0:-18, a1:54},
+          {n:'3', nombre:'Evaluación crítica',     color:'#38a169', a0:54,  a1:126},
+          {n:'4', nombre:'Creación',               color:'#b7791f', a0:126, a1:198},
+          {n:'5', nombre:'Aplicación profesional', color:'#c05621', a0:198, a1:270}
+        ];
+        areas.forEach(function(area){
+          var p0 = ptAt(area.a0, Rcore), p1 = ptAt(area.a1, Rcore);
+          var d = 'M '+cx+','+cy+' L '+p0[0].toFixed(1)+','+p0[1].toFixed(1)+
+                  ' A '+Rcore+','+Rcore+' 0 0,1 '+p1[0].toFixed(1)+','+p1[1].toFixed(1)+' Z';
+          addEl('path', {d:d, fill:area.color, 'fill-opacity':0.16, stroke:'none'});
+        });
+        [-90,-18,54,126,198].forEach(function(deg){
+          var p = ptAt(deg, Rcore);
+          addEl('line', {x1:cx,y1:cy,x2:p[0],y2:p[1], stroke:'#ccc','stroke-width':1, opacity:0.7});
+        });
+        addEl('circle', {cx:cx, cy:cy, r:Rcore, fill:'none', stroke:'#bbb', 'stroke-width':1.3});
+
+        // ── 2. Los tres niveles, como bandas que atraviesan las cinco áreas
+        var rN1 = Rcore*0.36, rN2 = Rcore*0.66;
+        [rN1, rN2].forEach(function(r){
+          addEl('circle', {cx:cx, cy:cy, r:r, fill:'none', stroke:'#999', 'stroke-width':1, 'stroke-dasharray':'3,4', opacity:0.55});
+        });
+        var nivelLabels = [
+          {r:rN1*0.5,        corto:'N1'},
+          {r:(rN1+rN2)/2,    corto:'N2'},
+          {r:(rN2+Rcore)/2,  corto:'N3'}
+        ];
+        // se dibujan más abajo, después de las etiquetas de área, para que queden encima
+
+        // ── 3. La espiral: tres vueltas, una por nivel, atravesando las cinco áreas en cada vuelta
+        var thetaMax = 6*Math.PI, rStart = 8, rEnd = Rcore - 8;
+        var b = (rEnd - rStart)/thetaMax, N = 240, d = '';
+        for (var k=0;k<=N;k++){
+          var th = thetaMax*(k/N), r = rStart + b*th, ang = -Math.PI/2 + th;
+          d += (k===0?'M':'L') + (cx + r*Math.cos(ang)).toFixed(1) + ',' + (cy + r*Math.sin(ang)).toFixed(1) + ' ';
+        }
+        addEl('path', {d:d, fill:'none', stroke:'#2d3748', 'stroke-width':3.5, 'stroke-linecap':'round'});
+        var pS = ptAt(-90, rStart);
+        addEl('circle', {cx:pS[0], cy:pS[1], r:4, fill:'#2d3748'});
+
+        // ── 4. Etiquetas de área
+        areas.forEach(function(area){
+          var mid = (area.a0+area.a1)/2, p = ptAt(mid, Rcore*0.74);
+          addEl('rect', {x:p[0]-58, y:p[1]-19, width:116, height:36, rx:6, fill:'#fff', opacity:0.80});
+          var t1 = addEl('text', {x:p[0], y:p[1]-2, 'text-anchor':'middle', 'font-size':12.5, 'font-weight':700, fill:area.color});
+          t1.textContent = area.n;
+          var t2 = addEl('text', {x:p[0], y:p[1]+13, 'text-anchor':'middle', 'font-size':10.5, 'font-weight':600, fill:area.color});
+          t2.textContent = area.nombre;
+        });
+
+        // ── 4b. Marcas de nivel, encima de todo. Se usan etiquetas cortas centradas en el eje
+        // vertical: ahí queda el hueco entre las cajas del Área 5 y del Área 1, así que no chocan.
+        // Los nombres completos de cada nivel van en la leyenda, debajo del diagrama.
+        nivelLabels.forEach(function(nl){
+          var p = ptAt(-90, nl.r);
+          addEl('rect', {x:p[0]-15, y:p[1]-9, width:30, height:17, rx:4, fill:'#fff', opacity:0.94});
+          var t = addEl('text', {x:p[0], y:p[1]+4, 'text-anchor':'middle', 'font-size':11,
+                                 'font-weight':600, 'font-style':'italic', fill:'#6b7280'});
+          t.textContent = nl.corto;
+        });
+
+        // ── 5. Las tres capas envolventes: tres anillos, cada uno rodea al conjunto completo
+        envRings.forEach(function(ring, i){
+          addEl('circle', {cx:cx, cy:cy, r:ring.r, fill:'none', stroke:ring.color,
+                           'stroke-width':2.2, 'stroke-dasharray':'7,6', opacity:0.75});
+          // etiqueta corta sobre el anillo, a la izquierda, escalonada para que no choquen
+          var p = ptAt(180 - (i*10), ring.r);
+          var lab = addEl('text', {x:p[0]-6, y:p[1]+3, 'text-anchor':'end', 'font-size':10.5,
+                                   'font-weight':700, fill:ring.color});
+          lab.textContent = 'E'+(i+1);
+        });
+        var nota = addEl('text', {x:cx, y:cy+envRings[2].r+32, 'text-anchor':'middle', 'font-size':11.5, fill:'#666'});
+        nota.textContent = 'Las tres capas envolventes rodean al conjunto — no son un paso más del recorrido';
+      })();
+      </script>
+    </div>
+
+    <div class="espiral-leyenda">
+      <div class="ley-item"><span class="ley-dot" style="background:var(--c1)"></span> Área 1 · Comprensión de la IA</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--c2)"></span> Área 2 · Uso efectivo</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--c3)"></span> Área 3 · Evaluación crítica</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--c4)"></span> Área 4 · Creación e innovación</div>
+      <div class="ley-item"><span class="ley-dot" style="background:var(--c5)"></span> Área 5 · Aplicación profesional</div>
+      <div class="ley-item"><span class="ley-dot sq" style="background:var(--e1)"></span> E1 · Ética y uso responsable</div>
+      <div class="ley-item"><span class="ley-dot sq" style="background:var(--e2)"></span> E2 · Agencia y desarrollo continuo</div>
+      <div class="ley-item"><span class="ley-dot sq" style="background:var(--e3)"></span> E3 · Impacto social, equidad y ciudadanía</div>
+      <div class="ley-item" style="width:100%;border-top:1px solid #eee;padding-top:11px;margin-top:2px;color:#555">
+        Niveles, del centro hacia afuera — <strong style="margin:0 4px">N1</strong> Exploración ·
+        <strong style="margin:0 4px">N2</strong> Autonomía ·
+        <strong style="margin:0 4px">N3</strong> Transformación
+      </div>
+    </div>
+
+    <div class="callout info">
+      <strong>Cómo leer los niveles</strong>
+      N1 Exploración, N2 Autonomía y N3 Transformación son grados de profundidad dentro de cada área, no etapas de un
+      programa. La espiral da tres vueltas porque cada área se vuelve a recorrer con más profundidad, no porque haya
+      que terminar un área antes de pasar a la siguiente.
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Áreas núcleo — 1 a 5</div>
+    <div class="areas-grid">
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--c1)"></span>
+          <div>
+            <div class="area-num">ÁREA 1 · 16 COMPETENCIAS</div>
+            <div class="area-nombre">Comprensión y alfabetización en IA</div>
+            <div class="area-def">Qué es la IA, cómo funciona, sus tipos y sus límites.</div>
+          </div>
+        </div>
+        <ul class="comp-list">
+          <li><span class="niv">N1</span><span>Reconocimiento de la IA y sus manifestaciones en el entorno</span></li>
+          <li><span class="niv">N1</span><span>Comprensión de la inteligencia y sus formas en sistemas de IA</span></li>
+          <li><span class="niv">N1</span><span>Distinción entre tipos y categorías de sistemas de IA</span></li>
+          <li><span class="niv">N1</span><span>Reconocimiento de la naturaleza interdisciplinaria de la IA</span></li>
+          <li><span class="niv">N1</span><span>Comprensión de la programabilidad como fundamento de los sistemas de IA</span></li>
+          <li><span class="niv">N1</span><span>Acceso, filtrado y evaluación de información y datos con IA</span></li>
+          <li><span class="niv">N2</span><span>Comprensión del razonamiento y toma de decisiones en sistemas de IA</span></li>
+          <li><span class="niv">N2</span><span>Comprensión del aprendizaje automático: datos, entrenamiento e inferencia</span></li>
+          <li><span class="niv">N2</span><span>Comprensión del aprendizaje de la IA a partir de datos y sus implicaciones</span></li>
+          <li><span class="niv">N2</span><span>Comprensión de la representación del conocimiento en sistemas de IA</span></li>
+          <li><span class="niv">N2</span><span>Comprensión de la percepción del entorno en sistemas de IA</span></li>
+          <li><span class="niv">N2</span><span>Comprensión de la IA como agente físico con capacidad de acción</span></li>
+          <li><span class="niv">N2</span><span>Gestión, organización y curaduría de datos para sistemas de IA</span></li>
+          <li><span class="niv">N3</span><span>Evaluación de fortalezas, limitaciones y propósito de sistemas de IA</span></li>
+          <li><span class="niv">N3</span><span>Conexión entre capacidades técnicas de la IA e impactos sociales y éticos</span></li>
+          <li><span class="niv">N3</span><span>Anticipación de aplicaciones futuras de la IA y sus efectos</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--c2)"></span>
+          <div>
+            <div class="area-num">ÁREA 2 · 13 COMPETENCIAS</div>
+            <div class="area-nombre">Uso efectivo de la IA</div>
+            <div class="area-def">Operar, dirigir e iterar con herramientas de IA, generativas y no generativas.</div>
+          </div>
+        </div>
+        <ul class="comp-list">
+          <li><span class="niv">N1</span><span>Interacción con sistemas y tecnologías de IA en diferentes contextos</span></li>
+          <li><span class="niv">N1</span><span>Operación de software, aplicaciones y plataformas de IA</span></li>
+          <li><span class="niv">N1</span><span>Exploración de aplicaciones de IA para distintas tareas y contextos</span></li>
+          <li><span class="niv">N1</span><span>Aprovechamiento de tecnologías adaptativas personalizadas por IA</span></li>
+          <li><span class="niv">N1</span><span>Compartición responsable de datos y contenido digital</span></li>
+          <li><span class="niv">N2</span><span>Selección, evaluación y aplicación de herramientas de IA según necesidad</span></li>
+          <li><span class="niv">N2</span><span>Creación de contenido con IA mediante instrucciones e iteración estratégica</span></li>
+          <li><span class="niv">N2</span><span>Colaboración y co-creación con tecnologías digitales y de IA</span></li>
+          <li><span class="niv">N2</span><span>Construcción del entorno y selección de plataformas de IA para un proceso</span></li>
+          <li><span class="niv">N2</span><span>Decisión fundamentada sobre el uso de IA según la naturaleza de la tarea</span></li>
+          <li><span class="niv">N2</span><span>Aplicación de procesos de resolución de problemas con tecnología de IA</span></li>
+          <li><span class="niv">N3</span><span>Delegación de tareas a sistemas de IA para optimización de flujos de trabajo</span></li>
+          <li><span class="niv">N3</span><span>Definición y descomposición de problemas para resolución con IA</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--c3)"></span>
+          <div>
+            <div class="area-num">ÁREA 3 · 7 COMPETENCIAS</div>
+            <div class="area-nombre">Evaluación crítica de la IA</div>
+            <div class="area-def">Verificar, contrastar y juzgar la calidad de lo que produce un sistema de IA.</div>
+          </div>
+        </div>
+        <ul class="comp-list">
+          <li><span class="niv">N1</span><span>Evaluación crítica de la calidad y confiabilidad de información procesada por IA</span></li>
+          <li><span class="niv">N2</span><span>Evaluación y verificación de autenticidad de contenido generado por IA</span></li>
+          <li><span class="niv">N2</span><span>Detección de desinformación y evaluación de credibilidad de outputs de IA</span></li>
+          <li><span class="niv">N2</span><span>Evaluación de completitud, claridad y utilidad de outputs de IA</span></li>
+          <li><span class="niv">N2</span><span>Aplicación de juicio humano en la interpretación y uso de outputs de IA</span></li>
+          <li><span class="niv">N3</span><span>Alineación de outputs de IA con objetivos estratégicos del trabajo</span></li>
+          <li><span class="niv">N3</span><span>Explicación precisa del funcionamiento de la IA sin antropomorfismos</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--c4)"></span>
+          <div>
+            <div class="area-num">ÁREA 4 · 10 COMPETENCIAS</div>
+            <div class="area-nombre">Creación e innovación con IA</div>
+            <div class="area-def">Diseñar, co-crear y desarrollar soluciones propias con apoyo de IA.</div>
+          </div>
+        </div>
+        <ul class="comp-list">
+          <li><span class="niv">N1</span><span>Generación y síntesis de contenido con IA generativa</span></li>
+          <li><span class="niv">N1</span><span>Exploración de perspectivas creativas con sistemas de IA</span></li>
+          <li><span class="niv">N1</span><span>Integración y re-elaboración de contenido digital para construcción de conocimiento</span></li>
+          <li><span class="niv">N2</span><span>Prototipado y combinación de ideas con distintos tipos de IA</span></li>
+          <li><span class="niv">N2</span><span>Colaboración con IA generativa para retroalimentación e iteración</span></li>
+          <li><span class="niv">N2</span><span>Prototipado iterativo de soluciones con apoyo de IA</span></li>
+          <li><span class="niv">N2</span><span>Innovación y co-diseño de soluciones creativas con IA</span></li>
+          <li><span class="niv">N2</span><span>Diseño de soluciones de IA para problemas de una comunidad</span></li>
+          <li><span class="niv">N3</span><span>Construcción y personalización de herramientas de IA mediante programación</span></li>
+          <li><span class="niv">N3</span><span>Diseño de la arquitectura de un sistema de IA</span></li>
+        </ul>
+      </div>
+
+      <div class="area-card">
+        <div class="area-header">
+          <span class="ring-dot" style="background:var(--c5)"></span>
+          <div>
+            <div class="area-num">ÁREA 5 · 6 COMPETENCIAS</div>
+            <div class="area-nombre">Aplicación profesional o disciplinar</div>
+            <div class="area-def">Usar IA dentro del propio campo profesional. Incluye la mirada docente como especialización.</div>
+          </div>
+        </div>
+        <ul class="comp-list">
+          <li><span class="niv">N1</span><span>Reconocimiento del tipo de IA apropiado para problemas propios de la disciplina</span></li>
+          <li><span class="niv">N1</span><span>Operación de tecnologías de IA especializadas para el propio campo disciplinar</span></li>
+          <li><span class="niv">N2</span><span>Integración de IA en los ciclos de trabajo y práctica disciplinar propia</span></li>
+          <li><span class="niv">N2</span><span>Análisis e interpretación de datos generados por IA en el propio campo</span></li>
+          <li><span class="niv">N2</span><span>Interpretación y uso de datos e información de IA en el propio campo</span></li>
+          <li><span class="niv">N3</span><span>Liderazgo de innovación con IA en la propia disciplina o institución</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Capas envolventes — E1 a E3</div>
+    <p class="seccion-intro">
+      No avanzan con la espiral: la rodean. Son igual de pertinentes en el Área 1 que en el Área 5, y por eso se
+      presentan aparte, con borde punteado y sin lugar en la secuencia.
+    </p>
+    <div class="envolvente-wrap">
+      <div class="envolvente-label">Presentes en cualquier punto del recorrido</div>
+      <div class="envolvente-grid">
+
+        <div class="area-card">
+          <div class="area-header">
+            <span class="ring-dot" style="background:var(--e1)"></span>
+            <div>
+              <div class="area-num">E1 · 13 COMPETENCIAS</div>
+              <div class="area-nombre">Ética y uso responsable</div>
+              <div class="area-def">Privacidad, seguridad, propiedad intelectual, cumplimiento y rendición de cuentas.</div>
+            </div>
+          </div>
+          <ul class="comp-list">
+            <li><span class="niv">N1</span><span>Aplicación de principios éticos fundamentales en el uso de IA</span></li>
+            <li><span class="niv">N1</span><span>Protección de privacidad y datos personales en el uso de IA</span></li>
+            <li><span class="niv">N1</span><span>Protección de dispositivos y sistemas en el uso de IA</span></li>
+            <li><span class="niv">N1</span><span>Cuidado de la salud y bienestar digital en el uso de IA</span></li>
+            <li><span class="niv">N1</span><span>Cumplimiento de políticas y regulaciones sobre el uso de IA</span></li>
+            <li><span class="niv">N1</span><span>Aplicación de normas éticas y de convivencia en entornos digitales y de IA</span></li>
+            <li><span class="niv">N2</span><span>Uso seguro, responsable y normado de la IA</span></li>
+            <li><span class="niv">N2</span><span>Gestión de derechos de autor y propiedad intelectual en entornos de IA</span></li>
+            <li><span class="niv">N2</span><span>Rendición de cuentas en decisiones asistidas por IA</span></li>
+            <li><span class="niv">N2</span><span>Aplicación de conciencia de privacidad en interacciones y colaboraciones con IA</span></li>
+            <li><span class="niv">N2</span><span>Gestión de riesgos del uso de IA según contexto y nivel de impacto</span></li>
+            <li><span class="niv">N3</span><span>Co-diseño de normas y políticas de uso ético de la IA</span></li>
+            <li><span class="niv">N3</span><span>Gestión de la identidad y reputación digital en entornos con IA</span></li>
+          </ul>
+        </div>
+
+        <div class="area-card">
+          <div class="area-header">
+            <span class="ring-dot" style="background:var(--e2)"></span>
+            <div>
+              <div class="area-num">E2 · 6 COMPETENCIAS</div>
+              <div class="area-nombre">Agencia y desarrollo continuo</div>
+              <div class="area-def">Mantener criterio propio frente a la IA y sostener el aprendizaje a lo largo del tiempo.</div>
+            </div>
+          </div>
+          <ul class="comp-list">
+            <li><span class="niv">N1</span><span>Ejercicio de agencia humana frente a sistemas de IA</span></li>
+            <li><span class="niv">N1</span><span>Evaluación de oportunidades y riesgos de la IA</span></li>
+            <li><span class="niv">N2</span><span>Autoevaluación y desarrollo continuo de la competencia en IA</span></li>
+            <li><span class="niv">N2</span><span>Desarrollo de confianza y motivación para el uso crítico de la IA</span></li>
+            <li><span class="niv">N2</span><span>Involucramiento activo con tecnologías digitales y de IA</span></li>
+            <li><span class="niv">N3</span><span>Reflexión crítica sobre la transformación identitaria y profesional propia a través de la IA</span></li>
+          </ul>
+        </div>
+
+        <div class="area-card">
+          <div class="area-header">
+            <span class="ring-dot" style="background:var(--e3)"></span>
+            <div>
+              <div class="area-num">E3 · 5 COMPETENCIAS</div>
+              <div class="area-nombre">Impacto social, equidad y ciudadanía</div>
+              <div class="area-def">Los efectos de la IA más allá del propio uso: sociedad, ambiente, equidad.</div>
+            </div>
+          </div>
+          <ul class="comp-list">
+            <li><span class="niv">N1</span><span>Análisis del impacto social de la IA y ejercicio de ciudadanía responsable</span></li>
+            <li><span class="niv">N1</span><span>Evaluación del impacto ambiental y social de sistemas de IA</span></li>
+            <li><span class="niv">N2</span><span>Análisis y promoción de equidad, inclusión y justicia en el uso de IA</span></li>
+            <li><span class="niv">N2</span><span>Asunción de responsabilidad social frente al impacto de la IA</span></li>
+            <li><span class="niv">N3</span><span>Anticipación de aplicaciones futuras de la IA y sus efectos</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Lo que observamos en las entrevistas</div>
+    <p class="seccion-intro">
+      El marco se construyó a partir de un benchmark de once marcos internacionales de competencias en IA. Después se
+      realizaron <strong>quince entrevistas</strong> a perfiles académicos y laborales en México, analizadas dos veces
+      de forma independiente y con métodos distintos. Estos son cuatro hallazgos de ese análisis que tocan directamente
+      la estructura del modelo. Los presentamos como observaciones, no como conclusiones: qué hacer con ellas es parte
+      de lo que te estamos preguntando.
+    </p>
+
+    <div class="callout obs">
+      <strong>Áreas 2 y 4 — Uso efectivo y Creación e innovación</strong>
+      Ninguna de las quince personas entrevistadas distinguió entre "usar IA" y "crear con IA" al describir su trabajo:
+      lo describieron como una sola actividad continua.
+    </div>
+
+    <div class="callout obs">
+      <strong>Área 3 — Evaluación crítica</strong>
+      Sus dos competencias mejor evidenciadas aparecen en las quince entrevistas sin excepción — las únicas dos del
+      marco completo con esa cobertura. Sin embargo, en el análisis temático ciego no formaron un grupo propio: el
+      contenido apareció disperso dentro de los demás temas.
+    </div>
+
+    <div class="callout obs">
+      <strong>Área 5 — Aplicación profesional o disciplinar</strong>
+      Es el área con menos antecedentes en el benchmark: solo 3 de los 11 marcos internacionales la incluyen. En el
+      análisis de las entrevistas, ninguna de sus competencias describió una actividad que no fuera ya "practicar una
+      competencia de otra área dentro de la propia disciplina".
+    </div>
+
+    <div class="callout obs">
+      <strong>Capas envolventes E1, E2 y E3</strong>
+      El grupo temático más grande del análisis ciego —actitudes, riesgo y ética— no se repartió limpiamente entre las
+      tres capas: el contenido se mezcló entre ellas en vez de separarse en tres bloques distinguibles.
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Preguntas que el modelo deja abiertas</div>
+    <p class="seccion-intro">
+      Además de las observaciones anteriores, hay decisiones de diseño que el equipo no ha resuelto y sobre las que
+      buscamos tu criterio.
+    </p>
+    <ul class="preg-list">
+      <li>
+        <span class="preg-q">¿Las capas envolventes deben tener niveles N1-N3 como las áreas núcleo, o son binarias —presentes o ausentes— en cada punto del recorrido?</span>
+        <span class="preg-ctx">Hoy tienen niveles asignados, por simetría con las áreas núcleo, pero no está claro que "ser ético" progrese de la misma forma en que progresa "usar herramientas de IA".</span>
+      </li>
+      <li>
+        <span class="preg-q">¿Las competencias de empleabilidad general deben formar parte de este marco?</span>
+        <span class="preg-ctx">El análisis del contexto mexicano identificó competencias ligadas al nearshoring —especialización sectorial, multilingüismo, emprendimiento— que son relevantes para la empleabilidad de los egresados pero no son competencias de IA. Hoy quedan fuera del marco.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="seccion">
+    <div class="callout nota">
+      Documento de investigación del proyecto Marco Mexicano de Competencias en IA para Educación Superior
+      (Universidad Anáhuac México · UNAM, Facultad de Química), preparado para la consulta al panel experto.
+      La estructura y las competencias que aquí se presentan son una propuesta en evaluación, no una versión final.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
