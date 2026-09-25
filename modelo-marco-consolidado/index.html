@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco Mexicano de Competencias en IA — el modelo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --texto:#1a1a2e; --gris:#666; --borde:#ddd; --fondo:#f2f2f5;
+    --candidata:#6a3fb5; --candidata-bg:#f1ecfa;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',-apple-system,sans-serif;background:var(--fondo);color:var(--texto);line-height:1.6;font-size:15px;}
+  .site-header{background:#1a1a2e;color:#fff;padding:24px 40px 20px;border-bottom:4px solid #553c9a;}
+  .site-header .kicker{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:.55;margin-bottom:6px;}
+  .site-header h1{font-size:21px;font-weight:700;margin-bottom:4px;}
+  .site-header .meta{font-size:12px;opacity:.55;}
+  .container{max-width:1240px;margin:0 auto;padding:32px 40px 60px;}
+  .seccion{margin-bottom:44px;}
+  .seccion-titulo{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gris);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--borde);}
+
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .card{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:20px 22px;}
+  .card-titulo{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gris);margin-bottom:12px;}
+  .card p{font-size:13.5px;color:#444;line-height:1.75;margin-bottom:10px;}
+  .card p:last-child{margin-bottom:0;}
+  .card a{color:#2c5f8f;}
+
+  /* espiral */
+  .espiral-panel{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:24px;margin-bottom:14px;display:flex;justify-content:center;}
+  .espiral-leyenda{display:flex;flex-wrap:wrap;gap:12px 20px;background:#fff;border:1px solid var(--borde);border-radius:10px;padding:14px 18px;font-size:12.5px;}
+  .ley-item{display:flex;align-items:center;gap:7px;}
+  .ley-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .ley-dot.sq{border-radius:3px;}
+  svg#espiralSvg .area-wedge{cursor:pointer;}
+  svg#espiralSvg .area-wedge:hover{fill-opacity:0.32 !important;}
+  svg#espiralSvg .decorativo{pointer-events:none;}
+  svg#espiralSvg circle.area-ring.ring-hover{opacity:1 !important;stroke-width:4.5 !important;}
+  svg#espiralSvg circle.area-ring-hit{cursor:pointer;}
+  svg#espiralSvg .area-atenuada.area-wedge{fill-opacity:0.05 !important;}
+  svg#espiralSvg .area-atenuada.area-ring{opacity:0.18 !important;}
+  .area-tooltip{position:fixed;z-index:50;background:#1a1a2e;color:#fff;border-radius:8px;padding:10px 13px;font-size:12px;line-height:1.45;max-width:340px;pointer-events:none;display:none;box-shadow:0 6px 20px rgba(0,0,0,.25);}
+  .area-tooltip strong{display:block;font-size:11px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;opacity:.85;}
+  .area-tooltip .tt-comp{padding:4px 0;border-top:1px solid rgba(255,255,255,.08);}
+  .area-tooltip .tt-comp:first-of-type{border-top:none;}
+  .area-tooltip .tt-codigo{font-family:'JetBrains Mono',monospace;font-size:10.5px;opacity:.6;margin-right:5px;}
+  .area-tooltip .tt-cand{font-size:10.5px;color:#c9b3f5;margin-left:4px;}
+
+  /* tarjetas */
+  .filtro-chip{display:none;align-items:center;gap:7px;font-size:12.5px;background:#eef0f4;border-radius:16px;padding:5px 8px 5px 12px;margin-bottom:14px;width:fit-content;}
+  .filtro-chip.visible{display:inline-flex;}
+  .filtro-chip .cerrar{cursor:pointer;background:#ddd;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;}
+  .grid-competencias{display:flex;flex-direction:column;gap:14px;}
+  .fila-area{display:grid;grid-template-columns:170px repeat(var(--cols,3),minmax(0,1fr));gap:14px;align-items:stretch;transition:opacity .15s;}
+  .fila-area.atenuada{opacity:.3;}
+  .fila-area-rotulo{border-left:4px solid #ccc;padding:6px 0 6px 12px;display:flex;flex-direction:column;justify-content:flex-start;cursor:pointer;}
+  .fila-area-rotulo:hover .fila-area-nombre{text-decoration:underline;}
+  .fila-area-codigo{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;}
+  .fila-area-nombre{font-size:12.5px;color:#555;line-height:1.35;margin-top:2px;}
+  .comp-card{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:16px 18px;}
+  .comp-card.candidata{border-color:#d9ccf2;background:#fcfaff;}
+  .cc-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;}
+  .cc-codigo{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gris);}
+  .cc-tag{font-size:10.5px;font-weight:700;color:var(--candidata);background:var(--candidata-bg);border-radius:10px;padding:1px 8px;}
+  .cc-nombre{font-size:14px;font-weight:700;line-height:1.4;margin-bottom:12px;}
+  .cc-niveles{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .cc-niveles li{display:grid;grid-template-columns:34px 1fr;gap:8px;font-size:12.8px;line-height:1.55;color:#333;}
+  .cc-niv{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;background:#eef0f4;color:#556;border:1px solid #dfe3ea;border-radius:8px;height:fit-content;text-align:center;padding:1px 0;}
+  .cc-niveles li.alcance{color:#555;font-size:12.3px;margin-top:-3px;}
+  .cc-niveles li.alcance > span:last-child{border-left:2px dashed #cfd4de;padding-left:9px;}
+  .cc-niveles li.alcance strong{font-weight:600;color:#445;}
+
+  .callout{border-radius:8px;padding:15px 18px;font-size:13.5px;line-height:1.7;margin-bottom:14px;}
+  .callout strong.tit{display:block;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;}
+  .callout.candidatas{background:var(--candidata-bg);color:#4a2a80;border-left:3px solid var(--candidata);}
+  .callout.base{background:#fff;color:#444;border:1px solid var(--borde);border-left:3px solid #aaa;}
+  .callout.base ul{margin:6px 0 0 18px;}
+  .nota{font-size:12px;color:var(--gris);background:#f7f7f9;border-left:3px solid #aaa;border-radius:0 7px 7px 0;padding:12px 16px;line-height:1.7;}
+
+  @media (max-width:820px){
+    .intro-grid,.fila-area{grid-template-columns:1fr;}
+    .container{padding:22px 16px 40px;}
+    .site-header{padding:20px 16px;}
+    .espiral-panel{padding:12px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="kicker">Documento de investigación · para revisión del panel experto</div>
+  <h1>Marco Mexicano de Competencias en IA — el modelo</h1>
+  <div class="meta">Cinco áreas núcleo y tres capas envolventes · 15 competencias, cada una con tres niveles de progresión · Universidad Anáhuac México y UNAM, Facultad de Química</div>
+</div>
+
+<div class="container">
+
+  <div class="seccion">
+    <div class="intro-grid">
+      <div class="card">
+        <div class="card-titulo">Qué es el marco</div>
+        <p>
+          El Marco Mexicano de Competencias en IA describe lo que un egresado de educación superior necesita saber,
+          poder hacer y valorar frente a la inteligencia artificial. Está formado por
+          <strong>15 competencias</strong>, organizadas en <strong>cinco áreas núcleo</strong> —Comprensión,
+          Uso efectivo, Evaluación crítica, Creación e innovación, y Aplicación profesional o disciplinar— y
+          <strong>tres capas envolventes</strong>: Ética y uso responsable, Agencia y desarrollo continuo, e Impacto
+          social, equidad y ciudadanía.
+        </p>
+        <p>
+          Cada competencia tiene <strong>tres niveles de progresión</strong> (N1, N2 y N3), de lo más básico a lo más
+          profundo. Una misma persona puede estar en N3 en una competencia y en N1 en otra.
+        </p>
+        <p>
+          Al final se presentan, por separado, <strong>2 competencias candidatas</strong> que todavía no
+          forman parte del marco, y las capacidades que quedan como base previa, fuera de él.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-titulo">Cómo leer el modelo</div>
+        <p>
+          <strong>La espiral.</strong> Cada cuña de color es un área núcleo. Las bandas punteadas, del centro hacia afuera,
+          son los niveles N1, N2 y N3. La espiral da tres vueltas porque cada área se vuelve a recorrer con más
+          profundidad; no hay que terminar un área para pasar a la siguiente.
+        </p>
+        <p>
+          <strong>Los anillos exteriores</strong> son las capas envolventes. No son un paso más del recorrido: rodean al
+          conjunto, porque son igual de pertinentes en el primer contacto con una herramienta que en el ejercicio
+          profesional avanzado.
+        </p>
+        <p>
+          <strong>El nivel N3 y su alcance.</strong> El N3 describe el dominio de la propia práctica. En algunas
+          competencias aparece además una línea de <em>alcance, según el perfil</em>: orientar o liderar a otras
+          personas, equipos o instituciones. No es un cuarto nivel ni se espera de todo egresado.
+        </p>
+        <p>
+          Pasa el cursor sobre un área o un anillo para ver qué competencias contiene; haz clic para resaltarlas abajo.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">El modelo</div>
+    <div class="espiral-panel">
+      <svg id="espiralSvg" width="700" height="570" viewBox="0 55 700 570" style="max-width:100%;height:auto;"></svg>
+    </div>
+    <div class="espiral-leyenda" id="espiral-leyenda"></div>
+  </div>
+
+  <div class="seccion" id="seccion-competencias">
+    <div class="seccion-titulo">Las 15 competencias y sus niveles</div>
+    <div class="filtro-chip" id="filtro-chip">Área: <strong id="filtro-chip-texto"></strong><span class="cerrar" id="filtro-chip-cerrar">✕</span></div>
+    <div class="grid-competencias" id="grid-competencias"></div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Competencias candidatas</div>
+    <div class="callout candidatas">
+      <strong class="tit">★ Todavía no forman parte del marco</strong>
+      Surgieron de las propuestas de competencias nuevas de la consulta anterior. Se presentan aquí con su progresión
+      completa para que puedas valorar si deben integrarse, y en qué área.
+    </div>
+    <div class="grid-competencias" id="grid-candidatas"></div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Fuera del marco</div>
+    <div class="callout base">
+      <strong class="tit">Base previa</strong>
+      Capacidades digitales generales que se asumen previas y no forman parte de las competencias del marco, porque no
+      son específicas de la inteligencia artificial:
+      <ul id="lista-base"></ul>
+    </div>
+    <div class="nota">
+      Documento de investigación del proyecto Marco Mexicano de Competencias en IA para Educación Superior (Universidad
+      Anáhuac México · UNAM, Facultad de Química), preparado para la consulta al panel experto. La estructura y las
+      competencias que aquí se presentan son una propuesta en evaluación, no una versión final.
+    </div>
+  </div>
+
+</div>
+
+<div class="area-tooltip" id="area-tooltip"></div>
+
+<script id="datos-json" type="application/json">{"areas": [{"codigo": "C1", "nombre": "Comprensión de la IA", "corto": "Comprensión", "color": "#2b6cb0", "a0": -90, "a1": -18}, {"codigo": "C2", "nombre": "Uso efectivo de la IA", "corto": "Uso efectivo", "color": "#2f855a", "a0": -18, "a1": 54}, {"codigo": "C3", "nombre": "Evaluación crítica de la IA", "corto": "Evaluación crítica", "color": "#38a169", "a0": 54, "a1": 126}, {"codigo": "C4", "nombre": "Creación e innovación con IA", "corto": "Creación", "color": "#b7791f", "a0": 126, "a1": 198}, {"codigo": "C5", "nombre": "Aplicación profesional o disciplinar", "corto": "Aplicación profesional", "color": "#c05621", "a0": 198, "a1": 270}], "envolventes": [{"codigo": "E1", "nombre": "Ética y uso responsable", "color": "#553c9a", "r": 196}, {"codigo": "E2", "nombre": "Agencia y desarrollo continuo", "color": "#8a4712", "r": 222}, {"codigo": "E3", "nombre": "Impacto social, equidad y ciudadanía", "color": "#a02c5a", "r": 248}], "competencias": [{"codigo": "C1-1", "nombre": "Comprensión conceptual de la IA: qué es, cómo piensa y su alcance", "area": "C1", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Reconoce manifestaciones de la IA en su entorno, distingue tipos y categorías de sistemas de IA, y comprende su naturaleza interdisciplinaria y las distintas formas que puede tomar la \"inteligencia\" en un sistema."}, {"nivel": "N2", "texto": "Comprende cómo los sistemas de IA razonan y toman decisiones."}, {"nivel": "N3", "texto": "Evalúa las fortalezas, limitaciones y propósito de un sistema de IA, y conecta sus capacidades técnicas con sus impactos sociales y éticos."}]}, {"codigo": "C1-2", "nombre": "Comprensión del aprendizaje, percepción y acción de los sistemas de IA", "area": "C1", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Comprende la programabilidad como fundamento de los sistemas de IA."}, {"nivel": "N2", "texto": "Comprende cómo un sistema de IA aprende a partir de datos (entrenamiento e inferencia), cómo representa y organiza el conocimiento internamente, cómo percibe su entorno, y cómo puede actuar como agente físico con capacidad de acción."}, {"nivel": "N3", "texto": "Anticipa aplicaciones futuras de la IA y sus efectos, a partir de comprender cómo aprende, percibe y actúa."}]}, {"codigo": "C2-1", "nombre": "Interacción, selección y configuración de sistemas de IA", "area": "C2", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Interactúa con sistemas de IA en diferentes contextos —incluida la interacción oral—, opera software, aplicaciones y plataformas de IA, y explora sus aplicaciones para distintas tareas."}, {"nivel": "N2", "texto": "Selecciona, evalúa y aplica herramientas de IA según la necesidad, y decide con fundamento cuándo y cómo usarla según la naturaleza de la tarea."}, {"nivel": "N3", "texto": "Construye y configura el entorno, seleccionando las plataformas de IA adecuadas, para un proceso completo."}]}, {"codigo": "C2-2", "nombre": "Uso de tecnologías adaptativas personalizadas de IA", "area": "C2", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Aprovecha tecnologías adaptativas personalizadas por IA."}, {"nivel": "N2", "texto": "Selecciona y personaliza el nivel de adaptación de una tecnología de IA según sus propias necesidades de aprendizaje o trabajo."}, {"nivel": "N3", "texto": "Configura o construye una tecnología adaptativa propia (por ejemplo, un sistema de recomendación o un tutor personalizado) para una necesidad específica."}]}, {"codigo": "C2-3", "nombre": "Resolución de problemas con apoyo de IA", "area": "C2", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Reconoce situaciones de su trabajo o estudio en las que la IA podría apoyar la resolución de un problema."}, {"nivel": "N2", "texto": "Aplica procesos de resolución de problemas con tecnología de IA."}, {"nivel": "N3", "texto": "Define y descompone problemas para resolverlos con IA, y delega tareas a sistemas de IA para optimizar flujos de trabajo."}]}, {"codigo": "C3-1", "nombre": "Evaluación crítica de la calidad y confiabilidad de outputs de IA", "area": "C3", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Accede, filtra y evalúa críticamente la calidad y confiabilidad de información y datos procesados por IA."}, {"nivel": "N2", "texto": "Evalúa y verifica la autenticidad de contenido generado por IA, y detecta desinformación o baja credibilidad en sus outputs."}, {"nivel": "N3", "texto": "Evalúa si los outputs de IA están alineados con los objetivos estratégicos del trabajo."}]}, {"codigo": "C3-2", "nombre": "Juicio humano y explicación crítica de la IA", "area": "C3", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Evalúa la completitud, claridad y utilidad de outputs de IA."}, {"nivel": "N2", "texto": "Aplica juicio humano en la interpretación y uso de outputs de IA."}, {"nivel": "N3", "texto": "Explica con precisión el funcionamiento de la IA, sin caer en antropomorfismos."}]}, {"codigo": "C4-1", "nombre": "Creación de contenido con IA mediante instrucciones e iteración", "area": "C4", "es_candidata": false, "alcance_n3": "Comparte o estandariza esas estrategias de instrucción en su equipo o proceso.", "niveles": [{"nivel": "N1", "texto": "Genera y sintetiza contenido con IA generativa a partir de instrucciones sencillas, explora perspectivas creativas, e integra o re-elabora contenido digital para construir conocimiento."}, {"nivel": "N2", "texto": "Crea contenido con IA mediante instrucciones e iteración estratégica, usa la IA generativa como fuente de retroalimentación para mejorar el contenido, y formula sus preguntas de forma que sea la IA quien pida más contexto cuando haga falta."}, {"nivel": "N3", "texto": "Diseña y sistematiza estrategias de instrucción (prompting) reutilizables para crear contenido con IA de forma consistente en su propia práctica."}]}, {"codigo": "C4-2", "nombre": "Prototipado, innovación y construcción técnica de soluciones con IA", "area": "C4", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Reconoce oportunidades donde una solución con IA podría resolver un problema propio o de su comunidad, e identifica qué datos o herramientas requeriría."}, {"nivel": "N2", "texto": "Prototipa y combina ideas con distintos tipos de IA, itera prototipos de soluciones, innova y co-diseña soluciones creativas, y diseña soluciones de IA para problemas de una comunidad, incluyendo la gestión y curaduría de los datos que esas soluciones requieren."}, {"nivel": "N3", "texto": "Construye y personaliza herramientas de IA mediante programación, y diseña la arquitectura de un sistema de IA."}]}, {"codigo": "C5-1", "nombre": "Aplicación de la IA en la práctica disciplinar propia", "area": "C5", "es_candidata": false, "alcance_n3": "Lidera la innovación con IA en su disciplina o institución, orientando a otras personas en su adopción.", "niveles": [{"nivel": "N1", "texto": "Reconoce el tipo de IA apropiado para problemas de su disciplina, y opera tecnologías de IA especializadas para su campo."}, {"nivel": "N2", "texto": "Integra la IA en sus ciclos de trabajo y práctica disciplinar, analizando e interpretando datos generados por IA en su campo, y reconociendo el valor de la colaboración multidisciplinaria frente a problemas complejos de IA."}, {"nivel": "N3", "texto": "Rediseña procesos o enfoques de su propia práctica profesional con apoyo de IA."}]}, {"codigo": "E1-1", "nombre": "Principios éticos, normativos y de seguridad en el uso de la IA", "area": "E1", "es_candidata": false, "alcance_n3": "Participa en el co-diseño de normas y políticas de uso ético de la IA.", "niveles": [{"nivel": "N1", "texto": "Aplica principios éticos fundamentales, cumple políticas y regulaciones sobre el uso de IA, y protege sus dispositivos y sistemas."}, {"nivel": "N2", "texto": "Usa la IA de forma segura, responsable y normada, gestionando riesgos según el contexto y nivel de impacto, los derechos de autor y propiedad intelectual involucrados, y rindiendo cuentas en las decisiones asistidas por IA."}, {"nivel": "N3", "texto": "Formula criterios propios de uso ético ante situaciones nuevas o no reguladas de su práctica."}]}, {"codigo": "E1-2", "nombre": "Privacidad, datos e identidad digital", "area": "E1", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Protege su privacidad y datos personales en el uso de IA, y comparte datos y contenido de forma responsable."}, {"nivel": "N2", "texto": "Aplica conciencia de privacidad en sus interacciones y colaboraciones con IA."}, {"nivel": "N3", "texto": "Gestiona su identidad y reputación digital en entornos con IA."}]}, {"codigo": "E1-3", "nombre": "Salud y bienestar digital en el uso de la IA", "area": "E1", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Cuida su salud y bienestar digital en el uso de la IA."}, {"nivel": "N2", "texto": "Gestiona activamente su equilibrio digital, reconociendo señales de uso problemático o dependencia de la IA en su vida académica y personal."}, {"nivel": "N3", "texto": "Promueve prácticas de bienestar digital saludables en su equipo, comunidad o institución."}]}, {"codigo": "E2-1", "nombre": "Agencia, desarrollo continuo y reflexión crítica frente a la IA", "area": "E2", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Ejerce agencia humana frente a sistemas de IA con una disposición de apertura (humildad, curiosidad y apropiación del problema), evaluando oportunidades y riesgos."}, {"nivel": "N2", "texto": "Se autoevalúa y desarrolla continuamente su competencia en IA, transfiriendo lo aprendido en el uso cotidiano y personal de la IA hacia su trabajo profesional, desarrolla confianza y motivación para su uso crítico, y se involucra activamente con tecnologías digitales y de IA."}, {"nivel": "N3", "texto": "Reflexiona críticamente sobre la transformación identitaria y profesional propia a través de la IA."}]}, {"codigo": "E3-1", "nombre": "Análisis, equidad y responsabilidad ante el impacto social y ambiental de la IA", "area": "E3", "es_candidata": false, "niveles": [{"nivel": "N1", "texto": "Analiza el impacto social de la IA y ejerce ciudadanía responsable, evaluando también su impacto ambiental."}, {"nivel": "N2", "texto": "Analiza y promueve equidad, inclusión y justicia en el uso de IA, asumiendo responsabilidad social frente a su impacto."}, {"nivel": "N3", "texto": "Anticipa aplicaciones futuras de la IA y sus efectos sociales y ambientales."}]}], "candidatas": [{"codigo": "C2-4", "nombre": "Conciencia de costos económicos, materiales y ambientales en el uso de la IA", "area": "C2", "es_candidata": true, "niveles": [{"nivel": "N1", "texto": "Reconoce que usar IA tiene un costo económico, material y ambiental, no solo un beneficio."}, {"nivel": "N2", "texto": "Evalúa el costo económico, material y ambiental al decidir cómo y cuánto usar IA para una tarea."}, {"nivel": "N3", "texto": "Audita o gestiona el costo de uso de IA de su equipo, proceso u organización."}]}, {"codigo": "C3-3", "nombre": "Reconocimiento de sesgos y límites de la IA para decidir cuándo delegar a juicio humano", "area": "C3", "es_candidata": true, "niveles": [{"nivel": "N1", "texto": "Reconoce que los sistemas de IA tienen límites y que hay situaciones en las que el juicio humano es indispensable, más allá de lo que la IA puede resolver."}, {"nivel": "N2", "texto": "Reconoce que los modelos de IA pueden tener sesgos culturales y lingüísticos que afectan sus resultados."}, {"nivel": "N3", "texto": "Discierne qué delegar a la IA y cuándo escalar la decisión a juicio humano, considerando esos sesgos y otros límites del sistema."}]}], "base": ["Colaboración y co-creación con tecnologías digitales y de IA", "Aplicación de normas éticas y de convivencia en entornos digitales y de IA"]}</script>
+<script>
+const DATA = JSON.parse(document.getElementById('datos-json').textContent);
+const TODAS_AREAS = DATA.areas.concat(DATA.envolventes);
+let filtroArea = null;
+
+function escaparHTML(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ───────── ESPIRAL (misma geometría que el modelo que ya conoce el panel) ─────────
+function dibujarEspiral() {
+  const svg = document.getElementById('espiralSvg');
+  const NS = 'http://www.w3.org/2000/svg';
+  const cx = 350, cy = 320, Rcore = 168;
+  const ptAt = (a, r) => { const t = a * Math.PI / 180; return [cx + r * Math.cos(t), cy + r * Math.sin(t)]; };
+  function addEl(tag, attrs) {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    svg.appendChild(el);
+    return el;
+  }
+  const porArea = {};
+  DATA.competencias.concat(DATA.candidatas).forEach(c => (porArea[c.area] = porArea[c.area] || []).push(c));
+
+  function mostrarTooltip(evt, area) {
+    const tt = document.getElementById('area-tooltip');
+    tt.innerHTML = `<strong>${area.codigo} · ${escaparHTML(area.nombre)}</strong>` + (porArea[area.codigo] || []).map(c =>
+      `<div class="tt-comp"><span class="tt-codigo">${c.codigo}</span>${escaparHTML(c.nombre)}${c.es_candidata ? '<span class="tt-cand">★ candidata</span>' : ''}</div>`).join('')
+      + `<div style="margin-top:7px;font-size:10.5px;opacity:.55;">clic para resaltarlas abajo</div>`;
+    tt.style.display = 'block';
+    const x = evt.clientX + 16 + tt.offsetWidth > window.innerWidth ? evt.clientX - tt.offsetWidth - 16 : evt.clientX + 16;
+    tt.style.left = x + 'px';
+    tt.style.top = (evt.clientY + 12) + 'px';
+  }
+  const ocultarTooltip = () => { document.getElementById('area-tooltip').style.display = 'none'; };
+
+  DATA.areas.forEach(area => {
+    const p0 = ptAt(area.a0, Rcore), p1 = ptAt(area.a1, Rcore);
+    const w = addEl('path', {d: `M ${cx},${cy} L ${p0[0].toFixed(1)},${p0[1].toFixed(1)} A ${Rcore},${Rcore} 0 0,1 ${p1[0].toFixed(1)},${p1[1].toFixed(1)} Z`,
+      fill: area.color, 'fill-opacity': 0.16, stroke: 'none', class: 'area-wedge', 'data-area': area.codigo});
+    w.addEventListener('mousemove', e => mostrarTooltip(e, area));
+    w.addEventListener('mouseleave', ocultarTooltip);
+    w.addEventListener('click', () => toggleFiltroArea(area.codigo));
+  });
+  [-90, -18, 54, 126, 198].forEach(deg => { const p = ptAt(deg, Rcore); addEl('line', {x1: cx, y1: cy, x2: p[0], y2: p[1], stroke: '#ccc', 'stroke-width': 1, opacity: 0.7, class: 'decorativo'}); });
+  addEl('circle', {cx, cy, r: Rcore, fill: 'none', stroke: '#bbb', 'stroke-width': 1.3, class: 'decorativo'});
+  const rN1 = Rcore * 0.36, rN2 = Rcore * 0.66;
+  [rN1, rN2].forEach(r => addEl('circle', {cx, cy, r, fill: 'none', stroke: '#999', 'stroke-width': 1, 'stroke-dasharray': '3,4', opacity: 0.55, class: 'decorativo'}));
+
+  const thetaMax = 6 * Math.PI, rStart = 8, b = (Rcore - 16) / thetaMax;
+  let d = '';
+  for (let k = 0; k <= 240; k++) {
+    const th = thetaMax * (k / 240), r = rStart + b * th, ang = -Math.PI / 2 + th;
+    d += (k ? 'L' : 'M') + (cx + r * Math.cos(ang)).toFixed(1) + ',' + (cy + r * Math.sin(ang)).toFixed(1) + ' ';
+  }
+  addEl('path', {d, fill: 'none', stroke: '#2d3748', 'stroke-width': 3.5, 'stroke-linecap': 'round', class: 'decorativo'});
+  const pS = ptAt(-90, rStart);
+  addEl('circle', {cx: pS[0], cy: pS[1], r: 4, fill: '#2d3748', class: 'decorativo'});
+
+  DATA.areas.forEach(area => {
+    const p = ptAt((area.a0 + area.a1) / 2, Rcore * 0.74);
+    addEl('rect', {x: p[0] - 58, y: p[1] - 19, width: 116, height: 36, rx: 6, fill: '#fff', opacity: 0.8, class: 'decorativo'});
+    addEl('text', {x: p[0], y: p[1] - 2, 'text-anchor': 'middle', 'font-size': 12.5, 'font-weight': 700, fill: area.color, class: 'decorativo'}).textContent = area.codigo;
+    addEl('text', {x: p[0], y: p[1] + 13, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': 600, fill: area.color, class: 'decorativo'}).textContent = area.corto;
+  });
+  [[rN1 * 0.5, 'N1'], [(rN1 + rN2) / 2, 'N2'], [(rN2 + Rcore) / 2, 'N3']].forEach(([r, txt]) => {
+    const p = ptAt(-90, r);
+    addEl('rect', {x: p[0] - 15, y: p[1] - 9, width: 30, height: 17, rx: 4, fill: '#fff', opacity: 0.94, class: 'decorativo'});
+    addEl('text', {x: p[0], y: p[1] + 4, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 600, 'font-style': 'italic', fill: '#6b7280', class: 'decorativo'}).textContent = txt;
+  });
+
+  DATA.envolventes.forEach((ring, i) => {
+    const circle = addEl('circle', {cx, cy, r: ring.r, fill: 'none', stroke: ring.color, 'stroke-width': 2.2, 'stroke-dasharray': '7,6', opacity: 0.75, class: 'area-ring decorativo', 'data-area': ring.codigo});
+    // La línea visible mide 2px; este anillo invisible de 24px es el que recibe el cursor.
+    const hit = addEl('circle', {cx, cy, r: ring.r, fill: 'none', stroke: 'transparent', 'stroke-width': 24, 'pointer-events': 'stroke', class: 'area-ring-hit'});
+    hit.addEventListener('mouseenter', () => circle.classList.add('ring-hover'));
+    hit.addEventListener('mousemove', e => mostrarTooltip(e, ring));
+    hit.addEventListener('mouseleave', () => { circle.classList.remove('ring-hover'); ocultarTooltip(); });
+    hit.addEventListener('click', () => toggleFiltroArea(ring.codigo));
+    const p = ptAt(180 - i * 10, ring.r);
+    addEl('text', {x: p[0] - 6, y: p[1] + 3, 'text-anchor': 'end', 'font-size': 10.5, 'font-weight': 700, fill: ring.color, class: 'decorativo'}).textContent = ring.codigo;
+  });
+  addEl('text', {x: cx, y: cy + DATA.envolventes[2].r + 32, 'text-anchor': 'middle', 'font-size': 11.5, fill: '#666', class: 'decorativo'})
+    .textContent = 'Pasa el cursor sobre un área para ver sus competencias · clic para resaltarlas abajo';
+}
+
+function leyendaHTML() {
+  return DATA.areas.map(a => `<div class="ley-item"><span class="ley-dot" style="background:${a.color}"></span>${a.codigo} · ${a.nombre}</div>`)
+    .concat(DATA.envolventes.map(a => `<div class="ley-item"><span class="ley-dot sq" style="background:${a.color}"></span>${a.codigo} · ${a.nombre}</div>`))
+    .concat([`<div class="ley-item" style="width:100%;border-top:1px solid #eee;padding-top:10px;color:#555">Niveles, del centro hacia afuera: <strong style="margin:0 3px">N1</strong> · <strong style="margin:0 3px">N2</strong> · <strong style="margin:0 3px">N3</strong></div>`])
+    .join('');
+}
+
+// ───────── TARJETAS ─────────
+function tarjetaHTML(c) {
+  const niveles = c.niveles.map(n => `<li><span class="cc-niv">${n.nivel}</span><span>${escaparHTML(n.texto)}</span></li>`).join('')
+    + (c.alcance_n3 ? `<li class="alcance" title="No es un cuarto nivel: depende del perfil"><span></span><span><strong>Alcance, según el perfil:</strong> ${escaparHTML(c.alcance_n3)}</span></li>` : '');
+  return `
+    <div class="comp-card${c.es_candidata ? ' candidata' : ''}">
+      <div class="cc-top"><span class="cc-codigo">${c.codigo}</span>${c.es_candidata ? '<span class="cc-tag">★ candidata</span>' : ''}</div>
+      <div class="cc-nombre">${escaparHTML(c.nombre)}</div>
+      <ol class="cc-niveles">${niveles}</ol>
+    </div>`;
+}
+
+function filasHTML(lista, conFiltro) {
+  const areasConComps = TODAS_AREAS.filter(a => lista.some(c => c.area === a.codigo));
+  return areasConComps.map(a => {
+    const atenuada = conFiltro && filtroArea && a.codigo !== filtroArea ? ' atenuada' : '';
+    return `
+    <div class="fila-area${atenuada}" data-area="${a.codigo}">
+      <div class="fila-area-rotulo" style="border-left-color:${a.color}" onclick="toggleFiltroArea('${a.codigo}')" title="Clic para resaltar esta área">
+        <span class="fila-area-codigo" style="color:${a.color}">${a.codigo}</span>
+        <span class="fila-area-nombre">${a.nombre}</span>
+      </div>
+      ${lista.filter(c => c.area === a.codigo).map(tarjetaHTML).join('')}
+    </div>`;
+  }).join('');
+}
+
+function render() {
+  const cols = Math.max(...TODAS_AREAS.map(a => DATA.competencias.filter(c => c.area === a.codigo).length));
+  const grid = document.getElementById('grid-competencias');
+  grid.style.setProperty('--cols', cols);
+  grid.innerHTML = filasHTML(DATA.competencias, true);
+  const gc = document.getElementById('grid-candidatas');
+  gc.style.setProperty('--cols', cols);
+  gc.innerHTML = filasHTML(DATA.candidatas, false);
+  document.querySelectorAll('#espiralSvg .area-wedge, #espiralSvg .area-ring').forEach(el =>
+    el.classList.toggle('area-atenuada', !!filtroArea && el.dataset.area !== filtroArea));
+  document.getElementById('filtro-chip').classList.toggle('visible', !!filtroArea);
+  if (filtroArea) {
+    const a = TODAS_AREAS.find(x => x.codigo === filtroArea);
+    document.getElementById('filtro-chip-texto').textContent = `${a.codigo} · ${a.nombre}`;
+  }
+}
+
+function toggleFiltroArea(codigo) {
+  const antes = filtroArea;
+  filtroArea = filtroArea === codigo ? null : codigo;
+  render();
+  if (filtroArea && filtroArea !== antes) {
+    const fila = document.querySelector(`#grid-competencias .fila-area[data-area="${filtroArea}"]`);
+    if (fila) fila.scrollIntoView({behavior: 'smooth', block: 'center'});
+  }
+}
+document.getElementById('filtro-chip-cerrar').addEventListener('click', () => toggleFiltroArea(filtroArea));
+
+dibujarEspiral();
+document.getElementById('espiral-leyenda').innerHTML = leyendaHTML();
+document.getElementById('lista-base').innerHTML = DATA.base.map(t => `<li>${escaparHTML(t)}</li>`).join('');
+render();
+</script>
+</body>
+</html>
