@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instrumento breve de competencias en IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Una columna de lectura: casos en serif como documento, preguntas y resultados en sans como formulario. Paleta y tipos heredados del prototipo de las fonditas. */
+:root{
+  --bg:#F3F5F4; --paper:#FFFFFF; --ink:#1C2733; --muted:#5B6773; --line:#D6DCDA;
+  --accent:#2B5F9E; --accent-soft:#E3ECF6;
+  --n0:#B4483C; --n1:#B07812; --n2:#3E8A5C; --n3:#2B5F9E;
+  --ok:#2F7A4E; --ok-soft:#E2F1E8; --no:#B4483C; --no-soft:#F7E4E1;
+  --serif:"Literata", Georgia, "Times New Roman", serif;
+  --sans:"Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121821; --paper:#1A222D; --ink:#E6EAEE; --muted:#9AA6B2; --line:#2E3946;
+    --accent:#7FB0E8; --accent-soft:#1F3048;
+    --n0:#E07A6E; --n1:#E2B04E; --n2:#6CC08D; --n3:#7FB0E8;
+    --ok:#6CC08D; --ok-soft:#173326; --no:#E07A6E; --no-soft:#3A1F1C;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121821; --paper:#1A222D; --ink:#E6EAEE; --muted:#9AA6B2; --line:#2E3946;
+  --accent:#7FB0E8; --accent-soft:#1F3048;
+  --n0:#E07A6E; --n1:#E2B04E; --n2:#6CC08D; --n3:#7FB0E8;
+  --ok:#6CC08D; --ok-soft:#173326; --no:#E07A6E; --no-soft:#3A1F1C;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;padding-inline:16px}
+[hidden]{display:none!important}
+.wrap{max-width:760px;margin:0 auto;padding-block:40px 80px}
+.kicker{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.12;margin:0 0 14px;text-wrap:balance}
+h2{font-size:1.25rem;margin:0 0 14px;text-wrap:balance}
+h3{font-size:1.05rem;margin:32px 0 10px}
+.intro{color:var(--muted);max-width:62ch;margin:0 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin:14px 0 0;padding:0;list-style:none}
+.meta b{color:var(--ink);font-weight:600}
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;margin-block:28px 8px;border-bottom:1px solid var(--line)}
+.sticky-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:8px}
+.bar span{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.who{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:18px 0 6px}
+.who label{font-size:14px;color:var(--muted)}
+.who input{font:inherit;font-size:15px;padding:8px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);flex:1;min-width:0;max-width:360px}
+.case{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:28px clamp(18px,5vw,40px);margin:36px 0 28px}
+.case-label{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;font-weight:600}
+.case h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;margin-bottom:16px}
+.case p,.case li{font-family:var(--serif);font-size:1.05rem;line-height:1.7;max-width:66ch}
+.case p{margin:0 0 1em}
+.case ul,.case ol{margin:0 0 1em;padding-left:1.3em}
+.case li{margin-bottom:.25em}
+.case blockquote{margin:0 0 1.2em;padding:14px 18px;border-left:3px solid var(--accent);background:var(--accent-soft);font-family:var(--serif);font-style:italic;line-height:1.7}
+.bq-label{display:block;font-family:var(--sans);font-style:normal;font-size:13px;color:var(--muted);margin-bottom:6px}
+fieldset{border:0;margin:0 0 34px;padding:0;min-width:0}
+legend{padding:0;margin-bottom:12px;font-weight:600;font-size:1.05rem;line-height:1.45;display:flex;gap:12px}
+.num{flex:none;font-size:13px;font-weight:700;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums;min-width:2.2em}
+.opts{display:grid;gap:8px;margin-left:calc(2.2em + 12px)}
+@media (max-width:520px){.opts{margin-left:0}}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--paper);border:1px solid var(--line);border-radius:4px;cursor:pointer;line-height:1.5}
+.opt:hover{border-color:var(--muted)}
+.opt input{margin-top:3px;accent-color:var(--accent);flex:none;width:18px;height:18px}
+.opt:has(input:checked){border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.opt-text{flex:1;min-width:0}
+.tags{display:none;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:12px;font-weight:700;padding:1px 8px;border-radius:10px;border:1px solid currentColor}
+.tag.k-ok{color:var(--ok)} .tag.k-no{color:var(--no)}
+.tag.lv{color:var(--muted)}
+.reviewed .tags{display:flex}
+.reviewed .opt{cursor:default}
+.reviewed .opt.right{background:var(--ok-soft);border-color:var(--ok);box-shadow:none}
+.reviewed .opt.wrong{background:var(--no-soft);border-color:var(--no);box-shadow:none}
+.verdict-line{display:none;margin:10px 0 0 calc(2.2em + 12px);font-size:14px;color:var(--muted)}
+@media (max-width:520px){.verdict-line{margin-left:0}}
+.reviewed .verdict-line{display:block}
+.verdict-line b{color:var(--ink)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:12px}
+button{font:inherit;font-size:15px;font-weight:600;padding:11px 20px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ink);background:transparent;color:var(--ink)}
+button.primary{background:var(--ink);color:var(--paper)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font-size:14px;color:var(--muted)}
+#results{margin-top:48px;padding-top:36px;border-top:2px solid var(--ink)}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:12px}
+.score > div{background:var(--paper);padding:18px 20px}
+.big{font-family:var(--serif);font-size:2.2rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.lbl{font-size:14px;color:var(--muted)}
+.dist{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:10px;color:var(--paper);white-space:nowrap}
+.note{font-size:14px;color:var(--muted);max-width:66ch}
+.flag{border-left:3px solid var(--n1);background:var(--paper);padding:10px 14px;font-size:14px;margin:12px 0}
+.tablewrap{overflow-x:auto;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:540px}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:13px;padding:8px 10px;border-bottom:1.5px solid var(--ink)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.code{font-weight:700;white-space:nowrap}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.meter{display:inline-flex;gap:3px;vertical-align:middle;margin-right:8px}
+.meter i{width:14px;height:10px;border-radius:2px;background:var(--line)}
+.meter i.on{background:var(--accent)}
+.keylink{margin-top:56px;font-size:14px;color:var(--muted)}
+.keylink a{color:var(--accent)}
+@media (max-width:600px){
+  table{min-width:0}
+  table tr:first-child{display:none}
+  table tr{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  table td{padding:0;border:0}
+  table td.num{grid-column:1 / -1}
+  table td.pillcell{grid-column:1 / -1}
+  table td.notecell{grid-column:1 / -1}
+  table td.notecell:empty{display:none}
+}
+.tag.you-ok{color:var(--paper);background:var(--ok);border-color:var(--ok)}
+.tag.you-no{color:var(--paper);background:var(--no);border-color:var(--no)}
+.tag.you-n{color:var(--ink);border-color:var(--line)}
+.reviewed .opt.marked{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.task{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:10px;padding:0 8px;margin-right:4px;vertical-align:2px}
+:root{--warn:#9A6A10;--warn-soft:#FBF1DD;--n0:#7A8794}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--warn:#E2B04E;--warn-soft:#3A2F17;--n0:#7F8C99}}
+:root[data-theme="dark"]{--warn:#E2B04E;--warn-soft:#3A2F17;--n0:#7F8C99}
+.inicio{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:28px clamp(18px,5vw,40px);margin:32px 0}
+.inicio h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;margin-bottom:6px}
+.inicio h3{margin:26px 0 8px}
+.legal{border:1px solid var(--line);border-radius:4px;padding:16px 18px;max-height:320px;overflow-y:auto;font-size:15px;line-height:1.6;background:var(--bg)}
+.legal h4{font-size:15px;margin:14px 0 4px}
+.legal h4:first-child{margin-top:0}
+.legal p{margin:0 0 8px}
+.pendiente{border-left:3px solid var(--warn);padding:6px 12px;font-size:14px;color:var(--muted)}
+.campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px 20px;margin-top:8px}
+.campo{display:flex;flex-direction:column;gap:6px;min-width:0}
+.campo > label,.campo .lbl-campo{font-size:14px;font-weight:600}
+.campo .ayuda{font-size:13px;color:var(--muted)}
+.campo input[type=text],.campo input[type=email],.campo input[type=number],.campo select{font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);width:100%}
+.campo input:focus-visible,.campo select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.campo .error{font-size:13px;color:var(--no)}
+.acepto{display:flex;gap:12px;align-items:flex-start;margin-top:18px;font-weight:600}
+.acepto input{width:18px;height:18px;margin-top:3px;flex:none;accent-color:var(--accent)}
+.siono{display:flex;gap:24px;flex-wrap:wrap}
+.siono label{display:inline-flex;gap:8px;align-items:center;font-size:15px;font-weight:400;cursor:pointer}
+.siono input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--accent)}
+.insignia{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px clamp(18px,4vw,32px);margin:8px 0 12px}
+.ruta{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:18px;list-style:none;padding:0}
+.ruta li{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border-top:4px solid var(--line);padding-top:6px}
+.ruta li.hecho{border-color:var(--accent);color:var(--accent)}
+.ruta li.actual{border-color:var(--accent);color:var(--ink)}
+.insignia-kicker{font-size:13px;color:var(--muted);margin:0}
+.insignia-nombre{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.15;margin:2px 0 10px}
+.insignia p.msg{font-family:var(--serif);font-size:1.08rem;line-height:1.6;margin:0;max-width:60ch}
+.consejos{display:grid;gap:10px}
+.consejo{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.consejo .c-titulo{font-weight:600;margin:0 0 2px}
+.consejo .c-meta{font-size:13px;color:var(--muted);margin:0 0 6px}
+.consejo p.c-texto{margin:0;max-width:66ch}
+.reviewed .tag.k-ok,.reviewed .tag.k-no{display:none}
+.reviewed.solo-clave .tag.k-ok,.reviewed.solo-clave .tag.k-no{display:inline-block}
+.reviewed .opt.good{background:var(--ok-soft);border-color:var(--ok);box-shadow:none}
+.reviewed .opt.bad{background:var(--warn-soft);border-color:var(--warn);box-shadow:none}
+.tag.st-good{color:var(--paper);background:var(--ok);border-color:var(--ok)}
+.tag.st-bad{color:var(--paper);background:var(--warn);border-color:var(--warn)}
+details.revision{margin-top:28px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+details.revision > summary{cursor:pointer;padding:14px 18px;font-weight:600;color:var(--accent);list-style-position:inside}
+details.revision[open] > summary{border-bottom:1px solid var(--line)}
+details.revision .rev-cuerpo{padding:8px clamp(10px,3vw,20px) 4px}
+details.revision .rev-cuerpo .case{margin-top:20px}
+.insignia p.foco{font-family:var(--serif);font-size:1.08rem;line-height:1.6;margin:10px 0 0;max-width:60ch}
+.insignia ul.foco{margin:6px 0 0;padding-left:1.2em;font-family:var(--serif);font-size:1.05rem;line-height:1.6;max-width:60ch}
+.insignia ul.foco li{margin-bottom:4px}
+details.como{margin-top:28px;font-size:14px;color:var(--muted)}
+details.como summary{cursor:pointer;color:var(--accent);font-weight:600}
+details.como p{margin:8px 0 0;max-width:66ch}
+@media (prefers-reduced-motion: reduce){.bar span{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <p class="kicker">Marco Mexicano de Competencias en IA · instrumento breve v0.4 · borrador para el equipo</p>
+  <h1>Tres casos sobre el uso de la IA</h1>
+  <p class="intro">Vas a leer tres casos y responder 17 preguntas. En cada pregunta marca todas las opciones que harías o que consideres correctas; cada una se califica por separado. No es un examen: al final recibirás tu insignia, un mapa de tus competencias y recomendaciones para seguir aprendiendo.</p>
+  <ul class="meta"><li><b>17</b> preguntas</li><li><b>3</b> casos</li><li>sin límite de tiempo</li></ul>
+</header>
+
+
+
+<section class="inicio" id="inicio" aria-labelledby="t-inicio">
+  <h2 id="t-inicio">Antes de empezar</h2>
+  <p class="intro">Lee el consentimiento informado y el aviso de privacidad, y llena tus datos. Después podrás responder los casos.</p>
+
+  <h3>Consentimiento informado</h3>
+  <div class="legal" tabindex="0" aria-label="Texto del consentimiento informado">
+    <p>La Universidad Anáhuac México y la Universidad Nacional Autónoma de México están desarrollando una investigación para desarrollar un marco de competencia de IA 2030.</p>
+    <p>El objetivo de este estudio es desarrollar un modelo basado en niveles de agencia, validado empíricamente y alineado con estándares internacionales. Este documento tiene como propósito informarle los alcances de su participación en la investigación.</p>
+    <p>Le pedimos leerlo cuidadosamente y, en caso de estar de acuerdo, aceptarlo al final.</p>
+    <h4>Sobre su participación</h4>
+    <p>Usted ha sido invitado/a a participar en el levantamiento de datos para el desarrollo del marco de competencia IA 2030.</p>
+    <p>Nuestro propósito es construir no solo un marco de competencias sino rutas de aprendizaje que permitan desarrollar dichas competencias.</p>
+    <p>Su participación es completamente voluntaria. No implica compensación económica ni costo alguno. Una vez concluido el estudio, los hallazgos serán publicados en un informe y publicaciones relacionadas que serán compartidos en un portal digital de manera consolidada. Sus datos personales no serán compartidos de manera individual, pero sí de manera consolidada (encuestas). En el caso de personas entrevistadas solo se citará el número de entrevistado sin mostrar su nombre ni datos personales.</p>
+    <h4>Derechos ARCO</h4>
+    <p>El titular de los datos personales tiene derecho a solicitar el Acceso, Rectificación, Cancelación u Oposición (derechos ARCO) respecto del tratamiento de su información. Para iniciar este proceso, deberá presentar una solicitud por escrito dirigida a la Oficina del Oficial de Protección de Datos Personales de la Universidad Anáhuac México en el domicilio en Av. Universidad Anáhuac 46, Col. Lomas Anáhuac, Huixquilucan, Estado de México, C. P. 52786, o bien, a través del correo electrónico privacidad.norte@anahuac.mx detallando los datos sobre los cuales desea ejercer su derecho.</p>
+  </div>
+
+  <h3>Aviso de privacidad</h3>
+  <div class="legal" tabindex="0" aria-label="Texto del aviso de privacidad">
+    <p>Investigaciones y Estudios Superiores, S. C. (Universidad Anáhuac México), con domicilio en Av. Universidad Anáhuac 46, Col. Lomas Anáhuac, Huixquilucan, Estado de México, C. P. 52786, es responsable del tratamiento de los datos personales que nos proporciones en este cuestionario, que forma parte de una investigación conjunta con la Facultad de Química de la Universidad Nacional Autónoma de México.</p>
+    <h4>Qué datos recabamos</h4>
+    <p>Edad, universidad, área de estudio, semestre y correo institucional, además de tus respuestas a los casos. No recabamos datos personales sensibles.</p>
+    <h4>Para qué los usamos</h4>
+    <p>Para analizar los resultados del estudio de forma consolidada, por universidad, área de estudio, semestre y edad, y para identificar que cada persona responda una sola vez. Tus respuestas no se publican de manera individual.</p>
+    <h4>Con quién los compartimos</h4>
+    <p>Solo los consulta el equipo de investigación de la Universidad Anáhuac México y de la Facultad de Química de la UNAM. No los transferimos a terceros.</p>
+    <h4>Tus derechos</h4>
+    <p>Puedes ejercer tus derechos de acceso, rectificación, cancelación u oposición (ARCO) escribiendo a la Oficina del Oficial de Protección de Datos Personales de la Universidad Anáhuac México: privacidad.norte@anahuac.mx.</p>
+    <p class="pendiente">Pendiente: enlace al aviso de privacidad integral.</p>
+  </div>
+
+  <label class="acepto" for="aceptoTxt"><input type="checkbox" id="aceptoTxt"><span>He leído el consentimiento informado y el aviso de privacidad, y acepto participar de forma voluntaria en los términos establecidos.</span></label>
+
+  <div class="campo" style="margin-top:18px" role="radiogroup" aria-labelledby="lblPublica">
+    <span id="lblPublica" class="lbl-campo">¿Autorizas que tu información sea utilizada de modo consolidado para la publicación del estudio?</span>
+    <div class="siono">
+      <label for="pubSi"><input type="radio" name="publica" id="pubSi" value="si">Sí</label>
+      <label for="pubNo"><input type="radio" name="publica" id="pubNo" value="no">No</label>
+    </div>
+  </div>
+
+  <h3>Tus datos</h3>
+  <div class="campos">
+    <div class="campo">
+      <label for="edad">Edad</label>
+      <input id="edad" type="number" inputmode="numeric" min="15" max="99" placeholder="Años cumplidos">
+    </div>
+    <div class="campo">
+      <label for="universidad">Universidad</label>
+      <input id="universidad" type="text" autocomplete="organization" placeholder="Nombre de tu universidad">
+    </div>
+    <div class="campo">
+      <label for="area">Área de estudio</label>
+      <select id="area"><option value="">Elige el área de tu carrera</option><option value="01">Educación</option><option value="02">Artes y humanidades</option><option value="03">Ciencias sociales y derecho</option><option value="04">Administración y negocios</option><option value="05">Ciencias naturales, matemáticas y estadística</option><option value="06">Tecnologías de la información y la comunicación</option><option value="07">Ingeniería, manufactura y construcción</option><option value="08">Agronomía y veterinaria</option><option value="09">Ciencias de la salud</option><option value="10">Servicios (turismo, gastronomía, deporte, transporte, seguridad)</option><option value="99">Otra / no estoy seguro</option></select>
+    </div>
+    <div class="campo">
+      <label for="semestre">Semestre</label>
+      <select id="semestre"><option value="">Elige tu semestre</option><option value="1">1.º</option><option value="2">2.º</option><option value="3">3.º</option><option value="4">4.º</option><option value="5">5.º</option><option value="6">6.º</option><option value="7">7.º</option><option value="8">8.º</option><option value="9">9.º</option><option value="10+">10.º o más</option></select>
+    </div>
+    <div class="campo" style="grid-column:1 / -1">
+      <label for="correo">Correo institucional</label>
+      <input id="correo" type="email" autocomplete="email" placeholder="tu.nombre@universidad.edu.mx">
+      <span class="ayuda">El que te dio tu universidad, no uno personal.</span>
+      <span class="error" id="correoError" hidden>Revisa el correo: debe tener la forma nombre@dominio.</span>
+    </div>
+  </div>
+
+  <div class="actions" style="margin-top:22px">
+    <button class="primary" id="comenzarBtn" type="button" disabled>Comenzar</button>
+    <span class="hint" id="comenzarHint" aria-live="polite"></span>
+  </div>
+</section>
+
+<div id="instrumento" hidden>
+<div class="sticky" aria-hidden="true">
+  <div class="sticky-row"><span id="progress">0 de 17 respondidas</span><span id="stickyHint"></span></div>
+  <div class="bar"><span id="barFill"></span></div>
+</div>
+
+<form id="quiz"></form>
+
+<div class="actions">
+  <button class="primary" id="submitBtn" type="button" disabled>Ver mi perfil</button>
+    <span class="hint" id="submitHint" aria-live="polite">Responde las 17 preguntas para ver tu perfil.</span>
+</div>
+
+<section id="results" hidden aria-live="polite">
+  <h2>Tu perfil</h2>
+  <div class="insignia" id="insignia"></div>
+  <div id="flags"></div>
+  <h3>Para seguir creciendo</h3>
+  <div class="consejos" id="consejos"></div>
+  <h3>Tu mapa de competencias</h3>
+  <div class="tablewrap"><table id="compTable"></table></div>
+  <h3>Competencias en revisión</h3>
+  <p class="note">Un panel de especialistas está decidiendo si estas dos competencias entran al marco.</p>
+  <div class="tablewrap"><table id="candTable"></table></div>
+  <details class="revision" id="revision">
+    <summary>Revisa tus respuestas pregunta por pregunta</summary>
+    <div class="rev-cuerpo" id="revisionCuerpo"><p class="note">En cada opción verás su nivel y si tu decisión fue acertada (en verde) o no (en ámbar).</p></div>
+  </details>
+  <details class="como">
+    <summary>Cómo se arma tu perfil</summary>
+    <p><b>Tu insignia</b> depende del nivel que alcanzas en al menos la mitad de las 15 competencias del marco: Explorador, Practicante, Estratega o Guía. Debajo te decimos en qué dos áreas del marco tienes más espacio para crecer.</p>
+    <p><b>Cada competencia</b> tiene una pregunta con una opción de N1, dos de N2 y dos de N3. Tu nivel es el más alto que resolviste completo, y cada error en un nivel inferior lo baja un nivel.</p>
+    <p><b>Los consejos</b> son para tres de las competencias en las que tienes más espacio para crecer, y te dicen cómo llegar al siguiente nivel.</p>
+    <p><b>N3 según perfil:</b> en dos competencias el N3 pide conocimiento técnico (configurar flujos, conectar por API, bases de datos). Si tu carrera no es técnica, no alcanzarlo es esperable.</p>
+  </details>
+</section>
+
+</div>
+<p class="keylink">¿Revisas el instrumento con el equipo? <a href="#clave" id="keyLink">Ver la clave completa sin responder</a>.</p>
+</div>
+
+<script>
+const DATA = {"comps": {"C1-1": {"nombre": "Comprensión conceptual de la IA: qué es, cómo piensa y su alcance", "tipo": "oficial"}, "C1-2": {"nombre": "Comprensión del aprendizaje, percepción y acción de los sistemas de IA", "tipo": "oficial"}, "C2-1": {"nombre": "Interacción, selección y configuración de sistemas de IA", "tipo": "oficial"}, "C2-2": {"nombre": "Uso de tecnologías adaptativas personalizadas de IA", "tipo": "oficial"}, "C2-3": {"nombre": "Resolución de problemas con apoyo de IA", "tipo": "oficial"}, "C3-1": {"nombre": "Evaluación crítica de la calidad y confiabilidad de outputs de IA", "tipo": "oficial"}, "C3-2": {"nombre": "Juicio humano y explicación crítica de la IA", "tipo": "oficial"}, "C4-1": {"nombre": "Creación de contenido con IA mediante instrucciones e iteración", "tipo": "oficial"}, "C4-2": {"nombre": "Prototipado, innovación y construcción técnica de soluciones con IA", "tipo": "oficial"}, "C5-1": {"nombre": "Aplicación de la IA en la práctica disciplinar propia", "tipo": "oficial"}, "E1-1": {"nombre": "Principios éticos, normativos y de seguridad en el uso de la IA", "tipo": "oficial"}, "E1-2": {"nombre": "Privacidad, datos e identidad digital", "tipo": "oficial"}, "E1-3": {"nombre": "Salud y bienestar digital en el uso de la IA", "tipo": "oficial"}, "E2-1": {"nombre": "Agencia, desarrollo continuo y reflexión crítica frente a la IA", "tipo": "oficial"}, "E3-1": {"nombre": "Análisis, equidad y responsabilidad ante el impacto social y ambiental de la IA", "tipo": "oficial"}, "C2-4": {"nombre": "Conciencia de costos económicos, materiales y ambientales en el uso de la IA", "tipo": "candidata"}, "C3-3": {"nombre": "Reconocimiento de sesgos y límites de la IA para decidir cuándo delegar a juicio humano", "tipo": "candidata"}}, "casos": [{"id": "caso1", "titulo": "Caso 1 · El diagnóstico de las fonditas", "html": "<p>Mariana, estudiante de séptimo semestre de licenciatura, hace su servicio social en Cocinas Vivas, una asociación civil de Iztapalapa que apoya a 40 fondas familiares. La directora, Rosa, le pidió un diagnóstico breve de la economía de las fondas tras la pandemia, para decidir a cuáles apoyar primero y cómo.</p><p>Con poco tiempo, Mariana hace casi todo con un chatbot de IA generativa, que no tiene activada la búsqueda en internet. Subió completa la hoja de cálculo de la asociación, con el nombre, teléfono, dirección, ingresos aproximados y apoyos de gobierno de cada dueña, y le pidió: «Hazme un diagnóstico de estas fondas».</p><p>La hoja dice que:</p><ul><li>22 de las 40 fondas ganan hoy menos que en 2019.</li><li>12 dueñas reciben algún apoyo de gobierno.</li><li>31 dueñas no tienen cuenta bancaria.</li><li>9 dueñas tienen más de 65 años y 2 hablan náhuatl como primera lengua.</li><li>Casi todas usan solo WhatsApp en su celular.</li></ul><p>El chatbot respondió con un texto bien redactado. Este es un fragmento:</p><blockquote><span class=\"bq-label\">Respuesta del chatbot</span>Según el INEGI (Encuesta Nacional de Negocios Gastronómicos, 2024), el 78 % de las fondas de la Ciudad de México cerró durante la pandemia. Más de la mitad de las fondas de la asociación gana hoy menos que en 2019. La mayoría de las dueñas recibe apoyo de gobierno, por lo que su situación es estable. Se recomienda que las fondas pidan un crédito bancario para digitalizarse y contraten un sistema de cobro como Square o Toast.</blockquote><p>Mariana buscó la encuesta en el sitio del INEGI y no la encontró.</p><p>Cuando le cuenta a Rosa que usó un chatbot, Rosa le pregunta: «¿Cómo es que esa máquina sabe tanto de nuestras fondas? ¿Puedo confiar en lo que dice?».</p><p>Además, Mariana nota que últimamente usa el chatbot para casi todo, hasta para mensajes sencillos, y se siente insegura al redactar sin él.</p>"}, {"id": "caso2", "titulo": "Caso 2 · El buzón de la Coordinación", "html": "<p>La Coordinación de Servicio Social de tu facultad recibe cada mes unos 900 mensajes de estudiantes por un formulario en línea. La mayoría son dudas sobre trámites o solicitudes de cambio de plaza. También llegan quejas sobre las instituciones del servicio y, a veces, reportes graves, como acoso o accidentes. Hoy, dos personas leen todos los mensajes y tardan hasta tres semanas en contestar.</p><p>La Coordinación te invitó a un equipo que quiere usar IA para responder más rápido. Un proveedor ofrece un sistema en cuatro pasos:</p><ol><li>Un modelo de IA clasifica cada mensaje como trámite, cambio de plaza, queja o grave.</li><li>Un modelo de IA generativa, como el de los chatbots, redacta la respuesta.</li><li>La respuesta se envía al estudiante sin que nadie de la Coordinación la revise.</li><li>Un tablero muestra cuántos mensajes se contestaron y en cuánto tiempo.</li></ol><p>Para el paso 1 hay dos opciones: el mismo modelo generativo del paso 2, o un modelo más pequeño que solo sabe clasificar, entrenado con mensajes ya clasificados. El proveedor cobra por cada mensaje procesado y promete respuesta en menos de un minuto.</p><p>En una prueba con 50 mensajes ya recibidos, el sistema clasificó bien 46 y se equivocó en 4. Tres eran mensajes con muchas abreviaturas o que mezclaban español con otra lengua. El cuarto, un reporte de acoso que el sistema clasificó como queja común.</p>"}, {"id": "caso3", "titulo": "Caso 3 · Las plagas de la cooperativa", "html": "<p>Una cooperativa de productoras de jitomate en Morelos colabora con un equipo de estudiantes de distintas carreras de tu universidad.</p><p>Desde hace un año, las productoras usan una app con IA en el celular: toman una foto de las hojas y la app les dice si hay una plaga y cuál es. El modelo de la app se entrenó con miles de fotos de cultivos, casi todas de otros países. La app incluye un curso sobre plagas que cambia los ejercicios según los errores de cada productora.</p><p>Esta temporada, la app marcó como enfermas varias hojas que la agrónoma de la cooperativa considera sanas, y no detectó un hongo común en la región.</p><p>En la reunión del equipo, Daniel, que estudia ingeniería, propone reentrenar el modelo con fotos de la zona. Lucía, que estudia comunicación, dice que no entiende de modelos de IA y que eso le toca a Daniel. La agrónoma comenta, preocupada, que algunas productoras ya no revisan sus plantas: solo hacen lo que la app les dice.</p>"}], "preguntas": [{"id": "P01", "caso": "caso1", "comp": "C1-1", "tarea": false, "comprension": true, "enunciado": "Rosa quiere saber cómo «sabe» tanto el chatbot y si puede confiar en él. ¿Qué afirmaciones son correctas?", "afirmaciones": [{"t": "Un chatbot y un sistema que recomienda videos hacen lo mismo: eligen entre respuestas ya escritas.", "ok": false, "lv": 1}, {"t": "El 78 % pudo salir de cómo el modelo combina patrones de textos, sin consultar fuentes.", "ok": true, "lv": 2}, {"t": "Si no tiene un dato, un chatbot como este suele avisarlo en lugar de inventar una cifra.", "ok": false, "lv": 2}, {"t": "Sirve para ordenar y redactar, pero sus cifras deben revisarse antes de decidir a quién apoyar.", "ok": true, "lv": 3}, {"t": "Como procesa más información que una persona, su diagnóstico es más objetivo que el de Mariana.", "ok": false, "lv": 3}]}, {"id": "P02", "caso": "caso1", "comp": "C3-1", "tarea": false, "comprension": true, "enunciado": "Sobre el fragmento que respondió el chatbot, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Lo que el fragmento dice del apoyo de gobierno no coincide con la hoja.", "ok": true, "lv": 1}, {"t": "Sin la encuesta original, Mariana no debería usar la cifra del 78 %.", "ok": true, "lv": 2}, {"t": "Si otras páginas repiten la cifra del 78 %, eso confirma que la encuesta existe.", "ok": false, "lv": 2}, {"t": "Aunque sus cifras fueran correctas, el fragmento no le dice a Rosa a qué fondas apoyar primero.", "ok": true, "lv": 3}, {"t": "Para Rosa, el diagnóstico es más útil entre más datos nacionales incluya, aunque no sean de sus fondas.", "ok": false, "lv": 3}]}, {"id": "P03", "caso": "caso1", "comp": "C3-2", "tarea": false, "comprension": false, "enunciado": "Si fueras Mariana, ¿qué harías con el texto y cómo se lo explicarías a Rosa?", "afirmaciones": [{"t": "Agregar al diagnóstico lo que falta sobre las dueñas sin banco y las mayores de 65.", "ok": true, "lv": 1}, {"t": "Contrastar el texto con lo que he visto al trabajar con las dueñas.", "ok": true, "lv": 2}, {"t": "Corregir solo las cifras equivocadas y dejar las recomendaciones como están.", "ok": false, "lv": 2}, {"t": "Explicarle que el chatbot no conoce las fondas: combina la hoja con patrones de otros textos.", "ok": true, "lv": 3}, {"t": "Explicarle que el chatbot sabía que la cifra no existía, pero la incluyó para sonar convincente.", "ok": false, "lv": 3}]}, {"id": "P04", "caso": "caso1", "comp": "C4-1", "tarea": true, "comprension": false, "enunciado": "Mariana pedirá el diagnóstico otra vez, y el próximo semestre otros voluntarios harán diagnósticos parecidos. Marca lo que incluirías en la nueva instrucción.", "afirmaciones": [{"t": "Que proponga dos formas de organizar el diagnóstico: por zona o por tipo de apoyo.", "ok": true, "lv": 1}, {"t": "Para quién es, qué decisión debe apoyar y que pregunte lo que le falte saber.", "ok": true, "lv": 2}, {"t": "Que complete con cifras nacionales los datos que falten en la hoja de la asociación.", "ok": false, "lv": 2}, {"t": "Espacios marcados, como [datos del semestre], para que otros la reutilicen.", "ok": true, "lv": 3}, {"t": "Que retome la conversación de Mariana, para no empezar de cero cada semestre.", "ok": false, "lv": 3}]}, {"id": "P05", "caso": "caso1", "comp": "E1-2", "tarea": false, "comprension": false, "enunciado": "Si tuvieras que hacer de nuevo el diagnóstico, ¿qué harías con los datos de las dueñas?", "afirmaciones": [{"t": "Subir la hoja completa, porque pertenece a la asociación donde trabajo.", "ok": false, "lv": 1}, {"t": "Antes de subir la hoja, quitar nombres, teléfonos y direcciones.", "ok": true, "lv": 2}, {"t": "Borrar la conversación, dando por hecho que así los datos ya no quedan en la empresa.", "ok": false, "lv": 2}, {"t": "Revisar bien el diagnóstico antes de firmarlo: los errores de la IA afectan mi credibilidad.", "ok": true, "lv": 3}, {"t": "No mencionar en ningún lado que usé IA, para que nadie dude de la calidad de mi trabajo.", "ok": false, "lv": 3}]}, {"id": "P06", "caso": "caso1", "comp": "E1-3", "tarea": false, "comprension": true, "enunciado": "Mariana se siente insegura cuando escribe sin el chatbot. ¿Qué afirmaciones son correctas?", "afirmaciones": [{"t": "Si el chatbot le ahorra tiempo, usarlo para todo no afecta su bienestar.", "ok": false, "lv": 1}, {"t": "Que dude de su redacción cuando no tiene el chatbot es algo que conviene atender.", "ok": true, "lv": 2}, {"t": "Si revisa lo que el chatbot escribe, usarlo para todos sus mensajes no crea dependencia.", "ok": false, "lv": 2}, {"t": "Mariana podría proponer al equipo acordar qué tareas hacer sin IA para no perder práctica.", "ok": true, "lv": 3}, {"t": "Cada integrante decide cuánto usa el chatbot; no es algo que el equipo tenga que acordar.", "ok": false, "lv": 3}]}, {"id": "P07", "caso": "caso1", "comp": "E3-1", "tarea": false, "comprension": true, "enunciado": "Sobre los efectos del chatbot y de su recomendación, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Usar el chatbot también tiene un costo ambiental, aunque no aparezca en el texto.", "ok": true, "lv": 1}, {"t": "Seguir la recomendación tal cual podría dejar fuera a parte de las dueñas.", "ok": true, "lv": 2}, {"t": "La recomendación es justa porque propone lo mismo para todas las fondas.", "ok": false, "lv": 2}, {"t": "Si muchas asociaciones siguen consejos así, las fondas sin digitalizar podrían perder clientes.", "ok": true, "lv": 3}, {"t": "Con el tiempo, estas herramientas serán más baratas y la brecha entre fondas se cerrará sola.", "ok": false, "lv": 3}]}, {"id": "P08", "caso": "caso2", "comp": "C2-1", "tarea": false, "comprension": false, "enunciado": "Como parte del equipo, ¿qué harías para elegir las herramientas y montar el sistema?", "afirmaciones": [{"t": "Probar nosotros mismos la plataforma con mensajes de ejemplo, para ver qué hace y qué no.", "ok": true, "lv": 1}, {"t": "Usar el modelo pequeño para clasificar y dejar el generativo para redactar.", "ok": true, "lv": 2}, {"t": "Que el modelo también redacte la respuesta a los reportes graves, para atenderlos de inmediato.", "ok": false, "lv": 2}, {"t": "Montar con una herramienta de automatización el flujo entre formulario, modelos y correo.", "ok": true, "lv": 3}, {"t": "Dejar que el proveedor configure todo el flujo y limitarnos a revisar el tablero.", "ok": false, "lv": 3}]}, {"id": "P09", "caso": "caso2", "comp": "C2-3", "tarea": true, "comprension": false, "enunciado": "Te piden armar el plan para usar IA en el buzón. Marca los pasos que incluirías.", "afirmaciones": [{"t": "Usar la IA sobre todo en los reportes graves, porque son pocos y urgentes.", "ok": false, "lv": 1}, {"t": "Medir los errores por tipo de mensaje y ajustar el sistema antes de usarlo con todos.", "ok": true, "lv": 2}, {"t": "Pedirle al mismo sistema que evalúe su propia prueba, para ahorrar tiempo de revisión.", "ok": false, "lv": 2}, {"t": "Separar los mensajes por tipo y definir qué necesita cada uno antes de elegir dónde usar IA.", "ok": true, "lv": 3}, {"t": "Repartir los mensajes entre las dos personas por orden de llegada y que la IA redacte todas las respuestas.", "ok": false, "lv": 3}]}, {"id": "P10", "caso": "caso2", "comp": "C2-4", "tarea": false, "comprension": true, "enunciado": "Sobre lo que cuesta el sistema, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Procesar cada mensaje consume energía en los servidores, aunque no aparezca en la factura.", "ok": true, "lv": 1}, {"t": "Usar IA generativa para mensajes que bastaría responder con una plantilla fija es un gasto evitable.", "ok": true, "lv": 2}, {"t": "El tiempo de las dos personas revisando respuestas no es un costo, porque ya tienen sueldo.", "ok": false, "lv": 2}, {"t": "La Coordinación debería revisar cada mes cuánto gasta y qué mejora, para decidir si sigue.", "ok": true, "lv": 3}, {"t": "Basta comparar la factura del proveedor con el sueldo de las dos personas para decidir si conviene.", "ok": false, "lv": 3}]}, {"id": "P11", "caso": "caso2", "comp": "C3-3", "tarea": false, "comprension": true, "enunciado": "Sobre los errores de la prueba y lo que conviene dejarle al sistema, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Con más datos de entrenamiento, el sistema podría decidir por sí mismo cómo atender un reporte de acoso.", "ok": false, "lv": 1}, {"t": "Sus fallas con abreviaturas o mezcla de lenguas sugieren que funciona peor con ciertas formas de escribir.", "ok": true, "lv": 2}, {"t": "Con 46 aciertos de 50, se puede dar por hecho que el sistema funciona igual de bien para todos.", "ok": false, "lv": 2}, {"t": "Todo mensaje marcado como grave o queja debería pasar por una persona antes de responderse.", "ok": true, "lv": 3}, {"t": "Basta con que una persona revise cada semana una muestra al azar de las respuestas enviadas.", "ok": false, "lv": 3}]}, {"id": "P12", "caso": "caso2", "comp": "C4-2", "tarea": false, "comprension": false, "enunciado": "¿Qué harías al diseñar la solución?", "afirmaciones": [{"t": "Ajustar el modelo pequeño con mensajes ya clasificados de la Coordinación, para que entienda los de aquí.", "ok": true, "lv": 1}, {"t": "Diseñar el sistema con las dos personas que hoy responden, probarlo con ellas y ajustarlo.", "ok": true, "lv": 2}, {"t": "Usar las categorías que trae el proveedor y adaptar después las que usa la Coordinación.", "ok": false, "lv": 2}, {"t": "Conectar el modelo por API y guardar en una base de datos cada clasificación y respuesta.", "ok": true, "lv": 3}, {"t": "Agregar un segundo modelo que revise al primero, en lugar de la revisión de personas.", "ok": false, "lv": 3}]}, {"id": "P13", "caso": "caso2", "comp": "E1-1", "tarea": false, "comprension": true, "enunciado": "Sobre la ética y las reglas de este sistema, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Desde el formulario, los estudiantes deberían saber que sus mensajes los procesa una IA.", "ok": true, "lv": 1}, {"t": "Un error con un caso de acoso pesa más que varios con trámites, aunque cuenten igual en el porcentaje.", "ok": true, "lv": 2}, {"t": "Si el proveedor garantiza por contrato un 92 % de aciertos, la responsabilidad por los errores es suya.", "ok": false, "lv": 2}, {"t": "Sin reglas en la facultad, la Coordinación puede fijar criterios propios y consultarlos con estudiantes.", "ok": true, "lv": 3}, {"t": "Si el sistema cumple la ley de protección de datos, la Coordinación no necesita otros criterios éticos.", "ok": false, "lv": 3}]}, {"id": "P14", "caso": "caso3", "comp": "C1-2", "tarea": false, "comprension": true, "enunciado": "Sobre cómo funciona la app de plagas, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "La app aprendió por su cuenta qué es una plaga; nadie decidió qué tenía que detectar.", "ok": false, "lv": 1}, {"t": "Puede marcar hojas sanas como enfermas porque las de la región difieren de las de entrenamiento.", "ok": true, "lv": 2}, {"t": "Con cada foto que suben las productoras, la app aprende y corrige sola los errores que cometió.", "ok": false, "lv": 2}, {"t": "Si muchas la usan, las fotos con fecha y lugar podrían mostrar hacia dónde avanza una plaga.", "ok": true, "lv": 3}, {"t": "Como ya reconoce plagas en fotos, pronto podrá decidir sola qué tratamiento aplicar en cada parcela.", "ok": false, "lv": 3}]}, {"id": "P15", "caso": "caso3", "comp": "C2-2", "tarea": false, "comprension": true, "enunciado": "Sobre el curso que se adapta a cada productora, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Los ejercicios que el curso le repite le indican qué temas le conviene repasar.", "ok": true, "lv": 1}, {"t": "Si el curso le avanza lento, le conviene revisar si puede ajustar el nivel o elegir temas.", "ok": true, "lv": 2}, {"t": "Como el curso se adapta solo, no importa si la productora contesta con prisa o al azar.", "ok": false, "lv": 2}, {"t": "El equipo podría configurar o crear un módulo del curso con las plagas de la región.", "ok": true, "lv": 3}, {"t": "Si cada productora hace más ejercicios, el curso se ajustará solo a las plagas de la región.", "ok": false, "lv": 3}]}, {"id": "P16", "caso": "caso3", "comp": "C5-1", "tarea": false, "comprension": true, "enunciado": "Sobre cómo deberían usar la app la agrónoma y el equipo, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Un chatbot general, al que se le describe la hoja con palabras, diagnosticaría tan bien como la app.", "ok": false, "lv": 1}, {"t": "La agrónoma debería tomar el resultado de la app como un dato más, junto con lo que observa en campo.", "ok": true, "lv": 2}, {"t": "Reentrenar el modelo es un problema técnico, así que basta con que Daniel lo resuelva sin la agrónoma.", "ok": false, "lv": 2}, {"t": "Con los reportes de la app, la agrónoma podría decidir qué parcelas visitar primero, sin dejar las demás.", "ok": true, "lv": 3}, {"t": "Antes de cambiar cómo vigila el cultivo, la cooperativa debería esperar a que la app ya no se equivoque.", "ok": false, "lv": 3}]}, {"id": "P17", "caso": "caso3", "comp": "E2-1", "tarea": false, "comprension": true, "enunciado": "Sobre las productoras que solo hacen lo que dice la app y sobre Lucía, ¿qué afirmaciones son correctas?", "afirmaciones": [{"t": "Si la app acierta la mayoría de las veces, es razonable que las productoras dejen de revisar sus plantas.", "ok": false, "lv": 1}, {"t": "A Lucía le serviría aprender lo básico de cómo se entrena un modelo, aunque no vaya a programarlo.", "ok": true, "lv": 2}, {"t": "Como Lucía usa chatbots a diario, ya sabe lo suficiente de IA para opinar sobre el reentrenamiento.", "ok": false, "lv": 2}, {"t": "La agrónoma podría preguntarse qué de su trabajo cambia con la app y qué depende de su criterio.", "ok": true, "lv": 3}, {"t": "Si la app hace bien su parte, la agrónoma no tiene por qué replantearse su papel en la cooperativa.", "ok": false, "lv": 3}]}], "instruccion": "Lee cada caso. En cada pregunta marca todas las opciones que harías o que consideres correctas. Cada opción se califica por separado."};
+function reiniciarSiSePide(){ if(location.hash!=="#reiniciar") return false; try{localStorage.removeItem("instrumento-breve-v0.4");localStorage.removeItem("instrumento-breve-v0.4-registro");}catch(e){} history.replaceState(null,"",location.pathname); return true; }
+reiniciarSiSePide();
+window.addEventListener("hashchange",()=>{ if(reiniciarSiSePide()) location.reload(); });
+const LV = ["No alcanza N1","N1","N2","N3"];
+const LVC = ["var(--n0)","var(--n1)","var(--n2)","var(--n3)"];
+const KEY = "instrumento-breve-v0.4";
+const NQ = DATA.preguntas.length;
+
+function rnd(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646}}
+function fresh(){return {marks:{},seed:Math.floor(Math.random()*1e9)+1,name:"",submitted:false}}
+let state = fresh();
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s&&s.seed&&s.marks) state=s;}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const form=document.getElementById("quiz");
+function build(){
+  const r=rnd(state.seed);
+  let html="", n=0;
+  for(const caso of DATA.casos){
+    html+=`<section class="case" aria-labelledby="t-${caso.id}"><p class="case-label">Caso ${DATA.casos.indexOf(caso)+1} de ${DATA.casos.length}</p><h2 id="t-${caso.id}">${esc(caso.titulo.split(" · ")[1]||caso.titulo)}</h2>${caso.html}</section>`;
+    for(const p of DATA.preguntas.filter(q=>q.caso===caso.id)){
+      n++;
+      const order=[0,1,2,3,4].sort(()=>r()-.5);
+      html+=`<fieldset id="f-${p.id}"><legend><span class="num">${n}/${NQ}</span><span>${esc(p.enunciado)}</span></legend><div class="opts">`;
+      for(const i of order){
+        const a=p.afirmaciones[i], id=`${p.id}-${i}`;
+        const checked=(state.marks[p.id]||[]).includes(i)?"checked":"";
+        html+=`<label class="opt" for="${id}" data-q="${p.id}" data-i="${i}"><input type="checkbox" id="${id}" name="${p.id}" value="${i}" ${checked}><span class="opt-text">${esc(a.t)}<span class="tags"><span class="tag lv">N${a.lv}${a.lv===3&&a.ok&&PERFIL.includes(p.comp)?" · según perfil":""}</span><span class="tag ${a.ok?"k-ok":"k-no"}">${a.ok?(p.comprension?"Es correcta":"Conviene hacerlo"):"Error frecuente"}</span><span class="tag you"></span></span></span></label>`;
+      }
+      html+=`</div><p class="verdict-line" id="v-${p.id}"></p></fieldset>`;
+    }
+  }
+  form.innerHTML=html;
+}
+
+function answered(){return DATA.preguntas.filter(p=>(state.marks[p.id]||[]).length>0).length}
+function update(){
+  const n=answered();
+  document.getElementById("progress").textContent=`${n} de ${NQ} respondidas`;
+  document.getElementById("barFill").style.width=(n/NQ*100)+"%";
+  const btn=document.getElementById("submitBtn");
+  btn.disabled=state.submitted||n<NQ;
+  const hint=state.submitted?"Ya enviaste tus respuestas.":n<NQ?`Te faltan ${NQ-n} preguntas. En cada una marca al menos una opción.`:"Listo, ya puedes ver tu perfil.";
+  document.getElementById("submitHint").textContent=hint;
+  document.getElementById("stickyHint").textContent=state.submitted?"Tu perfil está abajo":"";
+}
+
+function scoreQuestion(p){
+  const marks=state.marks[p.id]||[];
+  const ok=p.afirmaciones.map((a,i)=>marks.includes(i)===a.ok);
+  const byLv={1:true,2:true,3:true};
+  p.afirmaciones.forEach((a,i)=>{if(!ok[i]) byLv[a.lv]=false});
+  let alto=0; for(const k of [1,2,3]) if(byLv[k]) alto=k;
+  const errAbajo=p.afirmaciones.filter((a,i)=>a.lv<alto&&!ok[i]).length;
+  const nivel=Math.max(0,alto-errAbajo);
+  const fallados=[1,2].filter(k=>k<alto&&!byLv[k]).map(k=>"N"+k);
+  return {ok,puntaje:ok.filter(Boolean).length,nivel,nota:errAbajo>0?`Resolviste el N${alto} completo, pero tuviste un error en ${fallados.join(" y ")}`:""};
+}
+
+const PERFIL=["C2-1","C4-2"];
+const INSIG=[{"nombre": "Explorador", "mensaje": "¡Felicidades por dar el primer paso! Estás comenzando tu camino con la IA y ya te detuviste a pensar cómo la usas. Hay mucho por descubrir."}, {"nombre": "Practicante", "mensaje": "Ya usas la IA en tu día a día y conoces lo básico de cómo funciona. Tienes una buena base para seguir profundizando."}, {"nombre": "Estratega", "mensaje": "Usas la IA con criterio y sabes cuándo y cómo apoyarte en ella. Estás cerca de diseñar tus propias formas de trabajar con IA."}, {"nombre": "Guía", "mensaje": "Tienes un dominio amplio de la IA y una mirada crítica sobre ella. Estás en posición de proponer nuevas formas de usarla y de acompañar a otras personas en su camino."}];
+const CONSEJOS={"C1-1": ["Fíjate qué herramientas de tu día a día usan IA, como el corrector del teclado, las recomendaciones de videos o un chatbot, y en qué se distinguen: unas recomiendan, otras clasifican y otras generan texto o imágenes.", "Cuando un chatbot te dé un dato, recuerda que produce el texto más probable según lo que aprendió, sin consultar una base de datos. Pídele sus fuentes y revisa que existan.", "Antes de usar un sistema de IA para algo importante, pregúntate para qué fue hecho, en qué suele fallar y a quién afectaría un error."], "C1-2": ["Recuerda que detrás de cada sistema de IA hay personas que decidieron qué debía hacer y con qué datos entrenarlo.", "Cuando una herramienta falle, pregúntate con qué datos se entrenó: un sistema aprende de sus ejemplos y le cuesta lo que no se parece a ellos.", "Imagina qué podría hacer la IA en tu campo dentro de unos años, a partir de cómo aprende y percibe hoy, y qué efectos tendría."], "C2-1": ["Prueba una herramienta de IA distinta a la que ya usas, también por voz, y explora para qué tareas te sirve y para cuáles no.", "Antes de usar IA para una tarea, pregúntate qué tipo de herramienta le conviene (un chatbot, una herramienta especializada) o si es mejor hacerla sin IA.", "Si te interesa el lado técnico, prueba una herramienta de automatización que conecte varios pasos de un proceso, por ejemplo un formulario, un modelo de IA y tu correo."], "C2-2": ["Prueba una app que se adapte a ti, como un tutor o una app de idiomas con IA, y observa cómo cambia según tus respuestas.", "Revisa la configuración de las apps que se adaptan a ti y ajusta el nivel o los temas a lo que de verdad necesitas aprender.", "Arma tu propio tutor: dale a un chatbot tu temario y pídele que te haga preguntas y cambie la dificultad según tus errores."], "C2-3": ["Piensa en una tarea repetitiva de tu escuela o tu trabajo y pregúntate en qué parte podría ayudarte la IA.", "Cuando uses IA para resolver algo, ve por pasos: prueba con un ejemplo pequeño, revisa el resultado y ajusta antes de aplicarlo a todo.", "Ante un problema grande, divídelo en partes antes de abrir la IA y decide cuáles le delegas y cuáles te quedas."], "C3-1": ["Antes de usar una cifra o un dato que te dio la IA, búscalo en su fuente original.", "Si la IA cita un estudio o una fuente, verifica que exista: que otras páginas repitan un dato no prueba que sea cierto.", "Además de revisar si lo que te dio la IA es correcto, pregúntate si de verdad sirve para lo que necesitas decidir o entregar."], "C3-2": ["Cuando recibas una respuesta de la IA, pregúntate qué le falta: qué casos, qué datos o qué personas no considera.", "Contrasta lo que te dice la IA con lo que tú sabes del tema o de la situación. Tu experiencia también es un dato.", "Practica explicar a alguien cómo funciona la IA sin decir que «piensa», «sabe» o «quiere»: describe qué hace con los datos."], "C4-1": ["Pídele a la IA varias versiones o enfoques de lo mismo y combina lo mejor con tus propias ideas.", "En tus instrucciones di para quién es el resultado y para qué sirve, y pídele a la IA que te pregunte lo que le falte antes de empezar.", "Guarda las instrucciones que te funcionan como plantillas, con espacios para cambiar los datos, para reutilizarlas o compartirlas."], "C4-2": ["Piensa en un problema de tu comunidad o tu escuela que la IA podría ayudar a resolver y qué datos se necesitarían.", "Arma una versión sencilla de una solución con IA, pruébala con quienes la usarían y ajústala con lo que te digan.", "Si te interesa el lado técnico, aprende a conectar un modelo de IA a otra herramienta (por ejemplo, por API) o a guardar sus resultados en una base de datos."], "C5-1": ["Busca qué herramientas de IA se usan en tu carrera o campo profesional y para qué problemas.", "Cuando la IA te dé un resultado de tu área, interprétalo con lo que sabes de tu disciplina y consulta a gente de otras áreas cuando el problema lo pida.", "Piensa en un proceso de tu práctica profesional que podría hacerse distinto con apoyo de IA y en qué seguiría dependiendo de tu criterio."], "E1-1": ["Revisa qué reglas tiene tu escuela o tu trabajo sobre el uso de IA y cuida los permisos que les das a las apps.", "Antes de usar IA en algo que afecte a otras personas, piensa qué tan grave sería un error y quién respondería por él.", "Cuando no haya reglas claras para un uso de IA, propón criterios con tu equipo en lugar de esperar a que alguien más los defina."], "E1-2": ["No subas a un chatbot datos personales tuyos o de otras personas (nombres, teléfonos, direcciones) si no es indispensable.", "Antes de compartir información con una herramienta de IA, quita lo que identifica a las personas y revisa qué hace la herramienta con los datos.", "Cuida lo que publicas con ayuda de IA: lo que firmas con tu nombre construye tu reputación, incluidos los errores que no revisaste."], "E1-3": ["Observa cuánto tiempo pasas con herramientas de IA y si te ayudan o te quitan tiempo de descanso.", "Haz algunas tareas sin IA de vez en cuando. Si te cuesta mucho, es una señal para practicar más por tu cuenta.", "Propón en tu equipo o grupo acuerdos sencillos para usar la IA sin perder habilidades, como qué tareas hacer sin ella."], "E2-1": ["Usa la IA con curiosidad, pero quédate con la última palabra: si algo no te convence, revísalo por tu cuenta.", "Fíjate qué te funciona de la IA en tu vida diaria y prueba llevarlo a tus tareas de la carrera. Date tiempo para aprender algo nuevo sobre ella.", "Pregúntate cómo está cambiando la IA tu forma de trabajar y qué partes de tu profesión quieres seguir haciendo con tu propio criterio."], "E3-1": ["Recuerda que usar IA consume energía y que sus decisiones afectan a personas. Toma en cuenta ambos efectos al usarla.", "Cuando la IA te haga una recomendación, pregúntate a quién podría dejar fuera por idioma, edad, acceso o recursos.", "Imagina cómo cambiaría tu comunidad si una aplicación de IA se usara a gran escala, y quién ganaría o perdería."], "C2-4": ["Recuerda que usar IA tiene costos aunque sea gratis para ti: energía, servidores y el tiempo de revisar lo que produce.", "Antes de usar IA para una tarea, pregúntate si vale la pena o si una solución más simple bastaría.", "Si tu equipo usa IA, lleven un registro sencillo de cuánto gastan y qué mejora obtienen, para decidir si les conviene."], "C3-3": ["Ten presente que hay decisiones que la IA no debe tomar sola, sobre todo las que afectan a personas.", "Pregúntate si la IA funciona igual para todos: puede fallar más con ciertas formas de escribir, lenguas o contextos.", "Al usar IA en un proceso, define en qué casos debe intervenir una persona antes de tomar una decisión."]};
+const LVF=["En inicio","N1","N2","N3"];
+const FOCO={"C1": ["Comprensión de la IA", "Entender cómo funcionan y aprenden los sistemas de IA."], "C2": ["Uso efectivo", "Elegir y usar las herramientas de IA según lo que necesitas."], "C3": ["Evaluación crítica", "Revisar con criterio lo que te da la IA."], "C4": ["Creación e innovación", "Crear contenido y soluciones con IA."], "C5": ["Aplicación en tu disciplina", "Llevar la IA a la práctica de tu profesión."], "E1": ["Ética y uso responsable", "Usar la IA de forma ética y segura, cuidando los datos y el bienestar."], "E2": ["Agencia y desarrollo continuo", "Mantener tu propio criterio frente a la IA y seguir aprendiendo."], "E3": ["Impacto social", "Analizar los efectos sociales y ambientales de la IA."]}, FOCO_FRASE="Donde más puedes crecer ahora:", FOCO_COMPLETO="Llegaste al nivel más alto en todas las áreas del marco.";
+function nivelTxt(c,n){return LVF[n]+(n===3&&PERFIL.includes(c)?" · según perfil":"")}
+function pill(n,c){return `<span class="pill" style="background:${LVC[n]}">${c?nivelTxt(c,n):LVF[n]}</span>`}
+
+function estado(p,a,marcada){
+  const bien=p.comprension?"es correcta":"convenía hacerlo";
+  if(a.ok&&marcada) return [true,`✓ La marcaste: ${bien}`];
+  if(a.ok) return [false,`Faltó marcarla: ${bien}`];
+  if(marcada) return [false,"La marcaste, pero es un error frecuente"];
+  return [true,"✓ Bien que no la marcaste: es un error frecuente"];
+}
+
+function reveal(withScores){
+  form.classList.add("reviewed");
+  form.classList.toggle("solo-clave",!withScores);
+  form.querySelectorAll("input").forEach(i=>i.disabled=true);
+  for(const p of DATA.preguntas){
+    const s=scoreQuestion(p);
+    form.querySelectorAll(`.opt[data-q="${p.id}"]`).forEach(el=>{
+      el.classList.remove("good","bad");
+      const you=el.querySelector(".tag.you"); you.className="tag you"; you.textContent=""; you.hidden=!withScores;
+      if(withScores){
+        const a=p.afirmaciones[+el.dataset.i], marcada=(state.marks[p.id]||[]).includes(+el.dataset.i);
+        const [ok,txt]=estado(p,a,marcada);
+        el.classList.add(ok?"good":"bad"); you.classList.add(ok?"st-good":"st-bad"); you.textContent=txt;
+      }
+    });
+    document.getElementById("v-"+p.id).innerHTML=withScores?`Nivel en esta pregunta: <b>${nivelTxt(p.comp,s.nivel)}</b>${s.nota?" · "+esc(s.nota):""}`:"";
+  }
+}
+function ocultarRevision(){form.classList.remove("reviewed","solo-clave");}
+function focoTxt(S){
+  const prom={};
+  for(const c of Object.keys(DATA.comps)){const a=c.split("-")[0]; (prom[a]=prom[a]||[]).push(S[c].nivel);}
+  const r=rnd(state.seed+11);
+  const areas=Object.keys(prom).map(a=>({a,m:prom[a].reduce((x,y)=>x+y,0)/prom[a].length,k:r()}))
+    .filter(x=>x.m<3).sort((x,y)=>x.m-y.m||x.k-y.k);
+  if(!areas.length) return `<p class="foco">${esc(FOCO_COMPLETO)}</p>`;
+  return `<p class="foco">${esc(FOCO_FRASE)}</p><ul class="foco">${areas.slice(0,2).map(x=>`<li><b>${esc(FOCO[x.a][0])}.</b> ${esc(FOCO[x.a][1])}</li>`).join("")}</ul>`;
+}
+
+function results(){
+  const S={}; for(const p of DATA.preguntas) S[p.comp]=scoreQuestion(p);
+  const comps=Object.keys(DATA.comps);
+  const oficiales=comps.filter(c=>DATA.comps[c].tipo==="oficial");
+  const niveles=oficiales.map(c=>S[c].nivel).sort((a,b)=>a-b);
+  const med=niveles[Math.floor(niveles.length/2)];
+  const ins=INSIG[med];
+  document.getElementById("insignia").innerHTML=
+    `<ol class="ruta">${INSIG.map((x,k)=>`<li class="${k<med?"hecho":k===med?"actual":""}">${esc(x.nombre)}</li>`).join("")}</ol>`+
+    `<p class="insignia-kicker">Tu insignia</p><p class="insignia-nombre">${esc(ins.nombre)}</p><p class="msg">${esc(ins.mensaje)}</p>${focoTxt(S)}`;
+
+  const r=rnd(state.seed+7);
+  const pool=comps.filter(c=>S[c].nivel<3).map(c=>({c,n:S[c].nivel,k:r()})).sort((a,b)=>a.n-b.n||a.k-b.k).slice(0,3);
+  document.getElementById("consejos").innerHTML=pool.length
+    ?pool.map(x=>`<div class="consejo"><p class="c-titulo">${esc(DATA.comps[x.c].nombre)}</p><p class="c-meta">Para llegar a ${x.n===2&&PERFIL.includes(x.c)?"N3 · según perfil":LVF[x.n+1]}</p><p class="c-texto">${esc(CONSEJOS[x.c][x.n])}</p></div>`).join("")
+    :`<p class="note">Llegaste al N3 en todas las competencias. Te invitamos a compartir lo que sabes y acompañar a otras personas en su camino con la IA.</p>`;
+
+  const marcadas=DATA.preguntas.reduce((a,p)=>a+(state.marks[p.id]||[]).length,0), totalAf=NQ*5;
+  const flags=[];
+  if(marcadas/totalAf>0.9) flags.push("Marcaste casi todas las opciones. Con ese patrón tu perfil dice poco de ti; si quieres, vuelve a intentarlo con calma.");
+  if(marcadas/totalAf<0.1) flags.push("Marcaste muy pocas opciones. Con ese patrón tu perfil dice poco de ti; si quieres, vuelve a intentarlo con calma.");
+  document.getElementById("flags").innerHTML=flags.map(f=>`<p class="flag">${f}</p>`).join("");
+
+  const head=`<tr><th>Competencia</th><th>Nivel</th><th>Nota</th></tr>`;
+  const row=c=>{const n=S[c].nivel; const extra=PERFIL.includes(c)&&n<3?"El N3 de esta competencia corresponde a perfiles técnicos.":""; const nota=[S[c].nota,extra].filter(Boolean).join(" ");
+    return `<tr><td>${esc(DATA.comps[c].nombre)}</td><td class="pillcell">${pill(n,c)}</td><td class="lbl notecell">${esc(nota)}</td></tr>`};
+  document.getElementById("compTable").innerHTML=head+oficiales.map(row).join("");
+  document.getElementById("candTable").innerHTML=head+comps.filter(c=>DATA.comps[c].tipo==="candidata").map(row).join("");
+
+  reveal(true);
+  document.getElementById("revisionCuerpo").appendChild(form);
+  document.querySelector(".sticky").hidden=true;
+  document.getElementById("submitBtn").closest(".actions").hidden=true;
+  document.getElementById("results").hidden=false;
+}
+
+build();
+form.addEventListener("change",e=>{
+  if(state.submitted||e.target.type!=="checkbox") return;
+  const q=e.target.name, i=+e.target.value, cur=new Set(state.marks[q]||[]);
+  e.target.checked?cur.add(i):cur.delete(i);
+  state.marks[q]=[...cur]; save(); update();
+});
+document.getElementById("submitBtn").addEventListener("click",()=>{
+  state.submitted=true; save(); update(); results();
+  document.getElementById("results").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+function showKey(){ if(location.hash==="#clave" && !state.submitted){ reveal(false); document.getElementById("submitHint").textContent="Estás viendo la clave sin responder."; document.getElementById("submitBtn").disabled=true; } }
+window.addEventListener("hashchange",showKey);
+update();
+if(state.submitted) results(); else showKey();
+const R_KEY="instrumento-breve-v0.4-registro";
+let reg={acepta:false,publica:"",edad:"",universidad:"",area:"",semestre:"",correo:"",inicio:null};
+try{const x=JSON.parse(localStorage.getItem(R_KEY)||"null"); if(x) reg=Object.assign(reg,x);}catch(e){}
+const saveReg=()=>{try{localStorage.setItem(R_KEY,JSON.stringify(reg))}catch(e){}};
+const $=id=>document.getElementById(id);
+const correoOk=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+function faltantes(){
+  const f=[];
+  if(!reg.acepta) f.push("aceptar el consentimiento");
+  if(!reg.publica) f.push("responder si autorizas la publicación");
+  if(reg.edad===""||+reg.edad<15||+reg.edad>99) f.push("tu edad");
+  if(!reg.universidad.trim()) f.push("tu universidad");
+  if(!reg.area) f.push("tu área de estudio");
+  if(!reg.semestre) f.push("tu semestre");
+  if(!correoOk(reg.correo)) f.push("tu correo institucional");
+  return f;
+}
+function updateReg(){
+  const f=faltantes();
+  $("comenzarBtn").disabled=f.length>0;
+  $("comenzarHint").textContent=f.length?"Falta: "+f.join(", ")+".":"Listo, ya puedes comenzar.";
+}
+function initReg(){
+  $("aceptoTxt").checked=reg.acepta;
+  if(reg.publica) $(reg.publica==="si"?"pubSi":"pubNo").checked=true;
+  for(const k of ["edad","universidad","area","semestre","correo"]) $(k).value=reg[k];
+  $("aceptoTxt").addEventListener("change",e=>{reg.acepta=e.target.checked;saveReg();updateReg()});
+  document.querySelectorAll('input[name="publica"]').forEach(x=>x.addEventListener("change",e=>{reg.publica=e.target.value;saveReg();updateReg()}));
+  for(const k of ["edad","universidad","area","semestre","correo"]){
+    $(k).addEventListener("input",e=>{reg[k]=e.target.value;saveReg();updateReg()});
+    $(k).addEventListener("change",e=>{reg[k]=e.target.value;saveReg();updateReg()});
+  }
+  $("correo").addEventListener("blur",()=>{$("correoError").hidden=reg.correo===""||correoOk(reg.correo)});
+  $("comenzarBtn").addEventListener("click",()=>{
+    if(faltantes().length) return;
+    reg.inicio=reg.inicio||new Date().toISOString(); saveReg(); mostrarInstrumento(true);
+  });
+  updateReg();
+}
+function mostrarInstrumento(scroll){
+  $("inicio").hidden=true; $("instrumento").hidden=false;
+  if(scroll) window.scrollTo(0,0);
+}
+initReg();
+if(reg.inicio) mostrarInstrumento(false);
+</script>
+</body>
+</html>
