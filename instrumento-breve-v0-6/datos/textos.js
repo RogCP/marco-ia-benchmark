@@ -64,7 +64,7 @@ IB.datos.textos = {
   ],
   [
    "p",
-   "Para analizar los resultados del estudio de forma consolidada, por universidad, entidad, área de estudio, semestre y edad. Tu correo institucional lo usamos solo para confirmar que perteneces a la universidad que elegiste y que cada persona responda una sola vez; se guarda por separado de tus respuestas. Tus respuestas no se publican de manera individual."
+   "Para analizar los resultados del estudio de forma consolidada, por universidad, entidad, área de estudio, semestre y edad. Tu correo institucional lo usamos solo para confirmar que perteneces a la universidad que elegiste y que cada persona responda una sola vez; se guarda por separado de tus respuestas. Si lo aceptas, podemos llegar a usar tu correo para invitarte a fases posteriores del proyecto. Tus respuestas no se publican de manera individual."
   ],
   [
    "h",

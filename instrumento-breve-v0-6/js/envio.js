@@ -27,7 +27,7 @@ IB.envio = (() => {
     for (const c of Object.keys(banco.comps)) { nivel[c] = S[c].nivel; puntaje[c] = S[c].puntaje; }
     return {
       id: uuid(), version: IB.datos.config.version, prueba: IB.esPrueba(),
-      inicio: reg.inicio, fin: new Date().toISOString(), publica: reg.publica, edad: +reg.edad,
+      inicio: reg.inicio, fin: new Date().toISOString(), publica: reg.publica, contacto: reg.contacto, edad: +reg.edad,
       universidad: reg.universidad, subunidad: reg.subunidad, universidad_otra: reg.universidad_otra.trim(),
       entidad: reg.entidad, area: reg.area, semestre: reg.semestre, correo: reg.correo.trim(),
       insignia: IB.calif.insignia(banco, S), nivel, puntaje, marcas: IB.calif.cadenaMarcas(banco, est.marks),

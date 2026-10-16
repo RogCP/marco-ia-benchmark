@@ -6,7 +6,7 @@ IB.registro = (() => {
   const correoOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
   const reg = {
-    acepta: false, publica: "", edad: "", universidad: "", subunidad: "", universidad_otra: "",
+    acepta: false, publica: "", contacto: "", edad: "", universidad: "", subunidad: "", universidad_otra: "",
     entidad: "", area: "", semestre: "", correo: "", inicio: null,
   };
   const guardar = () => IB.almacen.guardar("-registro", reg);
@@ -81,6 +81,7 @@ IB.registro = (() => {
     const f = [];
     if (!reg.acepta) f.push("aceptar el consentimiento");
     if (!reg.publica) f.push("responder si autorizas la publicación");
+    if (!reg.contacto) f.push("responder si aceptas que te contactemos");
     if (reg.edad === "" || +reg.edad < 15 || +reg.edad > 99) f.push("tu edad");
     const fu = faltaUniversidad();
     if (fu) f.push(fu);
@@ -118,11 +119,13 @@ IB.registro = (() => {
 
     $("aceptoTxt").checked = reg.acepta;
     if (reg.publica) $(reg.publica === "si" ? "pubSi" : "pubNo").checked = true;
+    if (reg.contacto) $(reg.contacto === "si" ? "contSi" : "contNo").checked = true;
     for (const k of CAMPOS) $(k).value = reg[k];
     armarSegundoNivel();
 
     $("aceptoTxt").addEventListener("change", e => cambio("acepta", e.target.checked));
     document.querySelectorAll('input[name="publica"]').forEach(x => x.addEventListener("change", e => cambio("publica", e.target.value)));
+    document.querySelectorAll('input[name="contacto"]').forEach(x => x.addEventListener("change", e => cambio("contacto", e.target.value)));
     for (const k of CAMPOS) {
       $(k).addEventListener("input", e => cambio(k, e.target.value));
       if ($(k).tagName === "SELECT") $(k).addEventListener("change", e => cambio(k, e.target.value));
