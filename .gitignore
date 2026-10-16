@@ -37,3 +37,5 @@ dist/
 # Archivos privados o de trabajo
 borradores/
 notas_personales/
+# Excepción: el aviso de privacidad del instrumento sí se publica.
+!instrumento-breve-*/aviso-de-privacidad.pdf
