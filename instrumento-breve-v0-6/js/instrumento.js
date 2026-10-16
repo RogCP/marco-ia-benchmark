@@ -10,7 +10,6 @@ IB.instrumento = (() => {
   const guardar = () => IB.almacen.guardar("", estado);
   const form = () => $("quiz");
 
-  const etiquetaNivel = (p, a) => `N${a.lv}${a.lv === 3 && a.ok && banco().perfil_tecnico.includes(p.comp) ? " · según perfil" : ""}`;
   const etiquetaClave = (p, a) => (a.ok ? (p.comprension ? "Es correcta" : "Conviene hacerlo") : "Error frecuente");
 
   function construir() {
@@ -26,7 +25,7 @@ IB.instrumento = (() => {
           const a = p.afirmaciones[i], id = `${p.id}-${i}`;
           const marcada = (estado.marks[p.id] || []).includes(i) ? "checked" : "";
           html += `<label class="opt" for="${id}" data-q="${p.id}" data-i="${i}"><input type="checkbox" id="${id}" name="${p.id}" value="${i}" ${marcada}>`
-            + `<span class="opt-text">${esc(a.t)}<span class="tags"><span class="tag lv">${etiquetaNivel(p, a)}</span>`
+            + `<span class="opt-text">${esc(a.t)}<span class="tags"><span class="tag lv">N${a.lv}</span>`
             + `<span class="tag ${a.ok ? "k-ok" : "k-no"}">${etiquetaClave(p, a)}</span><span class="tag you"></span></span></span></label>`;
         }
         html += `</div><p class="verdict-line" id="v-${p.id}"></p></fieldset>`;
@@ -72,7 +71,7 @@ IB.instrumento = (() => {
         tu.className = "tag you " + (ok ? "st-good" : "st-bad");
         tu.textContent = txt;
       });
-      $("v-" + p.id).innerHTML = `Nivel en esta pregunta: <b>${IB.perfil.nivelTxt(p.comp, s.nivel)}</b>${s.nota ? " · " + esc(s.nota) : ""}`;
+      $("v-" + p.id).innerHTML = `Nivel en esta pregunta: <b>${IB.perfil.NIVELES[s.nivel]}</b>${s.nota ? " · " + esc(s.nota) : ""}`;
     }
   }
 

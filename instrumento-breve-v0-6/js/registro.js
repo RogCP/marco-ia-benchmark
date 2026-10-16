@@ -24,7 +24,9 @@ IB.registro = (() => {
   function llenarPantalla() {
     const t = IB.datos.textos, cat = IB.datos.catalogos, u = IB.datos.universidades;
     $("txtConsentimiento").innerHTML = bloques(t.consentimiento);
-    $("txtAviso").innerHTML = bloques(t.aviso) + (t.aviso_pendiente ? `<p class="pendiente">${esc(t.aviso_pendiente)}</p>` : "");
+    const enlace = t.aviso_enlace;
+    $("txtAviso").innerHTML = bloques(t.aviso)
+      + (enlace ? `<p><a href="${esc(enlace.url)}" target="_blank" rel="noopener">${esc(enlace.texto)}</a></p>` : "");
     $("universidad").innerHTML = opciones("Elige tu universidad", u.lista.map(x => [x.clave, x.nombre]).concat([u.otra]));
     $("entidad").innerHTML = opciones("Elige la entidad de tu campus", cat.entidades);
     $("area").innerHTML = opciones("Elige el área de tu carrera", cat.areas);

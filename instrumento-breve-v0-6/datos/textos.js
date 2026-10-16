@@ -1,5 +1,6 @@
 // Textos de la pantalla de inicio y del perfil.
 // - consentimiento, aviso: bloques [tipo, texto]; tipo «h» es subtítulo y «p» es párrafo.
+// - aviso_enlace: enlace al aviso completo; el PDF se genera con ../generar_aviso_pdf.py.
 // - insignias: de 0 (Explorador) a 3 (Guía), según la mediana de niveles de las 15 competencias oficiales.
 // - foco_areas: nombre llano y frase de cada área del marco; se muestran las dos con promedio más bajo.
 // - consejos: tres por competencia, uno para llegar a cada nivel (N1, N2, N3).
@@ -55,7 +56,7 @@ IB.datos.textos = {
   ],
   [
    "p",
-   "Edad, universidad, entidad, área de estudio, semestre y correo institucional, además de tus respuestas a los casos y la fecha y hora en que respondes. No recabamos datos personales sensibles."
+   "Edad, universidad (y campus o facultad), entidad, área de estudio, semestre y correo institucional, además de tus respuestas a los casos y la fecha y hora en que respondes. No recabamos datos personales sensibles."
   ],
   [
    "h",
@@ -63,7 +64,7 @@ IB.datos.textos = {
   ],
   [
    "p",
-   "Para analizar los resultados del estudio de forma consolidada, por universidad, entidad, área de estudio, semestre y edad, y para identificar que cada persona responda una sola vez. Tu correo se guarda por separado de tus respuestas. Tus respuestas no se publican de manera individual."
+   "Para analizar los resultados del estudio de forma consolidada, por universidad, entidad, área de estudio, semestre y edad. Tu correo institucional lo usamos solo para confirmar que perteneces a la universidad que elegiste y que cada persona responda una sola vez; se guarda por separado de tus respuestas. Tus respuestas no se publican de manera individual."
   ],
   [
    "h",
@@ -71,7 +72,7 @@ IB.datos.textos = {
   ],
   [
    "p",
-   "Solo los consulta el equipo de investigación de la Universidad Anáhuac México y de la Facultad de Química de la UNAM. No los transferimos a terceros."
+   "Solo los consulta el equipo de investigación de la Universidad Anáhuac México y de la Facultad de Química de la UNAM. Se guardan en hojas de cálculo de Google, en la cuenta institucional del proyecto. No los transferimos a terceros."
   ],
   [
    "h",
@@ -82,7 +83,10 @@ IB.datos.textos = {
    "Puedes ejercer tus derechos de acceso, rectificación, cancelación u oposición (ARCO) con una solicitud por escrito al Centro de Emprendimiento Universitario de la Universidad Anáhuac México, en Av. Universidad Anáhuac 46, Col. Lomas Anáhuac, Huixquilucan, Estado de México, o al correo emprende@anahuac.mx."
   ]
  ],
- "aviso_pendiente": "Pendiente: enlace al aviso de privacidad completo para participantes del proyecto.",
+ "aviso_enlace": {
+  "texto": "Consulta el aviso de privacidad completo (PDF)",
+  "url": "aviso-de-privacidad.pdf"
+ },
  "insignias": [
   {
    "nombre": "Explorador",

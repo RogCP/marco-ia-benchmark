@@ -3,10 +3,7 @@ IB.perfil = (() => {
   const $ = IB.$, esc = IB.esc;
   const NIVELES = ["En inicio", "N1", "N2", "N3"];
   const COLORES = ["var(--n0)", "var(--n1)", "var(--n2)", "var(--n3)"];
-  const tecnica = c => IB.datos.banco.perfil_tecnico.includes(c);
-
-  const nivelTxt = (c, n) => NIVELES[n] + (n === 3 && tecnica(c) ? " · según perfil" : "");
-  const pastilla = (c, n) => `<span class="pill" style="background:${COLORES[n]}">${nivelTxt(c, n)}</span>`;
+  const pastilla = n => `<span class="pill" style="background:${COLORES[n]}">${NIVELES[n]}</span>`;
 
   function insignia(banco, S, seed) {
     const t = IB.datos.textos, k = IB.calif.insignia(banco, S), ins = t.insignias[k];
@@ -23,7 +20,7 @@ IB.perfil = (() => {
     const lista = IB.calif.consejos(banco, S, seed);
     $("consejos").innerHTML = lista.length
       ? lista.map(({ c, n }) => `<div class="consejo"><p class="c-titulo">${esc(banco.comps[c].nombre)}</p>`
-        + `<p class="c-meta">Para llegar a ${n === 2 && tecnica(c) ? "N3 · según perfil" : NIVELES[n + 1]}</p>`
+        + `<p class="c-meta">Para llegar a ${NIVELES[n + 1]}</p>`
         + `<p class="c-texto">${esc(IB.datos.textos.consejos[c][n])}</p></div>`).join("")
       : `<p class="note">Llegaste al N3 en todas las competencias. Te invitamos a compartir lo que sabes y acompañar a otras personas en su camino con la IA.</p>`;
   }
@@ -41,12 +38,7 @@ IB.perfil = (() => {
 
   function mapa(banco, S) {
     const encabezado = `<tr><th>Competencia</th><th>Nivel</th><th>Nota</th></tr>`;
-    const fila = c => {
-      const n = S[c].nivel;
-      const extra = tecnica(c) && n < 3 ? "El N3 de esta competencia corresponde a perfiles técnicos." : "";
-      const nota = [S[c].nota, extra].filter(Boolean).join(" ");
-      return `<tr><td>${esc(banco.comps[c].nombre)}</td><td class="pillcell">${pastilla(c, n)}</td><td class="lbl notecell">${esc(nota)}</td></tr>`;
-    };
+    const fila = c => `<tr><td>${esc(banco.comps[c].nombre)}</td><td class="pillcell">${pastilla(S[c].nivel)}</td><td class="lbl notecell">${esc(S[c].nota)}</td></tr>`;
     const comps = Object.keys(banco.comps);
     $("compTable").innerHTML = encabezado + comps.filter(c => banco.comps[c].tipo === "oficial").map(fila).join("");
     $("candTable").innerHTML = encabezado + comps.filter(c => banco.comps[c].tipo === "candidata").map(fila).join("");
@@ -68,5 +60,5 @@ IB.perfil = (() => {
     $("results").hidden = false;
   }
 
-  return { mostrar, nivelTxt };
+  return { mostrar, NIVELES };
 })();

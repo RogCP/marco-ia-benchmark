@@ -10,7 +10,6 @@ function reiniciarSiSePide() {
 reiniciarSiSePide();
 window.addEventListener("hashchange", () => { if (reiniciarSiSePide()) location.reload(); });
 
-IB.$("version").textContent = IB.datos.config.version;
 IB.registro.iniciar();
 IB.instrumento.iniciar(() => {
   IB.perfil.mostrar();

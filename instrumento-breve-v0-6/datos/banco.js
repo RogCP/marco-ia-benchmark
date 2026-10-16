@@ -1,16 +1,11 @@
 // Banco del instrumento breve: competencias, casos y preguntas (contenido de la v0.3 del equipo).
 // - comps: nombre y tipo (oficial / candidata) de cada competencia.
-// - perfil_tecnico: competencias cuyo N3 pide conocimiento técnico («N3 · según perfil»).
 // - casos: id, título y texto en HTML.
 // - preguntas: una por competencia; cada afirmación tiene texto (t), si conviene marcarla (ok) y nivel (lv).
 //   El orden de las afirmaciones importa: las marcas se guardan en este orden.
 // Es JSON después del signo «=»: los scripts de Python lo leen así.
 IB.datos.banco = {
  "instruccion": "Lee cada caso. En cada pregunta marca todas las opciones que harías o que consideres correctas. Cada opción se califica por separado.",
- "perfil_tecnico": [
-  "C2-1",
-  "C4-2"
- ],
  "comps": {
   "C1-1": {
    "nombre": "Comprensión conceptual de la IA: qué es, cómo piensa y su alcance",
