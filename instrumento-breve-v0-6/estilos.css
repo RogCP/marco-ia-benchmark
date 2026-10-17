@@ -134,6 +134,9 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .campo input[type=text],.campo input[type=email],.campo input[type=number],.campo select{font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);width:100%}
 .campo input:focus-visible,.campo select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .campo .error{font-size:13px;color:var(--no)}
+.campo .aviso-suave{font-size:13px;color:var(--warn)}
+.compartida{margin-top:28px;padding-top:16px;border-top:1px solid var(--line)}
+.compartida .note{margin:0 0 10px}
 .acepto{display:flex;gap:12px;align-items:flex-start;margin-top:18px;font-weight:600}
 .acepto input{width:18px;height:18px;margin-top:3px;flex:none;accent-color:var(--accent)}
 .siono{display:flex;gap:24px;flex-wrap:wrap}

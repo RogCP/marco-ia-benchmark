@@ -6,7 +6,7 @@ IB.registro = (() => {
   const correoOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
   const reg = {
-    acepta: false, publica: "", contacto: "", edad: "", universidad: "", subunidad: "", universidad_otra: "",
+    acepta: false, contacto: "", edad: "", universidad: "", subunidad: "", universidad_otra: "",
     entidad: "", area: "", semestre: "", correo: "", inicio: null,
   };
   const guardar = () => IB.almacen.guardar("-registro", reg);
@@ -75,12 +75,37 @@ IB.registro = (() => {
     return u && u.sub.length && !reg.subunidad ? "tu " + u.sub_etiqueta.toLowerCase() : "";
   }
 
+  // --- Dominio del correo -------------------------------------------------------------------------
+  // Si la universidad (o su campus/facultad) tiene dominios registrados en datos/universidades.js,
+  // se avisa, sin bloquear, cuando el correo no termina en ninguno. Cuenta cualquier subdominio:
+  // «comunidad.unam.mx» coincide con «unam.mx».
+
+  function dominiosEsperados() {
+    const u = universidadActual();
+    if (!u) return [];
+    const porSub = (u.dominios_sub || {})[reg.subunidad];
+    return porSub || u.dominios || [];
+  }
+
+  // "si" / "no" / "" (sin dominios registrados o correo incompleto). Se envía con la respuesta.
+  function dominioCoincide() {
+    const esperados = dominiosEsperados();
+    if (!esperados.length || !correoOk(reg.correo)) return "";
+    const dom = reg.correo.trim().toLowerCase().split("@")[1];
+    return esperados.some(d => dom === d || dom.endsWith("." + d)) ? "si" : "no";
+  }
+
+  function avisoDominio() {
+    const no = dominioCoincide() === "no";
+    $("correoAviso").hidden = !no;
+    $("correoAviso").textContent = no ? `Este correo no parece de ${universidadActual().nombre}. Revisa que sea tu correo institucional.` : "";
+  }
+
   // --- Validación ---------------------------------------------------------------------------------
 
   function faltantes() {
     const f = [];
     if (!reg.acepta) f.push("aceptar el consentimiento");
-    if (!reg.publica) f.push("responder si autorizas la publicación");
     if (!reg.contacto) f.push("responder si aceptas que te contactemos");
     if (reg.edad === "" || +reg.edad < 15 || +reg.edad > 99) f.push("tu edad");
     const fu = faltaUniversidad();
@@ -101,6 +126,8 @@ IB.registro = (() => {
   function cambio(clave, valor) {
     reg[clave] = valor;
     if (clave === "universidad") armarSegundoNivel();
+    if (["universidad", "subunidad"].includes(clave)) avisoDominio();
+    if (clave === "correo" && dominioCoincide() !== "no") $("correoAviso").hidden = true;
     guardar();
     actualizar();
   }
@@ -111,6 +138,13 @@ IB.registro = (() => {
     if (desplazar) window.scrollTo(0, 0);
   }
 
+  // Una vez registrada la respuesta, se borran del navegador los datos personales: en una computadora
+  // compartida, quien llegue después no los ve. Se conservan «acepta» e «inicio» para seguir mostrando el perfil.
+  function borrarDatosPersonales() {
+    for (const k of ["contacto", "edad", "universidad", "subunidad", "universidad_otra", "entidad", "area", "semestre", "correo"]) reg[k] = "";
+    guardar();
+  }
+
   // --- Arranque -----------------------------------------------------------------------------------
 
   function iniciar() {
@@ -118,13 +152,12 @@ IB.registro = (() => {
     llenarPantalla();
 
     $("aceptoTxt").checked = reg.acepta;
-    if (reg.publica) $(reg.publica === "si" ? "pubSi" : "pubNo").checked = true;
     if (reg.contacto) $(reg.contacto === "si" ? "contSi" : "contNo").checked = true;
     for (const k of CAMPOS) $(k).value = reg[k];
     armarSegundoNivel();
+    avisoDominio();
 
     $("aceptoTxt").addEventListener("change", e => cambio("acepta", e.target.checked));
-    document.querySelectorAll('input[name="publica"]').forEach(x => x.addEventListener("change", e => cambio("publica", e.target.value)));
     document.querySelectorAll('input[name="contacto"]').forEach(x => x.addEventListener("change", e => cambio("contacto", e.target.value)));
     for (const k of CAMPOS) {
       $(k).addEventListener("input", e => cambio(k, e.target.value));
@@ -132,7 +165,7 @@ IB.registro = (() => {
     }
     $("subunidad").addEventListener("change", e => cambio("subunidad", e.target.value));
     $("universidadOtra").addEventListener("input", e => cambio("universidad_otra", e.target.value));
-    $("correo").addEventListener("blur", () => { $("correoError").hidden = reg.correo === "" || correoOk(reg.correo); });
+    $("correo").addEventListener("blur", () => { $("correoError").hidden = reg.correo === "" || correoOk(reg.correo); avisoDominio(); });
     $("comenzarBtn").addEventListener("click", () => {
       if (faltantes().length) return;
       reg.inicio = reg.inicio || new Date().toISOString();
@@ -145,5 +178,5 @@ IB.registro = (() => {
     if (reg.inicio) mostrarInstrumento(false);
   }
 
-  return { iniciar, reg };
+  return { iniciar, reg, dominioCoincide, borrarDatosPersonales };
 })();

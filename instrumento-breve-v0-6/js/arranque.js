@@ -18,3 +18,13 @@ IB.instrumento.iniciar(() => {
 });
 if (IB.instrumento.estado.submitted) IB.perfil.mostrar();
 IB.envio.iniciar();
+
+// Botón al final del perfil, para computadoras compartidas.
+IB.$("borrarBtn").addEventListener("click", () => {
+  const aviso = IB.envio.yaRegistrado() || !IB.datos.config.endpoint
+    ? "Se borrarán tus respuestas y tu perfil de este navegador. Lo que ya quedó registrado no se pierde."
+    : "Tus respuestas todavía no quedan registradas. Si las borras ahora, se perderán. ¿Quieres borrarlas de todos modos?";
+  if (!confirm(aviso)) return;
+  IB.almacen.borrarTodo();
+  location.replace(location.pathname + location.search);
+});

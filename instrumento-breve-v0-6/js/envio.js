@@ -1,14 +1,14 @@
 // Envío de la respuesta a la aplicación web de Apps Script (datos/config.js, «endpoint»).
 // Para cambiar de destino (por ejemplo, a Supabase) solo hay que cambiar este archivo.
 //
-// Si falla, reintenta tres veces mientras la página sigue abierta, con esperas crecientes; si aun así
+// Si falla, reintenta cinco veces mientras la página sigue abierta, con esperas crecientes; si aun así
 // no llega, queda guardado en el navegador y se reintenta al volver a abrir la página o al recuperar
 // la conexión. El script descarta un id que ya recibió, así que reintentar nunca duplica.
 IB.envio = (() => {
   const OK = "Tus respuestas quedaron registradas. Gracias por participar.";
   const FALLO = "No pudimos registrar tus respuestas, quizá por la conexión. Lo intentaremos de nuevo cuando vuelvas a abrir esta página.";
   // El azar en cada espera evita que un grupo que termina al mismo tiempo reintente en el mismo segundo.
-  const ESPERAS = [0, 5000, 15000, 40000];
+  const ESPERAS = [0, 5000, 15000, 30000, 60000, 90000];
   let pendiente = null, enviando = false;
 
   function uuid() {
@@ -27,9 +27,10 @@ IB.envio = (() => {
     for (const c of Object.keys(banco.comps)) { nivel[c] = S[c].nivel; puntaje[c] = S[c].puntaje; }
     return {
       id: uuid(), version: IB.datos.config.version, prueba: IB.esPrueba(),
-      inicio: reg.inicio, fin: new Date().toISOString(), publica: reg.publica, contacto: reg.contacto, edad: +reg.edad,
+      inicio: reg.inicio, fin: new Date().toISOString(), contacto: reg.contacto, edad: +reg.edad,
       universidad: reg.universidad, subunidad: reg.subunidad, universidad_otra: reg.universidad_otra.trim(),
-      entidad: reg.entidad, area: reg.area, semestre: reg.semestre, correo: reg.correo.trim(),
+      entidad: reg.entidad, area: reg.area, semestre: reg.semestre,
+      correo: reg.correo.trim().toLowerCase(), correo_dominio: IB.registro.dominioCoincide(),
       insignia: IB.calif.insignia(banco, S), nivel, puntaje, marcas: IB.calif.cadenaMarcas(banco, est.marks),
     };
   }
@@ -53,8 +54,7 @@ IB.envio = (() => {
         const resp = await fetch(endpoint, { method: "POST", body: JSON.stringify(pendiente.datos) });
         const j = await resp.json();
         if (j.ok) {
-          pendiente.enviado = true;
-          IB.almacen.guardar("-envio", pendiente);
+          registrado();
           aviso(OK);
           enviando = false;
           return;
@@ -66,11 +66,22 @@ IB.envio = (() => {
     aviso(FALLO);
   }
 
+  // Ya registrada: se guarda solo la marca, sin los datos (que incluyen el correo), y se borran
+  // los datos personales de la pantalla de inicio.
+  function registrado() {
+    pendiente = { enviado: true };
+    IB.almacen.guardar("-envio", pendiente);
+    IB.registro.borrarDatosPersonales();
+  }
+
+  const yaRegistrado = () => !!(pendiente && pendiente.enviado);
+
   function iniciar() {
     pendiente = IB.almacen.leer("-envio");
+    if (yaRegistrado()) registrado();
     window.addEventListener("online", enviar);
     enviar();
   }
 
-  return { iniciar, enviar };
+  return { iniciar, enviar, yaRegistrado };
 })();

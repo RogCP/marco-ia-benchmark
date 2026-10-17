@@ -3,6 +3,9 @@
 // - sub_etiqueta, sub_ayuda: nombre del segundo desplegable («Campus», «Facultad o escuela») y su indicación.
 // - sub: [clave, nombre, grupo]; «grupo» agrupa opciones dentro del desplegable ("" = sin grupo).
 //   Si la lista va vacía, el segundo desplegable no aparece.
+// - dominios: dominios de correo institucional (ej. «unam.mx»); cuenta cualquier subdominio. Si el correo no
+//   coincide, la página avisa sin bloquear y la respuesta se marca (correo_dominio = no). Vacío: no se revisa.
+// - dominios_sub: dominios de un campus o facultad que use otros, por clave: {"IEST": ["…"]}.
 // - otra: opción final del primer desplegable; abre un campo para escribir el nombre.
 // Anáhuac: lista de Itzel López (16-oct-2026); Anáhuac México va como un solo campus.
 // Es JSON después del signo «=».
@@ -54,7 +57,9 @@ IB.datos.universidades = {
      "IEST Anáhuac",
      ""
     ]
-   ]
+   ],
+   "dominios": [],
+   "dominios_sub": {}
   },
   {
    "clave": "UNAM",
@@ -247,7 +252,9 @@ IB.datos.universidades = {
      "Otra dependencia de la UNAM",
      ""
     ]
-   ]
+   ],
+   "dominios": [],
+   "dominios_sub": {}
   }
  ],
  "otra": [

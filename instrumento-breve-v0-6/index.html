@@ -33,15 +33,7 @@
   <h3>Aviso de privacidad</h3>
   <div class="legal" id="txtAviso" tabindex="0" aria-label="Texto del aviso de privacidad"></div>
 
-  <label class="acepto" for="aceptoTxt"><input type="checkbox" id="aceptoTxt"><span>He leído el consentimiento informado y el aviso de privacidad, y acepto participar de forma voluntaria en los términos establecidos.</span></label>
-
-  <div class="campo" style="margin-top:18px" role="radiogroup" aria-labelledby="lblPublica">
-    <span id="lblPublica" class="lbl-campo">¿Autorizas que tu información sea utilizada de modo consolidado para la publicación del estudio?</span>
-    <div class="siono">
-      <label for="pubSi"><input type="radio" name="publica" id="pubSi" value="si">Sí</label>
-      <label for="pubNo"><input type="radio" name="publica" id="pubNo" value="no">No</label>
-    </div>
-  </div>
+  <label class="acepto" for="aceptoTxt"><input type="checkbox" id="aceptoTxt"><span>He leído el consentimiento informado y el aviso de privacidad, y acepto participar de forma voluntaria y que mis respuestas se usen de forma consolidada, sin identificarme, en el análisis y las publicaciones del estudio.</span></label>
 
   <div class="campo" style="margin-top:18px" role="radiogroup" aria-labelledby="lblContacto">
     <span id="lblContacto" class="lbl-campo">¿Aceptas que te contactemos a tu correo institucional para invitarte a fases posteriores del proyecto, como cursos o rutas formativas sobre IA y una nueva evaluación? Es opcional: puedes responder el instrumento igual.</span>
@@ -86,6 +78,7 @@
       <input id="correo" type="email" autocomplete="email" placeholder="tu.nombre@universidad.edu.mx">
       <span class="ayuda">El que te dio tu universidad, no uno personal. Solo lo usamos para confirmar que perteneces a esa universidad, y se guarda aparte de tus respuestas.</span>
       <span class="error" id="correoError" hidden>Revisa el correo: debe tener la forma nombre@dominio.</span>
+      <span class="aviso-suave" id="correoAviso" aria-live="polite" hidden></span>
     </div>
   </div>
 
@@ -130,6 +123,10 @@
     <p><b>Cada competencia</b> tiene una pregunta con una opción de N1, dos de N2 y dos de N3. Tu nivel es el más alto que resolviste completo, y cada opción equivocada en un nivel inferior lo baja un nivel.</p>
     <p><b>Los consejos</b> son para tres de las competencias en las que tienes más espacio para crecer, y te dicen cómo llegar al siguiente nivel.</p>
   </details>
+  <div class="compartida">
+    <p class="note">¿Usas una computadora compartida? Borra tus respuestas de este navegador para que otra persona pueda responder.</p>
+    <button type="button" id="borrarBtn">Borrar mis respuestas de este navegador</button>
+  </div>
 </section>
 </div>
 </div>
