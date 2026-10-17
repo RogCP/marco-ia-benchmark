@@ -8,6 +8,8 @@
 // - dominios_sub: dominios de un campus o facultad que use otros, por clave: {"IEST": ["…"]}.
 // - otra: opción final del primer desplegable; abre un campo para escribir el nombre.
 // Anáhuac: lista de Itzel López (16-oct-2026); Anáhuac México va como un solo campus.
+// Dominios provisionales (16-oct-2026), por confirmar con cada universidad: anahuac.mx y unam.mx.
+// IEST Anáhuac sin revisión de dominio («dominios_sub» vacío) hasta saber cuál usa.
 // Es JSON después del signo «=».
 IB.datos.universidades = {
  "lista": [
@@ -58,8 +60,12 @@ IB.datos.universidades = {
      ""
     ]
    ],
-   "dominios": [],
-   "dominios_sub": {}
+   "dominios": [
+    "anahuac.mx"
+   ],
+   "dominios_sub": {
+    "IEST": []
+   }
   },
   {
    "clave": "UNAM",
@@ -253,7 +259,9 @@ IB.datos.universidades = {
      ""
     ]
    ],
-   "dominios": [],
+   "dominios": [
+    "unam.mx"
+   ],
    "dominios_sub": {}
   }
  ],
