@@ -10,6 +10,8 @@
 // Anáhuac: lista de Itzel López (16-oct-2026); Anáhuac México va como un solo campus.
 // Dominios provisionales (16-oct-2026), por confirmar con cada universidad: anahuac.mx y unam.mx.
 // IEST Anáhuac sin revisión de dominio («dominios_sub» vacío) hasta saber cuál usa.
+// 20-oct-2026: se suman el Tecnológico Universitario del Valle de Chalco (campus único, sin segundo nivel)
+// y la UVM con un solo campus por ahora (Lomas Verdes); sus campus nuevos se agregan en «sub». Sin dominios aún.
 // Es JSON después del signo «=».
 IB.datos.universidades = {
  "lista": [
@@ -262,6 +264,30 @@ IB.datos.universidades = {
    "dominios": [
     "unam.mx"
    ],
+   "dominios_sub": {}
+  },
+  {
+   "clave": "TEC-VALLE-CHALCO",
+   "nombre": "Tecnológico Universitario del Valle de Chalco",
+   "sub_etiqueta": "Campus",
+   "sub_ayuda": "Elige tu campus",
+   "sub": [],
+   "dominios": [],
+   "dominios_sub": {}
+  },
+  {
+   "clave": "UVM",
+   "nombre": "Universidad del Valle de México (UVM)",
+   "sub_etiqueta": "Campus",
+   "sub_ayuda": "Elige tu campus",
+   "sub": [
+    [
+     "LOMAS-VERDES",
+     "Lomas Verdes",
+     ""
+    ]
+   ],
+   "dominios": [],
    "dominios_sub": {}
   }
  ],
