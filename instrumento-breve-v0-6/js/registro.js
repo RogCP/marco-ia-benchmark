@@ -4,6 +4,9 @@ IB.registro = (() => {
   const $ = IB.$, esc = IB.esc;
   const CAMPOS = ["edad", "universidad", "entidad", "area", "semestre", "correo"];
   const correoOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+  // Orden alfabético en español, sin distinguir acentos ni mayúsculas. Solo cambia el orden en pantalla:
+  // lo que se guarda es la clave.
+  const alfabetico = (a, b) => a.localeCompare(b, "es", { sensitivity: "base" });
 
   const reg = {
     acepta: false, contacto: "", edad: "", universidad: "", subunidad: "", universidad_otra: "",
@@ -27,7 +30,8 @@ IB.registro = (() => {
     const enlace = t.aviso_enlace;
     $("txtAviso").innerHTML = bloques(t.aviso)
       + (enlace ? `<p><a href="${esc(enlace.url)}" target="_blank" rel="noopener">${esc(enlace.texto)}</a></p>` : "");
-    $("universidad").innerHTML = opciones("Elige tu universidad", u.lista.map(x => [x.clave, x.nombre]).concat([u.otra]));
+    const unis = u.lista.map(x => [x.clave, x.nombre]).sort((a, b) => alfabetico(a[1], b[1]));
+    $("universidad").innerHTML = opciones("Elige tu universidad", unis.concat([u.otra]));
     $("entidad").innerHTML = opciones("Elige la entidad de tu campus", cat.entidades);
     $("area").innerHTML = opciones("Elige el área de tu carrera", cat.areas);
     $("semestre").innerHTML = opciones("Elige tu semestre", cat.semestres);
@@ -37,6 +41,16 @@ IB.registro = (() => {
 
   const OTRA = () => IB.datos.universidades.otra[0];
   const universidadActual = () => IB.datos.universidades.lista.find(x => x.clave === reg.universidad);
+
+  // Segundo nivel en orden alfabético: los grupos (Facultades, Escuelas…) conservan su orden y se ordena
+  // dentro de cada uno; la opción «OTRA» (por ejemplo, «Otra dependencia de la UNAM») va siempre al final.
+  function ordenarSub(sub) {
+    const grupos = [];
+    for (const x of sub) if (x[0] !== "OTRA" && !grupos.includes(x[2])) grupos.push(x[2]);
+    return grupos
+      .flatMap(g => sub.filter(x => x[2] === g && x[0] !== "OTRA").sort((a, b) => alfabetico(a[1], b[1])))
+      .concat(sub.filter(x => x[0] === "OTRA"));
+  }
 
   // Muestra el segundo desplegable o el campo «¿Cuál?» según la universidad elegida, y limpia lo que
   // ya no aplica (por ejemplo, el campus de otra universidad).
@@ -49,7 +63,7 @@ IB.registro = (() => {
     if (tieneSub) {
       $("subLbl").textContent = u.sub_etiqueta;
       let h = `<option value="">${esc(u.sub_ayuda)}</option>`, grupo = "";
-      for (const [c, n, g] of u.sub) {
+      for (const [c, n, g] of ordenarSub(u.sub)) {
         if (g !== grupo) {
           if (grupo) h += "</optgroup>";
           if (g) h += `<optgroup label="${esc(g)}">`;
