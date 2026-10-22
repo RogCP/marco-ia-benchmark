@@ -12,6 +12,8 @@
 // IEST Anáhuac sin revisión de dominio («dominios_sub» vacío) hasta saber cuál usa.
 // 20-oct-2026: se suman el Tecnológico Universitario del Valle de Chalco (campus único, sin segundo nivel)
 // y la UVM con un solo campus por ahora (Lomas Verdes); sus campus nuevos se agregan en «sub». Sin dominios aún.
+// 22-oct-2026: se suman la Universidad Iberoamericana (campus Ciudad de México) y la UAM (unidad Xochimilco;
+// la UAM se organiza en unidades, por eso su segundo desplegable dice «Unidad»). Sin dominios aún.
 // Es JSON después del signo «=».
 IB.datos.universidades = {
  "lista": [
@@ -284,6 +286,36 @@ IB.datos.universidades = {
     [
      "LOMAS-VERDES",
      "Lomas Verdes",
+     ""
+    ]
+   ],
+   "dominios": [],
+   "dominios_sub": {}
+  },
+  {
+   "clave": "IBERO",
+   "nombre": "Universidad Iberoamericana",
+   "sub_etiqueta": "Campus",
+   "sub_ayuda": "Elige tu campus",
+   "sub": [
+    [
+     "CDMX",
+     "Ciudad de México",
+     ""
+    ]
+   ],
+   "dominios": [],
+   "dominios_sub": {}
+  },
+  {
+   "clave": "UAM",
+   "nombre": "Universidad Autónoma Metropolitana (UAM)",
+   "sub_etiqueta": "Unidad",
+   "sub_ayuda": "Elige tu unidad",
+   "sub": [
+    [
+     "XOCHIMILCO",
+     "Xochimilco",
      ""
     ]
    ],
