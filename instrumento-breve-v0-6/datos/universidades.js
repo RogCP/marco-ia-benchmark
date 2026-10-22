@@ -14,6 +14,7 @@
 // y la UVM con un solo campus por ahora (Lomas Verdes); sus campus nuevos se agregan en «sub». Sin dominios aún.
 // 22-oct-2026: se suman la Universidad Iberoamericana (campus Ciudad de México) y la UAM (unidad Xochimilco;
 // la UAM se organiza en unidades, por eso su segundo desplegable dice «Unidad»). Sin dominios aún.
+// 22-oct-2026: se suma UNITEC con sus 14 campus según unitec.mx/campus (incluye «En línea»). Sin dominios aún.
 // Es JSON después del signo «=».
 IB.datos.universidades = {
  "lista": [
@@ -316,6 +317,86 @@ IB.datos.universidades = {
     [
      "XOCHIMILCO",
      "Xochimilco",
+     ""
+    ]
+   ],
+   "dominios": [],
+   "dominios_sub": {}
+  },
+  {
+   "clave": "UNITEC",
+   "nombre": "Universidad Tecnológica de México (UNITEC)",
+   "sub_etiqueta": "Campus",
+   "sub_ayuda": "Elige tu campus",
+   "sub": [
+    [
+     "ATIZAPAN",
+     "Atizapán",
+     ""
+    ],
+    [
+     "CUITLAHUAC",
+     "Cuitláhuac",
+     ""
+    ],
+    [
+     "ECATEPEC",
+     "Ecatepec",
+     ""
+    ],
+    [
+     "LOS-REYES",
+     "Los Reyes",
+     ""
+    ],
+    [
+     "MARINA",
+     "Marina",
+     ""
+    ],
+    [
+     "SUR",
+     "Sur",
+     ""
+    ],
+    [
+     "GUADALAJARA",
+     "Guadalajara",
+     ""
+    ],
+    [
+     "LEON",
+     "León",
+     ""
+    ],
+    [
+     "MONTERREY",
+     "Monterrey",
+     ""
+    ],
+    [
+     "QUERETARO",
+     "Querétaro",
+     ""
+    ],
+    [
+     "TOLUCA",
+     "Toluca",
+     ""
+    ],
+    [
+     "PUEBLA",
+     "Puebla",
+     ""
+    ],
+    [
+     "MERIDA",
+     "Mérida",
+     ""
+    ],
+    [
+     "EN-LINEA",
+     "En línea",
      ""
     ]
    ],
