@@ -15,6 +15,7 @@
 // 22-oct-2026: se suman la Universidad Iberoamericana (campus Ciudad de México) y la UAM (unidad Xochimilco;
 // la UAM se organiza en unidades, por eso su segundo desplegable dice «Unidad»). Sin dominios aún.
 // 22-oct-2026: se suma UNITEC con sus 14 campus según unitec.mx/campus (incluye «En línea»). Sin dominios aún.
+// Se muestra como «UNITEC» y no con su nombre completo (Universidad Tecnológica de México): así la conocen.
 // Es JSON después del signo «=».
 IB.datos.universidades = {
  "lista": [
@@ -325,7 +326,7 @@ IB.datos.universidades = {
   },
   {
    "clave": "UNITEC",
-   "nombre": "Universidad Tecnológica de México (UNITEC)",
+   "nombre": "UNITEC",
    "sub_etiqueta": "Campus",
    "sub_ayuda": "Elige tu campus",
    "sub": [
