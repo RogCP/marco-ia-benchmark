@@ -121,7 +121,7 @@ IB.registro = (() => {
     const f = [];
     if (!reg.acepta) f.push("aceptar el consentimiento");
     if (!reg.contacto) f.push("responder si aceptas que te contactemos");
-    if (reg.edad === "" || +reg.edad < 15 || +reg.edad > 99) f.push("tu edad");
+    if (reg.edad === "" || +reg.edad < 1 || +reg.edad > 99) f.push("tu edad");
     const fu = faltaUniversidad();
     if (fu) f.push(fu);
     if (!reg.entidad) f.push("la entidad donde estudias");
@@ -159,9 +159,38 @@ IB.registro = (() => {
     guardar();
   }
 
+  // --- Menores de edad ------------------------------------------------------------------------------
+  // Con menos de 18 años no se puede participar: se muestra el agradecimiento, se borra lo que la persona
+  // escribió y no se envía nada. El navegador recuerda el bloqueo 30 minutos, para que no baste con volver
+  // a intentar cambiando la edad, pero en una computadora compartida la siguiente persona pueda responder.
+  const EDAD_MINIMA = 18;
+  const BLOQUEO_MIN = 30;
+
+  function mostrarGracias() {
+    $("inicio").hidden = true;
+    $("instrumento").hidden = true;
+    $("gracias").hidden = false;
+    window.scrollTo(0, 0);
+  }
+
+  function bloquear() {
+    IB.almacen.guardar("-bloqueo", { hasta: Date.now() + BLOQUEO_MIN * 60000 });
+    IB.almacen.borrar("-registro");
+    mostrarGracias();
+  }
+
+  // true si hay un bloqueo vigente; si ya venció, lo borra.
+  function bloqueado() {
+    const b = IB.almacen.leer("-bloqueo");
+    if (b && Date.now() < b.hasta) return true;
+    if (b) IB.almacen.borrar("-bloqueo");
+    return false;
+  }
+
   // --- Arranque -----------------------------------------------------------------------------------
 
   function iniciar() {
+    if (bloqueado()) { mostrarGracias(); return; }
     Object.assign(reg, IB.almacen.leer("-registro") || {});
     llenarPantalla();
 
@@ -182,6 +211,7 @@ IB.registro = (() => {
     $("correo").addEventListener("blur", () => { $("correoError").hidden = reg.correo === "" || correoOk(reg.correo); avisoDominio(); });
     $("comenzarBtn").addEventListener("click", () => {
       if (faltantes().length) return;
+      if (+reg.edad < EDAD_MINIMA) { bloquear(); return; }
       reg.inicio = reg.inicio || new Date().toISOString();
       guardar();
       mostrarInstrumento(true);

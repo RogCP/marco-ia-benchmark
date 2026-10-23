@@ -25,7 +25,7 @@
 
 <section class="inicio" id="inicio" aria-labelledby="t-inicio">
   <h2 id="t-inicio">Antes de empezar</h2>
-  <p class="intro">Lee el consentimiento informado y el aviso de privacidad, y llena tus datos. Después podrás responder los casos.</p>
+  <p class="intro">Lee el consentimiento informado y el aviso de privacidad, y llena tus datos. Después podrás responder los casos. Para participar necesitas tener 18 años o más.</p>
 
   <h3>Consentimiento informado</h3>
   <div class="legal" id="txtConsentimiento" tabindex="0" aria-label="Texto del consentimiento informado"></div>
@@ -47,7 +47,7 @@
   <div class="campos">
     <div class="campo">
       <label for="edad">Edad</label>
-      <input id="edad" type="number" inputmode="numeric" min="15" max="99" placeholder="Años cumplidos">
+      <input id="edad" type="number" inputmode="numeric" min="1" max="99" placeholder="Años cumplidos">
     </div>
     <div class="campo">
       <label for="universidad">Universidad</label>
@@ -86,6 +86,12 @@
     <button class="primary" id="comenzarBtn" type="button" disabled>Comenzar</button>
     <span class="hint" id="comenzarHint" aria-live="polite"></span>
   </div>
+</section>
+
+<!-- Menores de 18: se muestra en lugar de los casos; no se guarda ni se envía nada. -->
+<section class="inicio" id="gracias" hidden aria-labelledby="t-gracias">
+  <h2 id="t-gracias">Gracias por tu interés</h2>
+  <p class="intro">Por ahora este estudio es solo para personas de 18 años o más, así que no podemos recibir tus respuestas. Te agradecemos mucho el tiempo que te tomaste.</p>
 </section>
 
 <div id="instrumento" hidden>
